@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'https://prototype-apidev.noisse.io';
+const BASE_URL = 'https://noisse-backend-production.up.railway.app';
 
 // src/api/subdomainAPI.js
 export const enumerateSubdomains = async (domain) => {
