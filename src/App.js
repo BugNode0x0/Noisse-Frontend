@@ -1,5 +1,6 @@
-import { Routes, Route } from "react-router-dom";
-import { SubdomainProvider } from './context/SubdomainContext';
+import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import PrivateRoute from './PrivateRoute';
 import React from 'react';
 import "./styles/app.sass";
 import Page from "./components/Page";
@@ -30,11 +31,13 @@ import NewAsset from "./screens/NewAsset";
 import AssetManagement from "./screens/AssetManagement";
 import ThreatManagement from "./screens/ThreatManagement";
 
+
 function App() {
+    
     return (
-        <SubdomainProvider>
+        <AuthProvider>
         <Routes>
-            <Route path="/">
+            <Route path="/" element={<PrivateRoute />}>
                 <Route
                     index
                     element={
@@ -208,7 +211,7 @@ function App() {
                 <Route path="pagelist" element={<PageList />} />
             </Route>
         </Routes>
-        </SubdomainProvider>
+        </AuthProvider>
     );
 }
 
