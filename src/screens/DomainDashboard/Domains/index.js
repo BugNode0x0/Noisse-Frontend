@@ -7,19 +7,10 @@ import Dropdown from "../../../components/Dropdown";
 import AllDomains from "./AllDomains";
 import ActiveDomains from "./ActiveDomains";
 import WebDomains from "./WebDomains";
-import { testAuth } from '../../../api/subdomainAPI';
 
 
 
 const Domains = () => {
-  const handleTestAuth = async () => {
-    try {
-      const response = await testAuth();
-      alert(`Response: ${response}`);
-    } catch (error) {
-      alert(`Error: ${error.message}`);
-    }
-  };
   const navigation = ["Web", "Active", "All"];
 
   const [activeTab, setActiveTab] = useState(navigation[0]);
@@ -82,7 +73,6 @@ const Domains = () => {
       }
     >
       <div className={styles.products}>
-      <button onClick={handleTestAuth}>Test Auth</button>
         <div className={styles.wrapper}>
           {activeTab === navigation[0] && <WebDomains  search={search} limit={3}/>}
           {activeTab === navigation[1] && <ActiveDomains  search={search} limit={3}/>}
