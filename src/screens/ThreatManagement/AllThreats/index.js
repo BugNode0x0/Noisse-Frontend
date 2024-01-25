@@ -45,7 +45,7 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
     };
     fetchWebDomains();
 
-    const socket = io('http://localhost:3001');
+    const socket = io('https://noisse-backend-production.up.railway.app/');
 
     // Open the socket connection
     socket.on('connect', () => {

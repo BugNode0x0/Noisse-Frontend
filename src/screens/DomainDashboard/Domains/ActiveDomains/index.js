@@ -45,7 +45,7 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
     };
     fetchActiveDomains();
 
-    const socket = io('http://localhost:3001');
+    const socket = io('https://noisse-backend-production.up.railway.app/');
 
     // Listen for 'active domain update' events or similar events tailored for active domains
     socket.on('active domain update', (data) => {

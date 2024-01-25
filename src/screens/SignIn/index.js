@@ -10,7 +10,7 @@ const SignIn = () => {
 
   // Function to handle redirect to AuthKit Sign In
   const handleAuthKitSignIn = () => {
-    window.location.href = 'http://localhost:3001/auth';
+    window.location.href = 'https://noisse-backend-production.up.railway.app/portal/auth';
   };
 
   return (
