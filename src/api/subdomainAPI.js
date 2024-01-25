@@ -7,6 +7,20 @@ const api = axios.create({
   withCredentials: true,
 });
 
+
+//test
+
+export const testAuth = async () => {
+  try {
+    const response = await api.get('/test-auth');
+    return response.data;
+  } catch (error) {
+    console.error('Test Auth error:', error);
+    throw new Error('Auth test failed');
+  }
+};
+
+
 export const enumerateSubdomains = async (domain) => {
   try {
       const response = await api.post(`/domains/enumerate`, { domain });
