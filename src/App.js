@@ -206,10 +206,11 @@ function App() {
                         </Page>
                     }
                 />
+                </Route>
                 <Route path="sign-up" element={<SignUp />} />
                 <Route path="sign-in" element={<SignIn />} />
                 <Route path="pagelist" element={<PageList />} />
-            </Route>
+            
         </Routes>
         </AuthProvider>
     );
