@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     // Check auth status on initial load
     const checkAuthStatus = async () => {
       try {
-        const response = await axios.get('https://noisse-backend-production.up.railway.app/user', { withCredentials: true });
+        const response = await axios.get('https://noisse-backend-production.up.railway.app/portal/user', { withCredentials: true });
         setUser(response.data.isAuthenticated ? response.data.user : null);
       } catch (error) {
         setUser(null);
