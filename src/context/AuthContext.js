@@ -7,12 +7,13 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Check auth status on initial load
     const checkAuthStatus = async () => {
       try {
         const response = await axios.get('https://noisse-backend-production.up.railway.app/portal/user', { withCredentials: true });
+        console.log('User data:', response.data);
         setUser(response.data.isAuthenticated ? response.data.user : null);
       } catch (error) {
+        console.error('Error fetching user:', error);
         setUser(null);
       }
     };
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }) => {
 
   return (
     <AuthContext.Provider value={{ user, setUser }}>
+      {console.log('Current user:', user)}
       {children}
     </AuthContext.Provider>
   );
