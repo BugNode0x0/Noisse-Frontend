@@ -9,6 +9,7 @@ import ActiveDomains from "./ActiveDomains";
 import WebDomains from "./WebDomains";
 
 
+
 const Domains = () => {
   const navigation = ["Web", "Active", "All"];
 
