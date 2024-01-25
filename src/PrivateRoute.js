@@ -3,7 +3,7 @@ import { useAuth } from './context/AuthContext'; // Adjust the path as needed to
 
 const PrivateRoute = () => {
   const { user } = useAuth();
-  return user ? <Outlet /> : <Navigate to="//noisse-frontend.vercel.app/sign-in" />;
+  return user ? <Outlet /> : <Navigate to="/sign-in" />;
 };
 
 export default PrivateRoute;
