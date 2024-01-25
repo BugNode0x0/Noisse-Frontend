@@ -1,22 +1,21 @@
-// src/context/AuthContext.js
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useContext } from 'react';
 
-export const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [auth, setAuth] = useState({ token: localStorage.getItem('token'), isAuthenticated: false });
 
-  useEffect(() => {
-    // Check for token in local storage and update state
-    const token = localStorage.getItem('token');
-    if (token) {
-      setIsAuthenticated(true);
-    }
-  }, []);
+  // Call this function when you want to update the auth state globally
+  const setAuthToken = (token) => {
+    localStorage.setItem('token', token);
+    setAuth({ token, isAuthenticated: !!token });
+  };
 
   return (
-    <AuthContext.Provider value={{ isAuthenticated, setIsAuthenticated }}>
+    <AuthContext.Provider value={{ auth, setAuthToken }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
+export const useAuth = () => useContext(AuthContext);
