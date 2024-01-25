@@ -1,94 +1,49 @@
 import React, { useState } from "react";
-import { NavLink, useLocation } from "react-router-dom";
 import cn from "classnames";
-import OutsideClickHandler from "react-outside-click-handler";
-import styles from "./User.module.sass";
-import Icon from "../../Icon";
-import LogoutButton from '../../../components/LogoutButton';
+import styles from "./Header.module.sass";
+import { Link } from "react-router-dom";
+import Icon from "../Icon";
+import Search from "./Search";
+import Messages from "./Messages";
+import Notification from "./Notification";
+import User from "./User";
 
+const Header = ({ onOpen }) => {
+  const [visible, setVisible] = useState(false);
+  const handleClick = () => {
+    onOpen();
+    setVisible(false);
+  };
 
-const items = [
-    {
-        menu: [
-            {
-                title: "Profile",
-                url: "/shop",
-            },
-            {
-                title: "Edit profile",
-                url: "/settings",
-            },
-
-            {
-                title: "Account settings",
-                url: "/settings",
-            },
-            {
-                title: "Log out",
-                action: 'logout'
-            },
-        ],
-    },
-];
-
-const User = ({ className }) => {
-    const [visible, setVisible] = useState(false);
-    const { pathname } = useLocation();
-
-    const handleLogout = () => {
-        setVisible(false);
-      };
-
-    return (
-        <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
-            <div
-                className={cn(styles.user, className, {
-                    [styles.active]: visible,
-                })}
-            >
-                <button
-                    className={styles.head}
-                    onClick={() => setVisible(!visible)}
-                >
-                    <img src="/images/content/avatar.jpg" alt="Avatar" />
-                </button>
-                <div className={styles.body}>
-                    {items.map((item, index) => (
-                        <div className={styles.menu} key={index}>
-                            {item.menu.map((x, index) =>
-                                x.url ? (
-                                    <NavLink
-                                        className={cn(styles.item, {
-                                            [styles.color]: x.color,
-                                            [styles.active]: pathname === x.url,
-                                        })}
-                                        to={x.url}
-                                        onClick={() => setVisible(false)}
-                                        key={index}
-                                    >
-                                        {x.icon && (
-                                            <Icon name={x.icon} size="24" />
-                                        )}
-                                        {x.title}
-                                    </NavLink>
-                                ) : x.action === 'logout' ? (
-                                    <LogoutButton onLogout={handleLogout} key={index} />
-                                ) : (
-                                    <button
-                                        className={styles.item}
-                                        onClick={() => setVisible(false)}
-                                        key={index}
-                                    >
-                                        {x.title}
-                                    </button>
-                                )
-                            )}
-                        </div>
-                    ))}
-                </div>
-            </div>
-        </OutsideClickHandler>
-    );
+  return (
+    <header className={styles.header}>
+      <button className={styles.burger} onClick={() => handleClick()}></button>
+      <Search className={cn(styles.search, { [styles.visible]: visible })} />
+      <button
+        className={cn(styles.buttonSearch, { [styles.active]: visible })}
+        onClick={() => setVisible(!visible)}
+      >
+        <Icon name="search" size="24" />
+      </button>
+      <div className={styles.control} onClick={() => setVisible(false)}>
+      <Link className={cn("button", styles.button)} to="/domains/add">
+          <Icon name="add" size="24" />
+          <span>Add Asset</span>
+        </Link>
+        <Messages className={styles.messages} />
+        <Notification className={styles.notification} />
+        <User className={styles.user} />
+      </div>
+      {/* <div className={styles.btns}>
+        <Link className={styles.link} to="/sign-in">
+          Sign in
+        </Link>
+        <Link className={cn("button", styles.button)} to="/sign-up">
+          Sign up
+        </Link>
+      </div> */}
+    </header>
+  );
 };
 
-export default User;
+export default Header;
