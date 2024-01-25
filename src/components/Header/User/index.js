@@ -4,7 +4,6 @@ import cn from "classnames";
 import OutsideClickHandler from "react-outside-click-handler";
 import styles from "./User.module.sass";
 import Icon from "../../Icon";
-import LogoutButton from "../../LogoutButton";
 
 const items = [
     {
@@ -104,7 +103,6 @@ const User = ({ className }) => {
                                         key={index}
                                     >
                                         {x.title}
-                                        <LogoutButton />
                                     </button>
                                 )
                             )}
