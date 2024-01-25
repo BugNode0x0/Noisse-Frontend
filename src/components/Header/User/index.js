@@ -4,6 +4,8 @@ import cn from "classnames";
 import OutsideClickHandler from "react-outside-click-handler";
 import styles from "./User.module.sass";
 import Icon from "../../Icon";
+import LogoutButton from '../../LogoutButton';
+
 
 const items = [
     {
@@ -16,45 +18,14 @@ const items = [
                 title: "Edit profile",
                 url: "/settings",
             },
-        ],
-    },
-    {
-        menu: [
-            {
-                title: "Analytics",
-                icon: "bar-chart",
-                url: "/customers/overview",
-            },
-            {
-                title: "Affiliate center",
-                icon: "ticket",
-                url: "/affiliate-center",
-            },
-            {
-                title: "Explore creators",
-                icon: "grid",
-                url: "/explore-creators",
-            },
-        ],
-    },
-    {
-        menu: [
-            {
-                title: "Upgrade to Pro",
-                icon: "leaderboard",
-                color: true,
-                url: "/upgrade-to-pro",
-            },
-        ],
-    },
-    {
-        menu: [
+
             {
                 title: "Account settings",
                 url: "/settings",
             },
             {
                 title: "Log out",
+                action: 'logout'
             },
         ],
     },
@@ -63,6 +34,10 @@ const items = [
 const User = ({ className }) => {
     const [visible, setVisible] = useState(false);
     const { pathname } = useLocation();
+
+    const handleLogout = () => {
+        setVisible(false);
+      };
 
     return (
         <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
@@ -96,6 +71,8 @@ const User = ({ className }) => {
                                         )}
                                         {x.title}
                                     </NavLink>
+                                ) : x.action === 'logout' ? (
+                                    <LogoutButton onLogout={handleLogout} key={index} />
                                 ) : (
                                     <button
                                         className={styles.item}
