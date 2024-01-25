@@ -1,22 +1,23 @@
-import React from 'react';
-import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import React from 'react';
+import styles from './Header/User/User.module.sass'; // Update this path to the correct location of your User.module.sass file
 
-const LogoutButton = () => {
-  const { setAuthToken } = useAuth();
-
+const LogoutButton = ({ onLogout }) => {
   const handleLogout = async () => {
     try {
       // Call the backend to clear the cookie
       await axios.get('https://noisse-backend-production.up.railway.app/logout', { withCredentials: true });
-      // Clear the token from auth state
-      setAuthToken(null);
+      onLogout(); // Close the user menu and clear local state
     } catch (error) {
       console.error('Logout failed', error);
     }
   };
 
-  return <button onClick={handleLogout}>Logout</button>;
+  return (
+    <button className={styles.item} onClick={handleLogout}>
+      Log out
+    </button>
+  );
 };
 
 export default LogoutButton;
