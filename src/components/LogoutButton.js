@@ -12,10 +12,9 @@ const LogoutButton = ({ onLogout }) => {
 
   const handleLogout = async () => {
     try {
-      // Call backend to clear the session
       await axios.get('https://noisse-backend-production.up.railway.app/logout', { withCredentials: true });
-      setUser(null);
-      navigate('/sign-in'); // Updated for React Router v6
+      setUser(null); // Clear user state
+      navigate('/sign-in');
     } catch (error) {
       console.error('Logout failed', error);
     }
