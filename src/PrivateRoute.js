@@ -1,9 +1,19 @@
-import { Outlet, Navigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext'; // Adjust the path as needed to match your directory structure
+// src/components/PrivateRoute.js
 
-const PrivateRoute = () => {
+import React from 'react';
+import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from './context/AuthContext'; // Ensure the path is correct
+
+const PrivateRoute = ({ children }) => {
   const { user } = useAuth();
-  return user ? <Outlet /> : <Navigate to="/sign-in" />;
+  const location = useLocation();
+
+  if (!user) {
+    // Redirect to the sign-in page, but save the current location they were trying to go to
+    return <Navigate to="/sign-in" state={{ from: location }} replace />;
+  }
+
+  return children; // If the user is authenticated, render the children components
 };
 
 export default PrivateRoute;
