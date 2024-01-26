@@ -1,37 +1,218 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from 'react-router-dom';
+import { AuthProvider, useAuth } from './context/AuthContext';
+import PrivateRoute from './PrivateRoute';
+import React from 'react';
+import "./styles/app.sass";
+import Page from "./components/Page";
+import Home from "./screens/Home";
+import DomainDashboard from "./screens/DomainDashboard";
+import DisDomains from "./screens/DisDomains";
+import Released from "./screens/Released";
+import Comments from "./screens/Comments";
+import Scheduled from "./screens/Scheduled";
+import AssetsDashboard from "./screens/AssetsDashboard";
+import CustomerList from "./screens/CustomerList";
+import Promote from "./screens/Promote";
+import Notification from "./screens/Notification";
+import Settings from "./screens/Settings";
+import UpgradeToPro from "./screens/UpgradeToPro";
+import MessageCenter from "./screens/MessageCenter";
+import ExploreCreators from "./screens/ExploreCreators";
+import AffiliateCenter from "./screens/AffiliateCenter";
+import SignUp from "./screens/SignUp";
+import SignIn from "./screens/SignIn";
+import Earning from "./screens/Earning";
+import Refunds from "./screens/Refunds";
+import Payouts from "./screens/Payouts";
+import Statements from "./screens/Statements";
+import Shop from "./screens/Shop";
+import PageList from "./screens/PageList";
+import NewAsset from "./screens/NewAsset";
+import AssetManagement from "./screens/AssetManagement";
+import ThreatManagement from "./screens/ThreatManagement";
 
-const AuthContext = createContext();
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
-  const [authChecking, setAuthChecking] = useState(true); // state to track auth checking
+function App() {
+    
+    return (
+        <AuthProvider>
+        <Routes>
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <DomainDashboard title="Dashboard" />
+              </PrivateRoute>
+            }
+          />
+                <Route
+            path="domains"
+            element={
+              <PrivateRoute>
+                <DomainDashboard title="Domains" />
+              </PrivateRoute>
+            }
+          />
+                <Route
+                    path="domains/add"
+                    element={
+                        <Page title="Add Assets">
+                            <NewAsset />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="domains/view"
+                    element={
+                        <Page title="Discover Domains">
+                            <DisDomains />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="products/released"
+                    element={
+                        <Page title="Released">
+                            <Released />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="products/comments"
+                    element={
+                        <Page title="Comments">
+                            <Comments />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="products/scheduled"
+                    element={
+                        <Page title="Scheduled">
+                            <Scheduled />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="assets/overview"
+                    element={
+                        <Page title="Assets">
+                            <AssetsDashboard />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="assets/view"
+                    element={
+                        <Page title="Asset Management">
+                            <AssetManagement />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="shop"
+                    element={
+                        <Page wide>
+                            <Shop />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="threats/overview"
+                    element={
+                        <Page title="Earning">
+                            <ThreatManagement />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="income/refunds"
+                    element={
+                        <Page title="Refunds">
+                            <Refunds />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="income/payouts"
+                    element={
+                        <Page title="Payouts">
+                            <Payouts />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="income/statements"
+                    element={
+                        <Page title="Statements">
+                            <Statements />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="promote"
+                    element={
+                        <Page title="Promote">
+                            <Promote />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="notification"
+                    element={
+                        <Page title="Notification">
+                            <Notification />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="settings"
+                    element={
+                        <Page title="Settings">
+                            <Settings />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="upgrade-to-pro"
+                    element={
+                        <Page title="Upgrade to Pro">
+                            <UpgradeToPro />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="message-center"
+                    element={
+                        <Page title="Message center">
+                            <MessageCenter />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="explore-creators"
+                    element={
+                        <Page title="Explore creators">
+                            <ExploreCreators />
+                        </Page>
+                    }
+                />
+                <Route
+                    path="affiliate-center"
+                    element={
+                        <Page title="Affiliate center">
+                            <AffiliateCenter />
+                        </Page>
+                    }
+                />
+                <Route path="sign-up" element={<SignUp />} />
+                <Route path="sign-in" element={<SignIn />} />
+                <Route path="pagelist" element={<PageList />} />
+            
+        </Routes>
+        </AuthProvider>
+    );
+}
 
-  useEffect(() => {
-    const checkAuthStatus = async () => {
-      try {
-        const response = await axios.get('https://noisse-backend-production.up.railway.app/portal/user', { withCredentials: true });
-        console.log('User data:', response.data);
-        setUser(response.data.isAuthenticated ? response.data.user : null);
-      } catch (error) {
-        console.error('Error fetching user:', error);
-        setUser(null);
-      }
-      setAuthChecking(false); // Auth check complete
-    };
-
-    checkAuthStatus();
-  }, []);
-
-  if (authChecking) {
-    return <div>Loading...</div>; // Or your custom loading component
-  }
-
-  return (
-    <AuthContext.Provider value={{ user, setUser }}>
-      {children}
-    </AuthContext.Provider>
-  );
-};
-
-export const useAuth = () => useContext(AuthContext);
+export default App;
