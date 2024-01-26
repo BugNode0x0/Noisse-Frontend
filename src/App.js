@@ -37,23 +37,23 @@ function App() {
     return (
         <AuthProvider>
         <Routes>
-            <Route path="/" element={<PrivateRoute />}>
+        <Route path="/sign-in" element={<SignIn />} />
+        <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <DomainDashboard title="Dashboard" />
+              </PrivateRoute>
+            }
+          />
                 <Route
-                    index
-                    element={
-                        <Page title="Dashboard">
-                            <DomainDashboard />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="/domains"
-                    element={
-                        <Page title="Domain - Dashboard">
-                            <DomainDashboard />
-                        </Page>
-                    }
-                />
+            path="domains"
+            element={
+              <PrivateRoute>
+                <DomainDashboard title="Domains" />
+              </PrivateRoute>
+            }
+          />
                 <Route
                     path="domains/add"
                     element={
@@ -206,7 +206,6 @@ function App() {
                         </Page>
                     }
                 />
-                </Route>
                 <Route path="sign-up" element={<SignUp />} />
                 <Route path="sign-in" element={<SignIn />} />
                 <Route path="pagelist" element={<PageList />} />
