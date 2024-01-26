@@ -4,15 +4,15 @@ import styles from './Header/User/User.module.sass';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from "../context/AuthContext"
 
-
-
 const LogoutButton = ({ onLogout }) => {
   const { setUser } = useAuth();
-  const navigate = useNavigate(); // Updated for React Router v6
+  const navigate = useNavigate();
 
   const handleLogout = async () => {
     try {
-      await axios.get('https://noisse-backend-production.up.railway.app/logout', { withCredentials: true });
+      console.log("Attempting to log out");
+      const response = await axios.get('https://noisse-backend-production.up.railway.app/portal/logout', { withCredentials: true });
+      console.log("Logout response:", response.data);
       setUser(null); // Clear user state
       navigate('/sign-in');
     } catch (error) {
