@@ -52,7 +52,6 @@ function App() {
                 </Page>
             }
           />
-          </Route>
                 <Route
                     path="domains/add"
                     element={
@@ -205,6 +204,9 @@ function App() {
                         </Page>
                     }
                 />
+                </Route>
+
+                
                 <Route path="sign-up" element={<SignUp />} />
                 <Route path="pagelist" element={<PageList />} />
             
