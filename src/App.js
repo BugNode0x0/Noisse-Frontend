@@ -42,7 +42,9 @@ function App() {
             path="/"
             element={
               <PrivateRoute>
+                <Page title="Dashboard">
                 <DomainDashboard title="Dashboard" />
+                </Page>
               </PrivateRoute>
             }
           />
@@ -50,7 +52,9 @@ function App() {
             path="domains"
             element={
               <PrivateRoute>
+                <Page title="Domains">
                 <DomainDashboard title="Domains" />
+                </Page>
               </PrivateRoute>
             }
           />
