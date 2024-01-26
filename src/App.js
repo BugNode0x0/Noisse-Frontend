@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import PrivateRoute from '../components/PrivateRoute';
+import PrivateRoute from './context/PrivateRoute';
 import React from 'react';
 import "./styles/app.sass";
 import Page from "./components/Page";
