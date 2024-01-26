@@ -1,12 +1,17 @@
 import axios from 'axios';
 import React from 'react';
-import styles from './Header/User/User.module.sass'; // Update this path to the correct location of your User.module.sass file
+import styles from './Header/User/User.module.sass'; 
+const { setUser } = useAuth();
+const history = useHistory();
+
 
 const LogoutButton = ({ onLogout }) => {
   const handleLogout = async () => {
     try {
+      // Call backend to clear the session
       await axios.get('https://noisse-backend-production.up.railway.app/logout', { withCredentials: true });
-      onLogout(); 
+      setUser(null);
+      history.push('/sign-in');
     } catch (error) {
       console.error('Logout failed', error);
     }
