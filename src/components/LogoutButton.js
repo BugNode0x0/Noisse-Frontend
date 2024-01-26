@@ -1,11 +1,12 @@
 import axios from 'axios';
 import React from 'react';
 import styles from './Header/User/User.module.sass'; 
-const { setUser } = useAuth();
-const history = useHistory();
+
 
 
 const LogoutButton = ({ onLogout }) => {
+  const { setUser } = useAuth();
+  const history = useHistory();
   const handleLogout = async () => {
     try {
       // Call backend to clear the session
