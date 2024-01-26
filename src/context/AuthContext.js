@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const AuthContext = createContext(null);
+const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [authChecking, setAuthChecking] = useState(true); // state to track auth checking
 
   useEffect(() => {
     const checkAuthStatus = async () => {
@@ -16,14 +17,18 @@ export const AuthProvider = ({ children }) => {
         console.error('Error fetching user:', error);
         setUser(null);
       }
+      setAuthChecking(false); // Auth check complete
     };
 
     checkAuthStatus();
   }, []);
 
+  if (authChecking) {
+    return <div>Loading...</div>; // Or your custom loading component
+  }
+
   return (
     <AuthContext.Provider value={{ user, setUser }}>
-      {console.log('Current user:', user)}
       {children}
     </AuthContext.Provider>
   );
