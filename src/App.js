@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
-import PrivateRoute from './context/PrivateRoute';
+import ProtectedRoutes from './components/ProtectedRoutes';
 import React from 'react';
 import "./styles/app.sass";
 import Page from "./components/Page";
@@ -35,26 +35,24 @@ function App() {
         <AuthProvider>
         <Routes>
         <Route path="/sign-in" element={<SignIn />} />
+        <Route element={<ProtectedRoutes />}>
         <Route
             path="/"
             element={
-              <PrivateRoute>
                 <Page title="Dashboard">
                 <DomainDashboard title="Dashboard" />
                 </Page>
-              </PrivateRoute>
             }
           />
-                <Route
+            <Route
             path="domains"
             element={
-              <PrivateRoute>
                 <Page title="Domains">
                 <DomainDashboard title="Domains" />
                 </Page>
-              </PrivateRoute>
             }
           />
+          </Route>
                 <Route
                     path="domains/add"
                     element={
