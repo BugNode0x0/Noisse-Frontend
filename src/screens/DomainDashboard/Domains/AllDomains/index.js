@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./AllDomains.module.sass";
-import Checkbox from "../../../../components/Checkbox";
 import Icon from "../../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
@@ -79,11 +78,6 @@ const AllDomains = ({ search, limit }) => { // Removed unused 'items' prop
         <div className={styles.row}>
           <div className={styles.col}>
           <div className={styles.iconCheckboxWrapper}>
-            <Checkbox
-              className={styles.checkbox}
-              value={chooseAll}
-              onChange={() => setChooseAll(!chooseAll)}
-            />
           <Icon name="globe" size="25" className={styles.icon} />
           </div>
           </div>
