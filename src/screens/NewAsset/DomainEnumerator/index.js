@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import cn from "classnames";
 import { Link } from "react-router-dom";
 import styles from "./DomainEnumerator.module.sass";
@@ -6,14 +7,13 @@ import Card from "../../../components/Card";
 import Icon from "../../../components/Icon";
 import TextInput from "../../../components/TextInput";
 import { enumerateSubdomains, getSubdomains } from '../../../api/subdomainAPI';
-import { SubdomainContext } from '../../../context/SubdomainContext';
 
 
 const DomainEnumerator = ({ className }) => {
     const [domain, setDomain] = useState('');
-    const { subdomains, setSubdomains } = useContext(SubdomainContext);
     const [isEnumerating, setIsEnumerating] = useState(false);
     const [notification, setNotification] = useState(''); 
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -32,10 +32,7 @@ const DomainEnumerator = ({ className }) => {
       try {
         const fetchedSubdomains = await getSubdomains(domain);
         console.log('Fetched Subdomains:', fetchedSubdomains);
-        const subdomainStrings = fetchedSubdomains.map(sub => sub.subdomain);
-        console.log('Subdomain Strings:', subdomainStrings);
-        setSubdomains(subdomainStrings);
-        setNotification('Fetched subdomains successfully.'); // Clear notification message
+        navigate('/domains');
       } catch (err) {
         setNotification("Failed to fetch results.");
       }
