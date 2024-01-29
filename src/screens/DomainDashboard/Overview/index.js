@@ -18,7 +18,18 @@ const intervals = ["This week", "This month", "This year"];
 
 
 const Overview = ({ className }) => {
-
+  // Inside Overview component, before the return statement
+  const generateChartData = (counter) => {
+    const dataPoints = []; // Create an array to store the data points
+    const steps = 10; // The number of steps or data points you want
+  
+    for (let i = 0; i <= steps; i++) {
+      const value = (counter / steps) * i;
+      dataPoints.push({ name: `Point ${i}`, earning: value });
+    }
+  
+    return dataPoints;
+  };
 
   const [sorting, setSorting] = useState(intervals[0]);
   const [discoveredCount, setDiscoveredCount] = useState(0);
