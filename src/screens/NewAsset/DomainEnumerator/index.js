@@ -74,12 +74,6 @@ const DomainEnumerator = ({ className }) => {
         </form>
         {/* Notification message */}
         {notification && <div className={styles.notification}>{notification}</div>}
-        <h4>Subdomains:</h4>
-        <ul className={styles.results}>
-          {subdomains.map((subdomain, index) => (
-            <li key={index}>{subdomain}</li>
-          ))}
-        </ul>
       </Card>
     );
 };
