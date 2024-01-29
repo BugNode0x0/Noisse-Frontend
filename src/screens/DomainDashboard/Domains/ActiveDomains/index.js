@@ -5,7 +5,6 @@ import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getActiveDomains } from '../../../../api/subdomainAPI';
 import io from 'socket.io-client';
-import Checkbox from "../../../../components/Checkbox";
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
@@ -66,11 +65,6 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
         <div className={styles.row}>
         <div className={styles.col}>
         <div className={styles.iconCheckboxWrapper}>
-            <Checkbox
-              className={styles.checkbox}
-              value={chooseAll}
-              onChange={() => setChooseAll(!chooseAll)} // Use this state to handle "select all" logic
-            />
           <Icon name="lightning" size="25" className={styles.icon}/>
           </div>
           </div>
@@ -80,7 +74,7 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
           <Row
             item={domain.host}
             key={index}
-            value={selectedFilters.includes(index)} // Pass state for individual checkbox
+            value={selectedFilters.includes(index)} 
             onChange={() => handleChange(index)}
           />
         ))}
