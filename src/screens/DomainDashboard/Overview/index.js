@@ -35,7 +35,11 @@ const Overview = ({ className }) => {
   const [discoveredCount, setDiscoveredCount] = useState(0);
   const [activeCount, setActiveCount] = useState(0);
   const [webCount, setWebCount] = useState(0);
+  const [discoveredDomainsChartData, setDiscoveredDomainsChartData] = useState(generateChartData(discoveredCount));
+  const [activeDomainsChartData, setActiveDomainsChartData] = useState([]);
+  const [webDomainsChartData, setWebDomainsChartData] = useState([]);
 
+  
 
   const items = [
     {
@@ -43,18 +47,25 @@ const Overview = ({ className }) => {
       counter: discoveredCount ? discoveredCount.toString() : '0',
       icon: "globe",
       background: "#edf8f2",
+      chartColor: "#83BF6E",
+      data: discoveredDomainsChartData,
     },
     {
       title: "Active Domains",
       counter: activeCount ? activeCount.toString() : '0', // Use activeCount here
       icon: "lightning",
       background: "#ecf9fe",
+      chartColor: "#2A85FF",
+      data: activeDomainsChartData,
     },
     {
       title: "Web Services",
       counter: webCount ? webCount.toString() : '0', // Use webCount here
       icon: "cloudcheck",
       background: "#f2efff",
+      chartColor: "#8E59FF",
+      data: webDomainsChartData,
+      
     },
   ];
 
@@ -80,6 +91,19 @@ const Overview = ({ className }) => {
         const activeDomainsCountData = await getActiveDomainsCount(intervalParam);
         const webDomainsCountData = await getWebDomainsCount(intervalParam);
   
+        // Only if new count data is fetched, then generate chart data
+        if (discoveredDomainsCountData) {
+          setDiscoveredCount(discoveredDomainsCountData);
+          setDiscoveredDomainsChartData(generateChartData(discoveredDomainsCountData));
+        }
+        if (activeDomainsCountData) {
+          setActiveCount(activeDomainsCountData);
+          setActiveDomainsChartData(generateChartData(activeDomainsCountData));
+        }
+        if (webDomainsCountData) {
+          setWebCount(webDomainsCountData);
+          setWebDomainsChartData(generateChartData(webDomainsCountData));
+        }
       } catch (error) {
         console.error("Error fetching domain counts:", error);
       }
