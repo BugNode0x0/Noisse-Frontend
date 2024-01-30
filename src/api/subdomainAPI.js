@@ -98,8 +98,8 @@ export const getIPAssets = async (search, page, limit) => {
     const response = await api.get(`/assets-ips`, { params: { search: search || '', page, pageSize: limit } });
     return response.data;
   } catch (error) {
-    console.error('Error fetching web domains:', error);
-    throw new Error('Could not retrieve web domains.');
+    console.error('Error fetching assets ips:', error);
+    throw new Error('Could not retrieve assets ips.');
   }
 };
 

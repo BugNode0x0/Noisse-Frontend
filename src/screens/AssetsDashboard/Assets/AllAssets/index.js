@@ -13,8 +13,8 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(ITEMS_PER_PAGE);  
-  const [webDomains, setWebDomains] = useState([]);
-  const [totalWebDomains, setTotalWebDomains] = useState(0);  
+  const [assetsIps, setassetsIps] = useState([]);
+  const [totalassetsIps, setTotalassetsIps] = useState(0);  
 
   const handleChange = (id) => {
     if (selectedFilters.includes(id)) {
@@ -24,7 +24,7 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
     }
   };
 
-  const totalPages = Math.ceil(totalWebDomains / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(totalassetsIps / ITEMS_PER_PAGE);
 
   const handlePageClick = (data) => {
     const selectedPage = data.selected + 1; // Adjust the page number (+1 because `selected` is zero-based)
@@ -33,16 +33,16 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
 
 
   useEffect(() => {
-    const fetchWebDomains = async () => {
+    const fetchassetsIps = async () => {
       try {
         const data = await getIPAssets(search, currentPage, ITEMS_PER_PAGE);
-        setWebDomains(data.webDomains); // Assuming the response has a 'webDomains' property
-        setTotalWebDomains(data.total); // Assuming the response has a 'total' property
+        setassetsIps(data.assetsIps); // Assuming the response has a 'assetsIps' property
+        setTotalassetsIps(data.total); // Assuming the response has a 'total' property
       } catch (error) {
         console.error('Error fetching web domains:', error);
       }
     };
-    fetchWebDomains();
+    fetchassetsIps();
 
     const socket = io('https://noisse-backend-production.up.railway.app/');
 
@@ -54,7 +54,7 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
     // Listen for 'subdomain update' events
     socket.on('web domain update', (data) => {
       console.log('Web domain update received:', data.message);
-      fetchWebDomains();
+      fetchassetsIps();
     });
     
     // Cleanup function for WebSocket
@@ -80,7 +80,7 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
           <div className={styles.col}>Host</div>
           <div className={styles.col}>Status Code</div>
         </div>
-        {webDomains.map((domain, index) => (
+        {assetsIps.map((domain, index) => (
           <Row
             item={domain.a}
             url={domain.a}
