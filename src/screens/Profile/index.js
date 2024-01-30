@@ -1,10 +1,9 @@
-import React from "react";
+import React, { useState, useEffect } from "react"; // Import useState and useEffect
 import styles from "./CustomerList.module.sass";
 import cn from "classnames";
 import Card from "../../components/Card";
 import Details from "./Details";
 import { getUserProfile } from '../../api/subdomainAPI';
-
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
@@ -20,9 +19,9 @@ const Profile = () => {
         console.error('Error:', error);
       }
     };
+
     fetchUserData();
   }, []);
-
 
   return (
     <Card
@@ -38,7 +37,7 @@ const Profile = () => {
             <p>{userData.email}</p>
           </>
         )}
-        {/* Include the Details component or other components as needed */}
+        <Details /> {/* Assuming you want to include the Details component */}
       </div>
     </Card>
   );
