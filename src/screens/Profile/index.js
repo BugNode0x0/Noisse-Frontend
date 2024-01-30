@@ -1,5 +1,5 @@
 import React from "react";
-import styles from "./CustomerList.module.sass";
+import styles from "./Profile.module.sass";
 import cn from "classnames";
 import Card from "../../components/Card";
 import Details from "./Details";
