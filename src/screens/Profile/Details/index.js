@@ -29,12 +29,6 @@ const Details = ({ className, onClose }) => {
       </button>
       {userData && (
         <div className={styles.userInfo}>
-          {/* Display user avatar */}
-          {userData.avatar && (
-            <div className={styles.avatar}>
-              <img src={userData.avatar} alt="User Avatar" />
-            </div>
-          )}
           <div className={styles.line}>
             <Icon name="user" size="24" />
             {`${userData.firstName} ${userData.lastName}`}
@@ -49,7 +43,6 @@ const Details = ({ className, onClose }) => {
           </a>
         </div>
       )}
-      {/* Include any other components or elements you need here */}
     </div>
   );
 };
