@@ -87,7 +87,7 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
             title={domain.host}
             statusCode={domain.status_code}
             key={index}
-            up={AllAssets.length - index <= 2}
+            up={webDomains.length - index <= 2}
             value={selectedFilters.includes(index)}
             onChange={() => handleChange(index)}
           />

@@ -119,7 +119,7 @@ function App() {
                 <Route
                     path="threats/overview"
                     element={
-                        <Page title="Earning">
+                        <Page title="Threats">
                             <ThreatManagement />
                         </Page>
                     }
