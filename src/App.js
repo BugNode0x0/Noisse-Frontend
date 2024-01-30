@@ -129,7 +129,7 @@ function App() {
                 <Route
                     path="profile"
                     element={
-                        <Page title="Notification">
+                        <Page title="Profile">
                             <Profile />
                         </Page>
                     }

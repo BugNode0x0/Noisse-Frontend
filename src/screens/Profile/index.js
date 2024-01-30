@@ -6,16 +6,11 @@ import Table from "./Table";
 import Panel from "./Panel";
 import Details from "./Details";
 
-const navigation = ["Active", "New"];
 
 const Profile = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [search, setSearch] = useState("");
   const [visible, setVisible] = useState(false);
-
-  const handleSubmit = (e) => {
-    alert();
-  };
 
   return (
     <>
