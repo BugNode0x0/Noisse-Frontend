@@ -30,17 +30,11 @@ const Details = ({ className, onClose }) => {
       {userData && (
         <div className={styles.userInfo}>
           <div className={styles.line}>
-            <Icon name="user" size="24" />
+            <Icon name="person" size="24" />
             {`${userData.firstName} ${userData.lastName}`}
           </div>
-          <a
-            className={styles.line}
-            href={`mailto:${userData.email}`}
-            rel="noopener noreferrer"
-          >
             <Icon name="mail" size="24" />
             {userData.email}
-          </a>
         </div>
       )}
     </div>
