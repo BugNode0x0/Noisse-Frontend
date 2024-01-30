@@ -10,7 +10,6 @@ const Profile = () => {
       className={styles.card}
       title="Info"
       classTitle={cn("title-red", styles.title)}
-      classCardHead={styles.head}
     >
       <Details /> {/* The Details component will handle user data fetching */}
     </Card>
