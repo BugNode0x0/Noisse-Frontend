@@ -72,3 +72,22 @@
                 display: none
         .details
             display: block
+
+.line
+  display: flex
+  align-items: center
+  margin-bottom: 10px // Adjust space between lines as needed
+  font-size: 18px // Larger text size
+  font-weight: bold // Bold text
+  color: $n7
+  transition: color .2s
+  svg
+    margin-right: 8px // Space between icon and text
+    fill: $n4
+    transition: fill .2s
+  +dark
+    color: $n1
+  &:hover
+    color: $p1
+    svg
+        fill: $p1
