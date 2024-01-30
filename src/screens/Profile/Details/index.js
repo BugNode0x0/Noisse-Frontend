@@ -24,17 +24,20 @@ const Details = ({ className, onClose }) => {
 
   return (
     <div className={cn(styles.details, className)}>
-      <button className={styles.close} onClick={onClose}>
-        <Icon name="close" size="20" />
-      </button>
       {userData && (
         <div className={styles.userInfo}>
           <div className={styles.line}>
             <Icon name="person" size="24" />
             {`${userData.firstName} ${userData.lastName}`}
           </div>
+          <a
+            className={styles.line}
+            href={`mailto:${userData.email}`}
+            rel="noopener noreferrer"
+          >
             <Icon name="mail" size="24" />
             {userData.email}
+          </a>
         </div>
       )}
     </div>
