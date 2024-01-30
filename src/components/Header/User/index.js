@@ -12,16 +12,7 @@ const items = [
         menu: [
             {
                 title: "Profile",
-                url: "/shop",
-            },
-            {
-                title: "Edit profile",
-                url: "/settings",
-            },
-
-            {
-                title: "Account settings",
-                url: "/settings",
+                url: "/profile",
             },
             {
                 title: "Log out",
