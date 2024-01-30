@@ -1,14 +1,14 @@
 import React, { useState, useContext, useEffect } from "react";
-import styles from "./AllAssets.module.sass";
+import styles from "./AllThreats.module.sass";
 import Icon from "../../../components/Icon";
-import Row from "./Row";// Row.js
+import Row from "./Row";
 import ReactPaginate from 'react-paginate';
-import { getIPAssets } from '../../../../api/subdomainAPI';
+import { getThreats } from '../../../api/subdomainAPI';
 import io from 'socket.io-client';
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
-const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
+const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
   const [chooseAll, setChooseAll] = useState(false); // Fixed typo setСhooseAll -> setChooseAll
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,7 +35,7 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
   useEffect(() => {
     const fetchWebDomains = async () => {
       try {
-        const data = await getIPAssets(search, currentPage, ITEMS_PER_PAGE);
+        const data = await getThreats(search, currentPage, ITEMS_PER_PAGE);
         setWebDomains(data.webDomains); // Assuming the response has a 'webDomains' property
         setTotalWebDomains(data.total); // Assuming the response has a 'total' property
       } catch (error) {
@@ -76,18 +76,20 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
             <Icon name="server" size="25" className={styles.icon} />
         </div>
           </div>
-          <div className={styles.col}>IP</div>
-          <div className={styles.col}>Host</div>
-          <div className={styles.col}>Status Code</div>
+          <div className={styles.col}>URL</div>
+          <div className={styles.col}>Threat</div>
+          <div className={styles.col}>Severity</div>
+          <div className={styles.col}>Template</div>
         </div>
         {webDomains.map((domain, index) => (
           <Row
-            item={domain.a}
-            url={domain.a}
-            title={domain.host}
-            statusCode={domain.status_code}
+            item={domain.matched_at}
+            url={domain.matched_at}
+            title={domain.name}
+            statusCode={domain.severity}
+            template={domain.template_id}
             key={index}
-            up={AllAssets.length - index <= 2}
+            up={AllThreats.length - index <= 2}
             value={selectedFilters.includes(index)}
             onChange={() => handleChange(index)}
           />
@@ -110,4 +112,4 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
   );
 };
 
-export default AllAssets;
+export default AllThreats;
