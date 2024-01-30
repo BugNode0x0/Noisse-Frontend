@@ -81,7 +81,7 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
           <div className={styles.col}>Severity</div>
           <div className={styles.col}>Template</div>
         </div>
-        {webDomains.map((domain, index) => (
+        {Array.isArray(webDomains) && webDomains.map((domain, index) => (
           <Row
             item={domain.matched_at}
             url={domain.matched_at}
