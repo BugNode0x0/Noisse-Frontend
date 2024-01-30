@@ -80,18 +80,16 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
           <div className={styles.col}>Host</div>
           <div className={styles.col}>Status Code</div>
         </div>
-        {Array.isArray(webDomains) && webDomains.map((domain, index) => (
-          <Row
-            item={domain.a}
-            url={domain.a}
-            title={domain.host}
-            statusCode={domain.status_code}
-            key={index}
-            up={webDomains.length - index <= 2}
-            value={selectedFilters.includes(index)}
-            onChange={() => handleChange(index)}
-          />
-        ))}
+      {Array.isArray(webDomains) && webDomains.map((domain, index) => (
+        <Row
+          url={domain.a}
+          title={domain.host}
+          statusCode={domain.status_code}
+          key={index}
+          selected={selectedFilters.includes(index)}
+          onChange={() => handleChange(index)}
+        />
+      ))}
       </div>
       <ReactPaginate
         previousLabel={'Previous'}
