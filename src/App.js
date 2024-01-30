@@ -27,6 +27,7 @@ import PageList from "./screens/PageList";
 import NewAsset from "./screens/NewAsset";
 import AssetManagement from "./screens/AssetManagement";
 import ThreatManagement from "./screens/ThreatManagement";
+import Profile from "./screens/Profile"
 
 
 function App() {
@@ -109,50 +110,10 @@ function App() {
                     }
                 />
                 <Route
-                    path="shop"
-                    element={
-                        <Page wide>
-                            <Shop />
-                        </Page>
-                    }
-                />
-                <Route
                     path="threats/overview"
                     element={
                         <Page title="Threats">
                             <ThreatManagement />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="income/refunds"
-                    element={
-                        <Page title="Refunds">
-                            <Refunds />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="income/payouts"
-                    element={
-                        <Page title="Payouts">
-                            <Payouts />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="income/statements"
-                    element={
-                        <Page title="Statements">
-                            <Statements />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="promote"
-                    element={
-                        <Page title="Promote">
-                            <Promote />
                         </Page>
                     }
                 />
@@ -164,46 +125,16 @@ function App() {
                         </Page>
                     }
                 />
+
                 <Route
-                    path="settings"
+                    path="profile"
                     element={
-                        <Page title="Settings">
-                            <Settings />
+                        <Page title="Notification">
+                            <Profile />
                         </Page>
                     }
                 />
-                <Route
-                    path="upgrade-to-pro"
-                    element={
-                        <Page title="Upgrade to Pro">
-                            <UpgradeToPro />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="message-center"
-                    element={
-                        <Page title="Message center">
-                            <MessageCenter />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="explore-creators"
-                    element={
-                        <Page title="Explore creators">
-                            <ExploreCreators />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="affiliate-center"
-                    element={
-                        <Page title="Affiliate center">
-                            <AffiliateCenter />
-                        </Page>
-                    }
-                />
+                
                 </Route>
 
                 
