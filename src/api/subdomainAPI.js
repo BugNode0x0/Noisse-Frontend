@@ -8,6 +8,8 @@ const api = axios.create({
 });
 
 
+
+
 //test
 
 export const testAuth = async () => {
@@ -17,6 +19,17 @@ export const testAuth = async () => {
   } catch (error) {
     console.error('Test Auth error:', error);
     throw new Error('Auth test failed');
+  }
+};
+
+
+export const getUserProfile = async () => {
+  try {
+    const response = await api.get('/portal/user');
+    return response.data; // returns the user data
+  } catch (error) {
+    console.error('Error fetching user profile:', error);
+    throw new Error('Failed to fetch user profile');
   }
 };
 
