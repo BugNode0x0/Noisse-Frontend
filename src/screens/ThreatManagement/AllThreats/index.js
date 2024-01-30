@@ -13,8 +13,8 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(ITEMS_PER_PAGE);  
-  const [webDomains, setWebDomains] = useState([]);
-  const [totalWebDomains, setTotalWebDomains] = useState(0);  
+  const [Threats, setThreats] = useState([]);
+  const [totalThreats, setTotalThreats] = useState(0);  
 
   const handleChange = (id) => {
     if (selectedFilters.includes(id)) {
@@ -24,7 +24,7 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
     }
   };
 
-  const totalPages = Math.ceil(totalWebDomains / ITEMS_PER_PAGE);
+  const totalPages = Math.ceil(totalThreats / ITEMS_PER_PAGE);
 
   const handlePageClick = (data) => {
     const selectedPage = data.selected + 1; // Adjust the page number (+1 because `selected` is zero-based)
@@ -33,16 +33,16 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
 
 
   useEffect(() => {
-    const fetchWebDomains = async () => {
+    const fetchThreats = async () => {
       try {
         const data = await getThreats(search, currentPage, ITEMS_PER_PAGE);
-        setWebDomains(data.webDomains); // Assuming the response has a 'webDomains' property
-        setTotalWebDomains(data.total); // Assuming the response has a 'total' property
+        setThreats(data.Threats); // Assuming the response has a 'Threats' property
+        setTotalThreats(data.total); // Assuming the response has a 'total' property
       } catch (error) {
         console.error('Error fetching web domains:', error);
       }
     };
-    fetchWebDomains();
+    fetchThreats();
 
     const socket = io('https://noisse-backend-production.up.railway.app/');
 
@@ -54,7 +54,7 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
     // Listen for 'subdomain update' events
     socket.on('web domain update', (data) => {
       console.log('Web domain update received:', data.message);
-      fetchWebDomains();
+      fetchThreats();
     });
     
     // Cleanup function for WebSocket
@@ -81,7 +81,7 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
           <div className={styles.col}>Severity</div>
           <div className={styles.col}>Template</div>
         </div>
-        {webDomains.map((domain, index) => (
+        {Threats.map((domain, index) => (
           <Row
             item={domain.matched_at}
             url={domain.matched_at}
