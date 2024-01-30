@@ -4,7 +4,6 @@ import styles from "./Header.module.sass";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
 import Search from "./Search";
-import Messages from "./Messages";
 import Notification from "./Notification";
 import User from "./User";
 
@@ -30,7 +29,6 @@ const Header = ({ onOpen }) => {
           <Icon name="add" size="24" />
           <span>Add Asset</span>
         </Link>
-        <Messages className={styles.messages} />
         <Notification className={styles.notification} />
         <User className={styles.user} />
       </div>
