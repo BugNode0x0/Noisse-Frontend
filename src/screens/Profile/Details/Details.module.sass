@@ -1,93 +1,74 @@
-@import ../../../styles/helpers
+@import ../../styles/helpers
+
+.head
+    margin-bottom: 44px
+    +t
+        margin-bottom: 32px
+    +m
+        flex-wrap: wrap
+        margin-bottom: 24px
+    .form
+        margin-right: auto
+        +t
+            width: 250px
+        +m
+            width: 100%
+            margin: 0 0 16px
+    &.hidden
+        +t
+            display: none
+
+.title
+    margin-right: 24px
+    +m
+        margin: 0 0 16px
+
+.nav
+    display: flex
+    +m
+        width: 100%
+
+.link
+    padding: 8px 16px
+    border-radius: 8px
+    +base1-s
+    color: $n4
+    transition: all .2s
+    +m
+        flex: 1
+    &:hover,
+    &.active
+        color: $n7
+        +dark
+            color: $n1
+    &.active
+        background: $n3
+        +dark
+            background: $n6
+    &:not(:last-child)
+        margin-right: 8px
+        +m
+            margin-right: 0
+
+.filters
+    margin-left: 8px
+    +t
+        display: none
 
 .details
-    position: relative
-    flex-grow: 1
-    padding: 60px 0 0 48px
-    +w
-        padding: 48px 0 0 48px
-    +t
-        padding: 0
+    display: none
 
-.close
-    position: absolute
-    top: 0
-    right: 0
-    width: 36px
-    height: 36px
-    border-radius: 50%
-    background: $n3
-    +t
-        top: -90px
-        background: $n1
-        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.05)
-    +m
-        top: -70px
-    svg
-        transition: transform .2s
-    +dark
-        background: $n6
-        svg
-            fill: $n1
-    &:hover
-        svg
-            transform: rotate(90deg)
-
-.head,
-.editor
-    margin-bottom: 48px
-    +x
-        margin-bottom: 32px
-
-.line
-  display: flex
-  align-items: center
-  margin-bottom: 10px // Adjust space between lines as needed
-  font-size: 18px // Larger text size
-  font-weight: bold // Bold text
-  color: $n7
-  transition: color .2s
-  svg
-    margin-right: 8px // Space between icon and text
-    fill: $n4
-    transition: fill .2s
-  +dark
-    color: $n1
-  &:hover
-    color: $p1
-    svg
-        fill: $p1
-
-.socials
-    display: flex
-    align-items: center
-    padding: 20px 0
-    border-width: 1px 0
-    border-style: solid
-    border-color: $n3
-    +m
-        padding: 16px 0
-    +dark
-        border-color: $n6
-
-.social
-    svg
-        fill: $n4
-        transition: fill .2s
-    &:hover
-        svg
-            fill: $p1
-    &:not(:last-child)
-        margin-right: 32px
-
-.line,
-.socials
-    &:not(:last-child)
-        margin-bottom: 20px
-        +m
-            margin-bottom: 16px
-
-.history
-    margin-top: 48px
-    +x
-        margin-top: 32px
+.row
+    &.flex
+        display: flex
+        .table
+            flex-shrink: 0
+            width: 384px
+            +w
+                width: 350px
+            +d
+                width: 320px
+            +t
+                display: none
+        .details
+            display: block
