@@ -92,36 +92,6 @@ export const getWebDomainsCount = async (interval) => {
   }
 };
  
-// Charts API
-export const getDiscoveredDomainsChartData = async (interval) => {
-  try {
-    const response = await api.get(`/domains/chart-data`, { params: { interval } });
-    return response.data; // Assuming the backend returns an array of data points
-  } catch (error) {
-    console.error('Error fetching discovered domains chart data:', error);
-    return []; // Return an empty array in case of error
-  }
-};
-
-export const getActiveDomainsChartData = async (interval) => {
-  try {
-    const response = await api.get(`/active-domains/chart-data`, { params: { interval } });
-    return response.data; // Assuming the backend returns an array of data points
-  } catch (error) {
-    console.error('Error fetching active domains chart data:', error);
-    return []; // Return an empty array in case of error
-  }
-};
-
-export const getWebDomainsChartData = async (interval) => {
-  try {
-    const response = await api.get(`/web-domains/chart-data`, { params: { interval } });
-    return response.data; // Assuming the backend returns an array of data points
-  } catch (error) {
-    console.error('Error fetching web domains chart data:', error);
-    return []; // Return an empty array in case of error
-  }
-};
 
 export const getIPAssets = async (search, page, limit) => {
   try {
