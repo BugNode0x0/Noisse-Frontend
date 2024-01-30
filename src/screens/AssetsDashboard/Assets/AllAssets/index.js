@@ -80,7 +80,7 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
           <div className={styles.col}>Host</div>
           <div className={styles.col}>Status Code</div>
         </div>
-        {webDomains.map((domain, index) => (
+        {Array.isArray(webDomains) && webDomains.map((domain, index) => (
           <Row
             item={domain.a}
             url={domain.a}
