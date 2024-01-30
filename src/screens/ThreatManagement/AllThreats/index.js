@@ -1,6 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import styles from "./AllAssets.module.sass";
-import Icon from "../../../../components/Icon";
+import Icon from "../../../components/Icon";
 import Row from "./Row";// Row.js
 import ReactPaginate from 'react-paginate';
 import { getIPAssets } from '../../../../api/subdomainAPI';
