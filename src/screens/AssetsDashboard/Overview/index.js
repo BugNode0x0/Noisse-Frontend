@@ -58,7 +58,20 @@ const Overview = ({ className }) => {
     };
   
     fetchChartData();
+
+    const fetchAssetsCount = async () => {
+      try {
+        const count = await getIPAssetsCount("week"); // Assuming you want to fetch count for 'week' interval
+        setTotalAssetsCount(count);
+      } catch (error) {
+        console.error("Error fetching assets count:", error);
+      }
+    };
+  
+      fetchAssetsCount();
+
   }, [sorting]);
+
 
   const initializeChartData = (interval) => {
     const dataPoints = [];
@@ -115,7 +128,7 @@ const Overview = ({ className }) => {
     >
       <div className={styles.overview}>
         <div className={styles.details}>
-          <div className={cn("h4", styles.title)}>1,509 Assets</div>
+        <div className={cn("h4", styles.title)}>{totalAssetsCount} Assets</div>
           <div className={styles.line}>
             {new Date().toLocaleDateString("en-US", {
               year: "numeric",
