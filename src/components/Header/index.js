@@ -3,7 +3,6 @@ import cn from "classnames";
 import styles from "./Header.module.sass";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
-import Search from "./Search";
 import Notification from "./Notification";
 import User from "./User";
 
@@ -17,13 +16,6 @@ const Header = ({ onOpen }) => {
   return (
     <header className={styles.header}>
       <button className={styles.burger} onClick={() => handleClick()}></button>
-      <Search className={cn(styles.search, { [styles.visible]: visible })} />
-      <button
-        className={cn(styles.buttonSearch, { [styles.active]: visible })}
-        onClick={() => setVisible(!visible)}
-      >
-        <Icon name="search" size="24" />
-      </button>
       <div className={styles.control} onClick={() => setVisible(false)}>
       <Link className={cn("button", styles.button)} to="/domains/add">
           <Icon name="add" size="24" />
