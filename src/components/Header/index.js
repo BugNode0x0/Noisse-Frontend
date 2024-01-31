@@ -3,7 +3,6 @@ import cn from "classnames";
 import styles from "./Header.module.sass";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
-import Notification from "./Notification";
 import User from "./User";
 
 const Header = ({ onOpen }) => {
@@ -21,7 +20,6 @@ const Header = ({ onOpen }) => {
           <Icon name="add" size="24" />
           <span>Add Asset</span>
         </Link>
-        <Notification className={styles.notification} />
         <User className={styles.user} />
       </div>
       {/* <div className={styles.btns}>
