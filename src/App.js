@@ -11,7 +11,6 @@ import Comments from "./screens/Comments";
 import Scheduled from "./screens/Scheduled";
 import AssetsDashboard from "./screens/AssetsDashboard";
 import Promote from "./screens/Promote";
-import Notification from "./screens/Notification";
 import Settings from "./screens/Settings";
 import UpgradeToPro from "./screens/UpgradeToPro";
 import MessageCenter from "./screens/MessageCenter";
@@ -114,14 +113,6 @@ function App() {
                     element={
                         <Page title="Threats">
                             <ThreatManagement />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="notification"
-                    element={
-                        <Page title="Notification">
-                            <Notification />
                         </Page>
                     }
                 />
