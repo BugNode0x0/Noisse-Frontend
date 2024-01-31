@@ -6,8 +6,8 @@ import styles from "./DomainEnumerator.module.sass";
 import Card from "../../../components/Card";
 import Icon from "../../../components/Icon";
 import TextInput from "../../../components/TextInput";
+import Loader from "../../../components/Loader"; // Make sure you import your Loader component
 import { enumerateSubdomains, getSubdomains } from '../../../api/subdomainAPI';
-
 
 const DomainEnumerator = ({ className }) => {
     const [domain, setDomain] = useState('');
@@ -21,20 +21,13 @@ const DomainEnumerator = ({ className }) => {
 
       try {
         await enumerateSubdomains(domain);
-        setNotification('Domain Enumeration Started!'); // Update notification message
+        setNotification('Enumeration Started!');
+        // Simulate waiting for enumeration to finish before navigating
+        setTimeout(() => {
+          navigate('/domains');
+        }, 5000); // Adjust timeout as needed for your enumeration duration
       } catch (err) {
-        setNotification("Failed to start enumeration. Please try again later."); // Update notification message
-      }
-      setIsEnumerating(false);
-    };
-
-    const handleFetchResults = async () => {
-      try {
-        const fetchedSubdomains = await getSubdomains(domain);
-        console.log('Fetched Subdomains:', fetchedSubdomains);
-        navigate('/domains');
-      } catch (err) {
-        setNotification("Failed to fetch results.");
+        setNotification("Failed to start enumeration. Please try again later.");
       }
     };
 
@@ -59,16 +52,18 @@ const DomainEnumerator = ({ className }) => {
             label="Domain Name"
             value={domain}
             onChange={(e) => setDomain(e.target.value)}
-            placeholder="aol.com"
+            placeholder="Insert your organization's domain name such as 'noisse.io'"
             disabled={isEnumerating}
             required
           />
           <div className={styles.buttons}>
             <button className={cn('button', styles.button)} type="submit" disabled={isEnumerating}>
-              Add Asset
-            </button>
-            <button className={cn('button', styles.button)} onClick={handleFetchResults} disabled={isEnumerating}>
-              Get Results
+              {isEnumerating ? (
+                <>
+                  <Loader className={styles.loader} />
+                  <span>Enumerating...</span>
+                </>
+              ) : "Add Asset"}
             </button>
           </div>
         </form>

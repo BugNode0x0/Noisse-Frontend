@@ -55,7 +55,7 @@ function App() {
                 <Route
                     path="domains/add"
                     element={
-                        <Page title="Add Assets">
+                        <Page title="Enumeration">
                             <NewAsset />
                         </Page>
                     }

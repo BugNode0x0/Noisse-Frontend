@@ -18,7 +18,7 @@ const Header = ({ onOpen }) => {
       <div className={styles.control} onClick={() => setVisible(false)}>
       <Link className={cn("button", styles.button)} to="/domains/add">
           <Icon name="add" size="24" />
-          <span>Add Asset</span>
+          <span>Enumerate Asset</span>
         </Link>
         <User className={styles.user} />
       </div>
