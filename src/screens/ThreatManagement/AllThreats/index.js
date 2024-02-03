@@ -44,7 +44,7 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
     };
     fetchThreats();
 
-    const socket = io('https://noisse-backend-production.up.railway.app/');
+    const socket = io('https://api.noisse.io/');
 
     // Open the socket connection
     socket.on('connect', () => {

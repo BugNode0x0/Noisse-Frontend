@@ -44,7 +44,7 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
     };
     fetchassetsIps();
 
-    const socket = io('https://noisse-backend-production.up.railway.app/');
+    const socket = io('https://api.noisse.io/');
 
     // Open the socket connection
     socket.on('connect', () => {
