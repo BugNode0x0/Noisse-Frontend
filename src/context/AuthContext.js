@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     const checkAuthStatus = async () => {
       try {
-        const response = await axios.get('https://noisse-backend-production.up.railway.app/portal/user', { withCredentials: true });
+        const response = await axios.get('https://noisse-backend-development.up.railway.app/portal/user', { withCredentials: true });
         console.log('User data:', response.data);
         setUser(response.data.isAuthenticated ? response.data.user : null);
       } catch (error) {

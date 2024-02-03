@@ -49,7 +49,7 @@ const AllDomains = ({ search, limit }) => { // Removed unused 'items' prop
     };
     fetchSubdomains();
 
-    const socket = io('https://noisse-backend-production.up.railway.app/');
+    const socket = io('https://noisse-backend-development.up.railway.app/');
 
     // Open the socket connection
     socket.on('connect', () => {

@@ -11,7 +11,7 @@ const LogoutButton = ({ onLogout }) => {
   const handleLogout = async () => {
     try {
       console.log("Attempting to log out");
-      const response = await axios.get('https://noisse-backend-production.up.railway.app/portal/logout', { withCredentials: true });
+      const response = await axios.get('https://noisse-backend-development.up.railway.app/portal/logout', { withCredentials: true });
       console.log("Logout response:", response.data);
       setUser(null); // Clear user state
       navigate('/sign-in');
