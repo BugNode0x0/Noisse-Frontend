@@ -86,6 +86,8 @@ const WebDomains = ({ search, limit }) => { // Removed unused 'items' prop
             url={domain.url}
             title={domain.title}
             statusCode={domain.status_code}
+            webServer={domain.webserver}
+            technology={domain.tech}
             key={index}
             up={WebDomains.length - index <= 2}
             value={selectedFilters.includes(index)}
