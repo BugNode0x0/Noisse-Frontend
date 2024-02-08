@@ -82,9 +82,9 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
         </div>
         {assetsIps.map((domain, index) => (
           <Row
-            item={domain.a}
-            url={domain.a}
-            title={domain.host}
+            item={domain.ip}
+            url={domain.ip}
+            title={domain.subdomain}
             statusCode={domain.status_code}
             key={index}
             up={AllAssets.length - index <= 2}

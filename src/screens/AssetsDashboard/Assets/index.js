@@ -8,7 +8,7 @@ import AllAssets from "./AllAssets";
 
 
 const Assets = () => {
-  const navigation = ["Web", "Active", "All"];
+  const navigation = ["Resolved IP"];
 
   const [activeTab, setActiveTab] = useState(navigation[0]);
   const [search, setSearch] = useState("");
