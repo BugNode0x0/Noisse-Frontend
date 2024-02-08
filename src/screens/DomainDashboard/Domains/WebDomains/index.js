@@ -79,6 +79,8 @@ const WebDomains = ({ search, limit }) => { // Removed unused 'items' prop
           <div className={styles.col}>URL</div>
           <div className={styles.col}>Title</div>
           <div className={styles.col}>Status Code</div>
+          <div className={styles.col}>Web Server</div>
+          <div className={styles.col}>Tech</div>
         </div>
         {webDomains.map((domain, index) => (
           <Row

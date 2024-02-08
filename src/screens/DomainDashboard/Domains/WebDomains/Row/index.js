@@ -12,7 +12,7 @@ const Row = ({ url, title, statusCode, webServer, technology,selected, onChange 
       <div className={styles.col}>{title || 'N/A'}</div>
       <div className={styles.col}>{statusCode}</div>
       <div className={styles.col}>{webServer}</div>
-      <div className={styles.col}>{statusCode}</div>
+      <div className={styles.col}>{technology}</div>
 
     </div>
   );
