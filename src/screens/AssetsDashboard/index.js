@@ -4,12 +4,13 @@ import Overview from "./Overview";
 import AssetActivity from "./AssetActivity";
 import Assets from "./Assets";
 
+// <Overview className={styles.card} /> add this later
 
 const AssetsDashboard = () => {
   return (
       <>
           <div className={styles.section}>
-              <Overview className={styles.card} />
+              
               <div className={styles.row}>
                   <div className={styles.col}>
                       <AssetActivity />
