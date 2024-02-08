@@ -76,7 +76,7 @@ const AssetActivity = () => {
   return (
     <Card
     className={cn(styles.card, styles['domain-activity-card'])}
-      title="Asset IP activity"
+      title="Active IP activity"
       classTitle="title-green"
       head={
         <Dropdown
