@@ -72,7 +72,7 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
         </div>
         {activeDomains.map((domain, index) => (
           <Row
-            item={domain.host}
+            item={domain.subdomain}
             key={index}
             value={selectedFilters.includes(index)} 
             onChange={() => handleChange(index)}
