@@ -88,6 +88,7 @@ const WebDomains = ({ search, limit }) => { // Removed unused 'items' prop
             url={domain.url}
             title={domain.title}
             statusCode={domain.status_code}
+            contentLength={domain.content_length}
             webServer={domain.webserver}
             technology={domain.tech}
             key={index}

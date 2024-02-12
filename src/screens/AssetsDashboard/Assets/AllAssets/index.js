@@ -86,6 +86,7 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
             url={domain.ip}
             title={domain.subdomain}
             statusCode={domain.status_code}
+            contentLength={domain.content_length}
             key={index}
             up={AllAssets.length - index <= 2}
             value={selectedFilters.includes(index)}
