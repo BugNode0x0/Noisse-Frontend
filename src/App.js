@@ -109,7 +109,7 @@ function App() {
                     }
                 />
                 <Route
-                    path="threats/overview"
+                    path="web/overview"
                     element={
                         <Page title="Web View">
                             <ThreatManagement />
