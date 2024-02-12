@@ -111,7 +111,7 @@ function App() {
                 <Route
                     path="threats/overview"
                     element={
-                        <Page title="Threats">
+                        <Page title="Web View">
                             <ThreatManagement />
                         </Page>
                     }

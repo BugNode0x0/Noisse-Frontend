@@ -43,13 +43,13 @@ const navigation = [
         ],
     },
     {
-        title: "Threats",
-        slug: "Threats",
-        icon: "bug",
+        title: "Web View",
+        slug: "View",
+        icon: "eye",
         dropdown: [
             {
-                title: "Discovered Threats",
-                url: "/threats/overview",
+                title: "Web View",
+                url: "/web/view",
             },
         ],
     },
