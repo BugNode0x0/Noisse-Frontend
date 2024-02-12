@@ -53,6 +53,18 @@ const navigation = [
             },
         ],
     },
+
+    {
+        title: "Crawler",
+        slug: "Crawler",
+        icon: "bug",
+        dropdown: [
+            {
+                title: "Asset Crawler",
+                url: "/crawler/view",
+            },
+        ],
+    },
 ];
 
 const Sidebar = ({ className, onClose }) => {
