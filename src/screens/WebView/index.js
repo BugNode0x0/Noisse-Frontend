@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import cn from "classnames";
-import styles from "./ThreatManagement.module.sass";
+import styles from "./WebView.module.sass";
 import Card from "../../components/Card";
 import Form from "../../components/Form";
-import AllThreats from "./AllThreats";
+import AllThreats from "./Views";
 import Dropdown from "../../components/Dropdown";
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useNavigate} from 'react-router-dom';
 
-const ThreatManagement = () => {
+const WebView = () => {
   const navigation = ["All"];
   const location = useLocation()
   const params = queryString.parse(location.search);
@@ -85,4 +85,4 @@ const ThreatManagement = () => {
   );
 };
 
-export default ThreatManagement;
+export default WebView;

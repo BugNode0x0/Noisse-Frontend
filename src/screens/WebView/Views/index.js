@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
-import styles from "./AllThreats.module.sass";
+import styles from "./Views.module.sass";
 import Icon from "../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
@@ -8,7 +8,7 @@ import io from 'socket.io-client';
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
-const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
+const Views = ({ search, limit }) => { // Removed unused 'items' prop
   const [chooseAll, setChooseAll] = useState(false); // Fixed typo setСhooseAll -> setChooseAll
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -112,4 +112,4 @@ const AllThreats = ({ search, limit }) => { // Removed unused 'items' prop
   );
 };
 
-export default AllThreats;
+export default Views;

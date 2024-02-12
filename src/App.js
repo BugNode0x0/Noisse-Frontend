@@ -25,7 +25,7 @@ import Shop from "./screens/Shop";
 import PageList from "./screens/PageList";
 import NewAsset from "./screens/NewAsset";
 import AssetManagement from "./screens/AssetManagement";
-import ThreatManagement from "./screens/ThreatManagement";
+import WebView from "./screens/WebView";
 import Profile from "./screens/Profile"
 
 
@@ -109,7 +109,7 @@ function App() {
                     }
                 />
                 <Route
-                    path="web/overview"
+                    path="web/view"
                     element={
                         <Page title="Web View">
                             <ThreatManagement />
