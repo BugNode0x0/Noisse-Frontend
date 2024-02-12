@@ -3,7 +3,7 @@ import cn from "classnames";
 import styles from "./WebView.module.sass";
 import Card from "../../components/Card";
 import Form from "../../components/Form";
-import AllThreats from "./Views";
+import Views from "./Views";
 import Dropdown from "../../components/Dropdown";
 import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
