@@ -25,7 +25,7 @@ import Shop from "./screens/Shop";
 import PageList from "./screens/PageList";
 import NewAsset from "./screens/NewAsset";
 import AssetManagement from "./screens/AssetManagement";
-import WebView from "./screens/WebView";
+//import WebView from "./screens/WebView";
 import Profile from "./screens/Profile"
 
 
@@ -112,7 +112,7 @@ function App() {
                     path="web/view"
                     element={
                         <Page title="Web View">
-                            <WebView />
+                            <AssetManagement />
                         </Page>
                     }
                 />
