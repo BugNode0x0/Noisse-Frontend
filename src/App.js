@@ -112,7 +112,7 @@ function App() {
                     path="web/view"
                     element={
                         <Page title="Web View">
-                            <ThreatManagement />
+                            <WebView />
                         </Page>
                     }
                 />
