@@ -10,22 +10,12 @@ import Released from "./screens/Released";
 import Comments from "./screens/Comments";
 import Scheduled from "./screens/Scheduled";
 import AssetsDashboard from "./screens/AssetsDashboard";
-import Promote from "./screens/Promote";
-import Settings from "./screens/Settings";
-import UpgradeToPro from "./screens/UpgradeToPro";
-import MessageCenter from "./screens/MessageCenter";
-import ExploreCreators from "./screens/ExploreCreators";
-import AffiliateCenter from "./screens/AffiliateCenter";
 import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
-import Refunds from "./screens/Refunds";
-import Payouts from "./screens/Payouts";
-import Statements from "./screens/Statements";
-import Shop from "./screens/Shop";
 import PageList from "./screens/PageList";
 import NewAsset from "./screens/NewAsset";
 import AssetManagement from "./screens/AssetManagement";
-//import WebView from "./screens/WebView";
+import WebView from "./screens/WebView";
 import Profile from "./screens/Profile"
 
 
@@ -112,7 +102,7 @@ function App() {
                     path="web/view"
                     element={
                         <Page title="Web View">
-                            <AssetManagement />
+                            <Webview />
                         </Page>
                     }
                 />

@@ -3,18 +3,17 @@ import styles from "./Views.module.sass";
 import Icon from "../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
-import { getThreats } from '../../../api/subdomainAPI';
+import { getScreenshots } from '../../../api/subdomainAPI';
 import io from 'socket.io-client';
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
 const Views = ({ search, limit }) => { // Removed unused 'items' prop
-  const [chooseAll, setChooseAll] = useState(false); // Fixed typo setСhooseAll -> setChooseAll
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(ITEMS_PER_PAGE);  
-  const [Threats, setThreats] = useState([]);
-  const [totalThreats, setTotalThreats] = useState(0);  
+  const [screenshots, setScreenshots] = useState([]);
+  const [totalItems, setTotalItems] = useState(0);
+
 
   const handleChange = (id) => {
     if (selectedFilters.includes(id)) {
@@ -27,37 +26,34 @@ const Views = ({ search, limit }) => { // Removed unused 'items' prop
   const totalPages = Math.ceil(totalThreats / ITEMS_PER_PAGE);
 
   const handlePageClick = (data) => {
-    const selectedPage = data.selected + 1; // Adjust the page number (+1 because `selected` is zero-based)
+    const selectedPage = data.selected + 1;
     setCurrentPage(selectedPage);
   };
 
 
   useEffect(() => {
-    const fetchThreats = async () => {
+    const fetchScreenshots = async () => {
       try {
-        const data = await getThreats(search, currentPage, ITEMS_PER_PAGE);
-        setThreats(data.Threats); // Assuming the response has a 'Threats' property
-        setTotalThreats(data.total); // Assuming the response has a 'total' property
+        const data = await getScreenshots(search, currentPage, ITEMS_PER_PAGE);
+        setScreenshots(data.webview); // Assuming the response has a 'Threats' property
+        setTotalItems(data.total); // Assuming the response has a 'total' property
       } catch (error) {
-        console.error('Error fetching web domains:', error);
+        console.error('Error fetching screenshots', error);
       }
     };
-    fetchThreats();
+    fetchScreenshots();
 
     const socket = io('https://noisse-backend-development.up.railway.app/');
 
-    // Open the socket connection
     socket.on('connect', () => {
       console.log('Connected to websocket server');
     });
 
-    // Listen for 'subdomain update' events
-    socket.on('web domain update', (data) => {
-      console.log('Web domain update received:', data.message);
+    socket.on('screenshot update', (data) => {
+      console.log('screenshot update received:', data.message);
       fetchThreats();
     });
     
-    // Cleanup function for WebSocket
     return () => {
       socket.off('connect');
       socket.off('subdomain update');
@@ -68,48 +64,34 @@ const Views = ({ search, limit }) => { // Removed unused 'items' prop
 
 
   return (
-    <div className={styles.all}>
-      <div className={styles.table}>
-        <div className={styles.row}>
-        <div className={styles.col}>
-        <div className={styles.iconCheckboxWrapper}>
-            <Icon name="server" size="25" className={styles.icon} />
-        </div>
-          </div>
-          <div className={styles.col}>URL</div>
-          <div className={styles.col}>Threat</div>
-          <div className={styles.col}>Severity</div>
-          <div className={styles.col}>Template</div>
-        </div>
-        {Threats.map((domain, index) => (
-          <Row
-            item={domain.matched_at}
-            url={domain.matched_at}
-            title={domain.name}
-            statusCode={domain.severity}
-            template={domain.template_id}
-            key={index}
-            up={AllThreats.length - index <= 2}
-            value={selectedFilters.includes(index)}
-            onChange={() => handleChange(index)}
-          />
-        ))}
-      </div>
+    <div className={styles.views}>
+      {screenshots.map((item, index) => (
+        <Row
+          key={index}
+          screenshot_url={item.screenshot_url}
+          website_url={item.website_url}
+          title={item.title}
+          status_code={item.status_code}
+          content_length={item.content_length}
+          webserver={item.webserver}
+          tech={item.tech}
+        />
+      ))}
       <ReactPaginate
         previousLabel={'Previous'}
         nextLabel={'Next'}
         breakLabel={'...'}
-        pageCount={totalPages}
+        pageCount={Math.ceil(totalItems / ITEMS_PER_PAGE)}
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
         onPageChange={handlePageClick}
         containerClassName={styles.pagination}
         activeClassName={styles.active}
-        forcePage={currentPage - 1} // Use forcePage to set correct page
+        forcePage={currentPage - 1}
       />
     </div>
-    
   );
 };
+
 
 export default Views;
