@@ -8,12 +8,30 @@ const Row = ({ screenshot_url, website_url, title, status_code, content_length, 
         <img src={screenshot_url} alt="Screenshot" />
       </div>
       <div className={styles.details}>
-        <div className={styles.detail_item}>URL: {website_url}</div>
-        <div className={styles.detail_item}>Title: {title || 'N/A'}</div>
-        <div className={styles.detail_item}>Status: {status_code}</div>
-        <div className={styles.detail_item}>Content Length: {content_length}</div>
-        <div className={styles.detail_item}>Webserver: {webserver}</div>
-        <div className={styles.detail_item}>Tech: {tech}</div>
+        <div className={styles.detail_item}>
+          <span className={styles.label}>URL:</span>
+          <span className={`${styles.value} ${styles.code_font}`}>{website_url}</span>
+        </div>
+        <div className={styles.detail_item}>
+          <span className={styles.label}>Title:</span>
+          <span className={`${styles.value} ${styles.code_font}`}>{title || 'N/A'}</span>
+        </div>
+        <div className={styles.detail_item}>
+          <span className={styles.label}>Status:</span>
+          <span className={`${styles.value} ${styles.code_font}`}>{status_code}</span>
+        </div>
+        <div className={styles.detail_item}>
+          <span className={styles.label}>Content Length:</span>
+          <span className={`${styles.value} ${styles.code_font}`}>{content_length}</span>
+        </div>
+        <div className={styles.detail_item}>
+          <span className={styles.label}>Webserver:</span>
+          <span className={`${styles.value} ${styles.code_font}`}>{webserver}</span>
+        </div>
+        <div className={styles.detail_item}>
+          <span className={styles.label}>Tech:</span>
+          <span className={`${styles.value} ${styles.code_font}`}>{tech}</span>
+        </div>
       </div>
     </div>
   );
