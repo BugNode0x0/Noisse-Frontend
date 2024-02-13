@@ -23,8 +23,8 @@
   
 .screenshot 
   flex-shrink: 0
-  width: 500px 
-  height: 500px 
+  width: 350px 
+  height: 350px 
   margin-right: 20px
   border-radius: 8px
   overflow: hidden
@@ -47,7 +47,13 @@
   margin-bottom: 4px
   +t 
     margin-bottom: 8px
-  
+
+    .label 
+    font-weight: bold
+
+  .code_font 
+    font-family: 'Courier New', Courier, monospace
+
 
 .col
     position: relative
@@ -212,7 +218,7 @@
 
 .label
     font-weight: bold
-    margin-right: 0.5rem
+    margin-right: 8px
     display: none
     +t
         display: block
