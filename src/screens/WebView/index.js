@@ -20,11 +20,6 @@ const WebView = () => {
     navigate(`/webview?search=${search}`);
   };
 
-  const handleTabChange = (newTab) => {
-    setActiveTab(newTab);
-    navigate(`/webview?tab=${newTab}&search=${search}`); // Update the URL
-  };
-
   useEffect(() => {
     const params = queryString.parse(location.search);
     setSearch(params.search || '');
