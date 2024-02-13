@@ -5,7 +5,7 @@ import Card from "../../../components/Card";
 import Dropdown from "../../../components/Dropdown";
 import Balance from "../../../components/Balance";
 import Chart from "./Chart";
-import { getIPAssetsChartData, getIPAssetsCount } from '../../../api/subdomainAPI';
+import { getIPAssetsCount } from '../../../api/subdomainAPI';
 
 
 const intervals = ["Last 28 days", "Last 14 days", "Last 7 days"];
@@ -35,29 +35,6 @@ const Overview = ({ className }) => {
   useEffect(() => {
     const intervalParam = mapIntervalToParam(sorting);
     
-    const fetchChartData = async () => {
-      try {
-        const chartDataResponse = await getIPAssetsChartData(intervalParam);
-        
-        // Initialize chart data array with zeros starting from the beginning of the interval
-        const initialChartData = initializeChartData(intervalParam);
-        
-        // Update the initialChartData with actual counts from the response
-        chartDataResponse.forEach(dataPoint => {
-          const date = new Date(dataPoint.date).toISOString().split('T')[0]; // Convert to YYYY-MM-DD format
-          const index = initialChartData.findIndex(point => point.name === date);
-          if (index !== -1) {
-            initialChartData[index].count = parseInt(dataPoint.count, 10);
-          }
-        });
-        
-        setChartData(initialChartData);
-      } catch (error) {
-        console.error("Error fetching chart data:", error);
-      }
-    };
-  
-    fetchChartData();
 
     const fetchAssetsCount = async () => {
       try {
