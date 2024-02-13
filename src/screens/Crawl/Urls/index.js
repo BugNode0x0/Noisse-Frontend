@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import styles from "./Urls.module.sass";
-import Icon from "../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getCrawl } from '../../../api/subdomainAPI';
@@ -15,30 +14,39 @@ const Urls = ({ search, limit }) => { // Removed unused 'items' prop
   const [totalItems, setTotalItems] = useState(0);
 
 
-  const handleChange = (id) => {
-    if (selectedFilters.includes(id)) {
-      setSelectedFilters(selectedFilters.filter((x) => x !== id));
-    } else {
-      setSelectedFilters((selectedFilters) => [...selectedFilters, id]);
-    }
-  };
-
-
   const handlePageClick = (data) => {
     setCurrentPage(data.selected + 1);
   }
+
+   // A function to restructure the flat list into a grouped object
+  const groupBySubdomain = (data) => {
+    const grouped = data.reduce((acc, cur) => {
+      // Group by subdomain_id
+      (acc[cur.subdomain_id] = acc[cur.subdomain_id] || []).push(cur.url);
+      return acc;
+    }, {});
+
+    // Convert the grouped object back into an array
+    return Object.keys(grouped).map(subdomain_id => ({
+      subdomain_id,
+      urls: grouped[subdomain_id]
+    }));
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await getCrawl(search, currentPage, ITEMS_PER_PAGE);
-        setCrawlData(data.jsview); // Assuming your API returns an array of objects with a url and crawledUrls
+        const groupedData = groupBySubdomain(data.jsview);
+        setCrawlData(groupedData);
         setTotalItems(data.total);
       } catch (error) {
         console.error('Error fetching crawl data:', error);
       }
     };
+
     fetchData();
+
 
     const socket = io('https://noisse-backend-development.up.railway.app/');
 
@@ -64,11 +72,11 @@ const Urls = ({ search, limit }) => { // Removed unused 'items' prop
 
   return (
     <div className={styles.urls}>
-      {crawlData.map((data, index) => (
+      {crawlData.map((group, index) => (
         <Row
           key={index}
-          url={data.url}
-          crawledUrls={data.crawledUrls} // You'll need to adjust your backend to send this data or restructure it on the frontend
+          subdomain_id={group.subdomain_id}
+          crawledUrls={group.urls}
         />
       ))}
       <ReactPaginate
