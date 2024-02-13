@@ -1,28 +1,29 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styles from './Row.module.sass';
+import Dropdown from "../../../../components/Dropdown"; // Ensure this path is correct
 
 const Row = ({ subdomain_id, crawledUrls }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
+  // Convert crawledUrls into the format expected by the Dropdown component
+  const dropdownOptions = crawledUrls.map(url => ({
+    value: url,
+    label: url
+  }));
 
-  const toggleExpanded = () => {
-    setIsExpanded(!isExpanded);
-  };
+  // State to hold the selected URL from the dropdown, initially the first URL
+  const [selectedUrl, setSelectedUrl] = React.useState(dropdownOptions[0].value);
 
   return (
     <div className={styles.row}>
-      <div onClick={toggleExpanded} className={styles.subdomain}>
+      <div className={styles.subdomain}>
         Subdomain ID: {subdomain_id}
-        <span className={styles.toggleIcon}>{isExpanded ? '-' : '+'}</span>
       </div>
-      {isExpanded && (
-        <div className={styles.dropdown}>
-          {crawledUrls.map((url, index) => (
-            <div key={index} className={styles.url}>
-              {url}
-            </div>
-          ))}
-        </div>
-      )}
+      <Dropdown
+        className={styles.dropdown}
+        value={selectedUrl}
+        setValue={setSelectedUrl}
+        options={dropdownOptions}
+        small
+      />
     </div>
   );
 };
