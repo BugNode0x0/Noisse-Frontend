@@ -7,20 +7,15 @@ const api = axios.create({
   withCredentials: true,
 });
 
-
-
-
-//test
-
-export const testAuth = async () => {
-  try {
-    const response = await api.get('/test-auth');
-    return response.data;
-  } catch (error) {
-    console.error('Test Auth error:', error);
-    throw new Error('Auth test failed');
-  }
-};
+//export const testAuth = async () => {
+//  try {
+//    const response = await api.get('/test-auth');
+//    return response.data;
+//  } catch (error) {
+//    console.error('Test Auth error:', error);
+//    throw new Error('Auth test failed');
+//  }
+//};
 
 
 export const getUserProfile = async () => {
@@ -126,23 +121,22 @@ export const getIPAssetsCount = async (interval) => {
   }
 };
 
-// Add the following function to subdomainAPI.js
-export const getIPAssetsChartData = async (interval) => {
+export const getScreenshots = async (search, page, limit) => {
   try {
-    const response = await api.get(`/assets-ips/chart-data`, { params: { interval } });
-    return response.data; // Assuming the backend returns an array of chart data points
+    const response = await api.get(`/webview`, { params: { search: search || '', page, pageSize: limit } });
+    return response.data;
   } catch (error) {
-    console.error('Error fetching IP assets chart data:', error);
-    return []; // Return an empty array in case of error
+    console.error('Error fetching screenshots:', error);
+    throw new Error('Could not retrieve web domains.');
   }
 };
 
-export const getThreats = async (search, page, limit) => {
+export const getCrawl = async (search, page, limit) => {
   try {
-    const response = await api.get(`/flaws`, { params: { search: search || '', page, pageSize: limit } });
+    const response = await api.get(`/jsview`, { params: { search: search || '', page, pageSize: limit } });
     return response.data;
   } catch (error) {
-    console.error('Error fetching web domains:', error);
+    console.error('Error fetching screenshots:', error);
     throw new Error('Could not retrieve web domains.');
   }
 };
