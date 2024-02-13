@@ -102,7 +102,7 @@ function App() {
                     path="web/view"
                     element={
                         <Page title="Web View">
-                            <Webview />
+                            <WebView />
                         </Page>
                     }
                 />

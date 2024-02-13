@@ -8,12 +8,12 @@ const Row = ({ screenshot_url, website_url, title, status_code, content_length, 
         <img src={screenshot_url} alt="Screenshot" />
       </div>
       <div className={styles.details}>
-        <div className={styles.detail-item}>URL: {website_url}</div>
-        <div className={styles.detail-item}>Title: {title || 'N/A'}</div>
-        <div className={styles.detail-item}>Status: {status_code}</div>
-        <div className={styles.detail-item}>Content Length: {content_length}</div>
-        <div className={styles.detail-item}>Webserver: {webserver}</div>
-        <div className={styles.detail-item}>Tech: {tech}</div>
+        <div className={styles.detail_item}>URL: {website_url}</div>
+        <div className={styles.detail_item}>Title: {title || 'N/A'}</div>
+        <div className={styles.detail_item}>Status: {status_code}</div>
+        <div className={styles.detail_item}>Content Length: {content_length}</div>
+        <div className={styles.detail_item}>Webserver: {webserver}</div>
+        <div className={styles.detail_item}>Tech: {tech}</div>
       </div>
     </div>
   );

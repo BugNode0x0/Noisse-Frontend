@@ -23,7 +23,6 @@ const Views = ({ search, limit }) => { // Removed unused 'items' prop
     }
   };
 
-  const totalPages = Math.ceil(totalThreats / ITEMS_PER_PAGE);
 
   const handlePageClick = (data) => {
     const selectedPage = data.selected + 1;
@@ -51,7 +50,7 @@ const Views = ({ search, limit }) => { // Removed unused 'items' prop
 
     socket.on('screenshot update', (data) => {
       console.log('screenshot update received:', data.message);
-      fetchThreats();
+      fetchScreenshots();
     });
     
     return () => {

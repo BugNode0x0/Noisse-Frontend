@@ -12,7 +12,6 @@ import { useNavigate} from 'react-router-dom';
 const WebView = () => {
   const location = useLocation()
   const params = queryString.parse(location.search);
-  const [activeTab, setActiveTab] = useState(params.tab || navigation[0]);
   const [search, setSearch] = useState(params.search || '');
   const navigate = useNavigate();
 
