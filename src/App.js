@@ -16,7 +16,7 @@ import PageList from "./screens/PageList";
 import NewAsset from "./screens/NewAsset";
 import AssetManagement from "./screens/AssetManagement";
 import WebView from "./screens/WebView";
-import WebView from "./screens/Crawl";
+import Crawl from "./screens/Crawl";
 import Profile from "./screens/Profile"
 
 
