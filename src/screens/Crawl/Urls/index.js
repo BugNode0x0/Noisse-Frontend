@@ -23,8 +23,6 @@ const Urls = ({ search, limit }) => { // Removed unused 'items' prop
     }
   };
 
-  const totalPages = Math.ceil(totalSubdomains / ITEMS_PER_PAGE);
-
 
   const handlePageClick = (data) => {
     setCurrentPage(data.selected + 1);
