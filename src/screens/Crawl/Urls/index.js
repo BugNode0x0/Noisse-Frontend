@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styles from "./AllDomains.module.sass";
+import styles from "./Urls.module.sass";
 import Icon from "../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
