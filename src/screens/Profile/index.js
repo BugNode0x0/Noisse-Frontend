@@ -2,11 +2,12 @@ import React, { useState, useEffect } from "react";
 import cn from "classnames";
 import styles from "./Profile.module.sass";
 import Card from "../../components/Card";
-import Icon from "../../components/Icon";
-import { getUserProfile } from '../../api/subdomainAPI';
+import Form from "../../components/Form";
+import { getUserProfile, getUserWebhook, updateUserWebhook } from '../../api/subdomainAPI';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
+  const [webhookUrl, setWebhookUrl] = useState(''); 
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -23,7 +24,42 @@ const Profile = () => {
     fetchUserData();
   }, []);
 
+  useEffect(() => {
+    const fetchUserWebhook = async () => {
+      if (userData) { // Only proceed if userData has been set
+        try {
+          const webhookData = await getUserWebhook(userData.user_id);
+          if (webhookData) {
+            setWebhookUrl(webhookData.webhook_url); // Again, make sure the property name is correct
+          }
+        } catch (error) {
+          console.error('Error fetching webhook URL:', error);
+        }
+      }
+    };
+
+    fetchUserWebhook();
+  }, [userData]);
+
+  const handleWebhookSubmit = async (e) => {
+    e.preventDefault(); // Prevent the default form submit action
+    try {
+      const response = await updateUserWebhook(userData.user_id, webhookUrl);
+      if (response.success) {
+        // Handle successful webhook update
+        alert('Webhook updated successfully!');
+      } else {
+        // Handle error in updating webhook
+        alert('Failed to update webhook.');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('Error updating webhook.');
+    }
+  };
+
   return (
+    <>
     <Card
       className={styles.card}
       title="Info"
@@ -48,6 +84,23 @@ const Profile = () => {
         )}
       </div>
     </Card>
+    <Card
+    className={styles.card}
+    title="Slack Webhook"
+    classTitle={styles.title}
+  >
+    <Form
+      className={styles.form}
+      onSubmit={handleWebhookSubmit}
+      placeholder="Enter your Slack webhook URL"
+      value={webhookUrl}
+      setValue={setWebhookUrl}
+      type="text"
+      name="webhook"
+      icon="arrow-right"
+    />
+  </Card>
+</>
   );
 };
 

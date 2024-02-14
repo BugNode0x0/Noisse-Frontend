@@ -140,3 +140,23 @@ export const getCrawl = async (search, page, limit) => {
     throw new Error('Could not retrieve web domains.');
   }
 };
+
+export const getUserWebhook = async () => {
+  try {
+    const response = await api.get('/user/webhook');
+    return response.data; 
+  } catch (error) {
+    console.error('Error fetching user webhook:', error);
+    throw new Error('Failed to fetch user webhook');
+  }
+};
+
+export const updateUserWebhook = async (webhookUrl) => {
+  try {
+    const response = await api.post('/user/webhook', { webhookUrl });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating user webhook:', error);
+    throw new Error('Failed to update user webhook');
+  }
+};
