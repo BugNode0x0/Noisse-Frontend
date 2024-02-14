@@ -13,13 +13,16 @@ const Urls = ({ subdomain, urls }) => {
                 {subdomain}
             </div>
             {visible && (
-                <Dropdown>
-                {urls.map(url => <div key={url}>{url}</div>)}
-              </Dropdown>
+                <Dropdown
+                options={urls.map((url) => (
+                  <Dropdown.Option key={url} value={url}>
+                    {url}
+                  </Dropdown.Option>
+                ))}
+              />
             )}
         </Card>
     );
 };
-
 
 export default Urls;
