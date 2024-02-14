@@ -27,14 +27,11 @@ const Crawl = () => {
 
     return (
         <div className={styles.section}>
-          {Object.entries(groupedUrls).map(([subdomain, urls]) => (
-            <div key={subdomain}>
-              {subdomain}
-              {JSON.stringify(urls)}
-            </div>
-          ))}
+            {Object.entries(groupedUrls).map(([subdomain, urls], index) => (
+                <Urls key={subdomain} subdomain={subdomain} urls={urls} />
+            ))}
         </div>
-      );
+    );
 };
 
 export default Crawl;
