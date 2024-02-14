@@ -1,96 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import styles from "./Urls.module.sass";
-import Row from "./Row";
-import ReactPaginate from 'react-paginate';
-import { getCrawl } from '../../../api/subdomainAPI';
-import io from 'socket.io-client';
+import Card from "../../../components/Card"; // Adjust the path as necessary
+import Dropdown from "../../../components/Dropdown"; // Adjust the path as necessary
 
-const ITEMS_PER_PAGE = 10;  // Set the desired items per page
+const Urls = ({ subdomain, urls }) => {
+    // State to control the dropdown visibility
+    const [visible, setVisible] = React.useState(false);
 
-const Urls = ({ search, limit }) => { // Removed unused 'items' prop
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [crawlData, setCrawlData] = useState([]);
-  const [totalItems, setTotalItems] = useState(0);
-
-
-  const handlePageClick = (data) => {
-    setCurrentPage(data.selected + 1);
-  }
-
-   // A function to restructure the flat list into a grouped object
-  const groupBySubdomain = (data) => {
-    const grouped = data.reduce((acc, cur) => {
-      // Group by subdomain_id
-      (acc[cur.subdomain_id] = acc[cur.subdomain_id] || []).push(cur.url);
-      return acc;
-    }, {});
-
-    // Convert the grouped object back into an array
-    return Object.keys(grouped).map(subdomain_id => ({
-      subdomain_id,
-      urls: grouped[subdomain_id]
-    }));
-  };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const data = await getCrawl(search, currentPage, ITEMS_PER_PAGE);
-        const groupedData = groupBySubdomain(data.jsview);
-        setCrawlData(groupedData);
-        setTotalItems(data.total);
-      } catch (error) {
-        console.error('Error fetching crawl data:', error);
-      }
-    };
-
-    fetchData();
-
-
-    const socket = io('https://noisse-backend-development.up.railway.app/');
-
-    // Open the socket connection
-    socket.on('connect', () => {
-      console.log('Connected to websocket server');
-    });
-
-    // Listen for 'subdomain update' events
-    socket.on('crawl update', (data) => {
-      fetchData(); // Call fetchSubdomains to update the list of subdomains
-    });
-
-    // Cleanup function for WebSocket
-    return () => {
-      socket.off('connect');
-      socket.off('crawl update');
-      socket.disconnect();
-      console.log('Disconnected from websocket server');
-    };
-  }, [ search, currentPage]);
-
-
-  return (
-    <div className={styles.urls}>
-      {crawlData.map((group, index) => (
-        <Row
-          key={index}
-          subdomain_id={group.subdomain_id}
-          crawledUrls={group.urls}
-        />
-      ))}
-      <ReactPaginate
-        previousLabel={'Previous'}
-        nextLabel={'Next'}
-        breakLabel={'...'}
-        pageCount={Math.ceil(totalItems / ITEMS_PER_PAGE)}
-        onPageChange={handlePageClick}
-        containerClassName={styles.pagination}
-        activeClassName={styles.active}
-        forcePage={currentPage - 1}
-      />
-    </div>
-  );
+    return (
+        <Card className={styles.card}>
+            <div className={styles.cardHead} onClick={() => setVisible(!visible)}>
+                {subdomain}
+            </div>
+            {visible && (
+                <Dropdown
+                    options={urls.map(url => ({ value: url, label: url }))}
+                />
+            )}
+        </Card>
+    );
 };
 
 export default Urls;
