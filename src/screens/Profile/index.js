@@ -3,6 +3,7 @@ import cn from "classnames";
 import styles from "./Profile.module.sass";
 import Card from "../../components/Card";
 import Form from "../../components/Form";
+import Icon from "../../components/Icon";
 import { getUserProfile, getUserWebhook, updateUserWebhook } from '../../api/subdomainAPI';
 
 const Profile = () => {
