@@ -4,14 +4,19 @@ import Urls from "./Urls";
 import { getCrawl } from '../../api/subdomainAPI';
 
 const Crawl = () => {
-    const [crawlData, setCrawlData] = useState([]);
+    const [groupedUrls, setGroupedUrls] = useState({});
     
     useEffect(() => {
         const fetchData = async () => {
             try {
-                // Here you would handle pagination or decide how to fetch all data
-                const data = await getCrawl('', 1, 100); // Example call, adjust as necessary
-                setCrawlData(data.jsview);
+                const { jsview } = await getCrawl('', 1, 100); // Adjust fetch parameters as needed
+                const urlsBySubdomain = jsview.reduce((acc, { subdomain, url }) => {
+                    acc[subdomain] = acc[subdomain] || [];
+                    acc[subdomain].push(url);
+                    return acc;
+                }, {});
+
+                setGroupedUrls(urlsBySubdomain);
             } catch (error) {
                 console.error('Error fetching crawl data:', error);
             }
@@ -22,8 +27,8 @@ const Crawl = () => {
 
     return (
         <div className={styles.section}>
-            {crawlData.map((data, index) => (
-                <Urls key={data.subdomain_id} subdomain={data.subdomain} urls={data.urls} />
+            {Object.entries(groupedUrls).map(([subdomain, urls], index) => (
+                <Urls key={subdomain} subdomain={subdomain} urls={urls} />
             ))}
         </div>
     );
