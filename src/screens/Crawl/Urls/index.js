@@ -4,7 +4,6 @@ import Card from "../../../components/Card";
 import Dropdown from "../../../components/Dropdown";
 
 const Urls = ({ subdomain, urls }) => {
-  const [visible, setVisible] = useState(false);
 
   const toggleDropdown = (e) => {
     e.stopPropagation(); // Prevent event bubbling up to the card
