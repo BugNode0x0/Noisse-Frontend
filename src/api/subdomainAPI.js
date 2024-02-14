@@ -141,15 +141,19 @@ export const getCrawl = async (search, page, limit) => {
   }
 };
 
-export const getUserWebhook = async () => {
+export const getUserWebhook = async (hunterId) => {
   try {
-    const response = await api.get('/user/webhook');
-    return response.data; 
+    const response = await api.get('/user/webhook', {
+      // Pass the hunter_id if needed, or adjust to use the correct identification
+      params: { hunter_id: hunterId }
+    });
+    return response.data; // This should return an object with the webhookUrl
   } catch (error) {
     console.error('Error fetching user webhook:', error);
     throw new Error('Failed to fetch user webhook');
   }
 };
+
 
 export const updateUserWebhook = async (webhookUrl) => {
   try {

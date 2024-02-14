@@ -27,11 +27,11 @@ const Profile = () => {
 
   useEffect(() => {
     const fetchUserWebhook = async () => {
-      if (userData) { // Only proceed if userData has been set
+      if (userData) {
         try {
-          const webhookData = await getUserWebhook(userData.user_id);
+          const webhookData = await getUserWebhook(userData.hunter_id); // Use hunter_id if that's what your API expects
           if (webhookData) {
-            setWebhookUrl(webhookData.webhook_url); // Again, make sure the property name is correct
+            setWebhookUrl(webhookData.webhookUrl); // The property name must match the API response
           }
         } catch (error) {
           console.error('Error fetching webhook URL:', error);
@@ -88,7 +88,7 @@ const Profile = () => {
     <Card
     className={styles.card}
     title="Slack Webhook"
-    classTitle={styles.title}
+    classTitle={cn("title-red", styles.title)}
   >
     <Form
       className={styles.form}
