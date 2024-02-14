@@ -13,9 +13,9 @@ const Urls = ({ subdomain, urls }) => {
                 {subdomain}
             </div>
             {visible && (
-                <Dropdown
-                    options={urls.map(url => ({ value: url, label: url }))}
-                />
+                <Dropdown>
+                {urls.map(url => <div key={url}>{url}</div>)}
+              </Dropdown>
             )}
         </Card>
     );
