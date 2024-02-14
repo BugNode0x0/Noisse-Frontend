@@ -55,15 +55,15 @@ const Dropdown = ({
           <div className={styles.selection}>{value}</div>
         </div>
         <div className={cn(styles.body, { [styles.bodyUp]: upBody })}>
-          {options.map((x, index) => (
+          {options.map((option, index) => (
             <div
               className={cn(styles.option, {
-                [styles.selectioned]: x === value,
+                [styles.selectioned]: option.value === value,
               })}
-              onClick={() => handleClick(x, index)}
+              onClick={() => handleClick(option.value)}
               key={index}
             >
-              {x}
+              {option.label}
             </div>
           ))}
         </div>

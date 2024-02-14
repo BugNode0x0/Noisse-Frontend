@@ -5,6 +5,8 @@ import Dropdown from "../../../components/Dropdown"; // Adjust the path as neces
 
 const Urls = ({ subdomain, urls }) => {
     // State to control the dropdown visibility
+    const [selectedUrl, setSelectedUrl] = React.useState(urls[0]); // default to the first URL or another appropriate value
+
     const [visible, setVisible] = React.useState(false);
 
     return (
@@ -14,15 +16,14 @@ const Urls = ({ subdomain, urls }) => {
             </div>
             {visible && (
                 <Dropdown
-                options={urls.map((url) => (
-                  <Dropdown.Option key={url} value={url}>
-                    {url}
-                  </Dropdown.Option>
-                ))}
+                options={urls.map(url => ({ value: url, label: url }))}
+                value={selectedUrl}
+                setValue={setSelectedUrl} // Pass the state updater function
               />
             )}
         </Card>
     );
 };
+
 
 export default Urls;
