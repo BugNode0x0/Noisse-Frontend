@@ -17,7 +17,7 @@ const Form = ({
     <form className={cn(className, styles.form)} action="" onSubmit={onSubmit}>
       <input
         className={styles.input}
-        type={type}
+        type="text"
         value={value}
         onChange={(e) => setValue(e.target.value)}
         name={name}

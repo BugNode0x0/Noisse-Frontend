@@ -144,7 +144,6 @@ export const getCrawl = async (search, page, limit) => {
 export const getUserWebhook = async (hunterId) => {
   try {
     const response = await api.get('/user/webhook', {
-      // Pass the hunter_id if needed, or adjust to use the correct identification
       params: { hunter_id: hunterId }
     });
     return response.data; // This should return an object with the webhookUrl

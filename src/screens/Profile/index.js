@@ -45,12 +45,10 @@ const Profile = () => {
   const handleWebhookSubmit = async (e) => {
     e.preventDefault(); // Prevent the default form submit action
     try {
-      const response = await updateUserWebhook(userData.user_id, webhookUrl);
-      if (response.success) {
-        // Handle successful webhook update
+      const response = await updateUserWebhook(webhookUrl); // Pass only the webhook URL
+      if (response.message === 'Webhook updated successfully') {
         alert('Webhook updated successfully!');
       } else {
-        // Handle error in updating webhook
         alert('Failed to update webhook.');
       }
     } catch (error) {
