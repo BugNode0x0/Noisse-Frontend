@@ -48,9 +48,9 @@ const Profile = () => {
       const response = await updateUserWebhook(webhookUrl); // Pass only the webhook URL
       if (response.message === 'Webhook updated successfully') {
         alert('Webhook updated successfully!');
-      } else {
-        alert('Failed to update webhook.');
-      }
+      } //else {
+        //alert('Failed to update webhook.');
+     // }
     } catch (error) {
       console.error('Error:', error);
       alert('Error updating webhook.');
