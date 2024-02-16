@@ -1,14 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
 import styles from "./Views.module.sass";
-import Icon from "../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getScreenshots } from '../../../api/subdomainAPI';
 import io from 'socket.io-client';
 
-const ITEMS_PER_PAGE = 10;  // Set the desired items per page
+const ITEMS_PER_PAGE = 20;  // Set the desired items per page
 
-const Views = ({ search, limit }) => { // Removed unused 'items' prop
+const Views = ({ search }) => { // Removed unused 'items' prop
   const [selectedFilters, setSelectedFilters] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [screenshots, setScreenshots] = useState([]);
@@ -23,19 +22,12 @@ const Views = ({ search, limit }) => { // Removed unused 'items' prop
     }
   };
 
-
-  const handlePageClick = (data) => {
-    const selectedPage = data.selected + 1;
-    setCurrentPage(selectedPage);
-  };
-
-
   useEffect(() => {
     const fetchScreenshots = async () => {
       try {
         const data = await getScreenshots(search, currentPage, ITEMS_PER_PAGE);
-        setScreenshots(data.webview); // Assuming the response has a 'Threats' property
-        setTotalItems(data.total); // Assuming the response has a 'total' property
+        setScreenshots(data.webview); 
+        setTotalItems(data.total); 
       } catch (error) {
         console.error('Error fetching screenshots', error);
       }
@@ -61,6 +53,11 @@ const Views = ({ search, limit }) => { // Removed unused 'items' prop
     };
   }, [search, currentPage]);
 
+  const handlePageClick = (data) => {
+    const selectedPage = data.selected + 1;
+    setCurrentPage(selectedPage);
+  };
+
 
   return (
     <div className={styles.views}>
@@ -80,17 +77,16 @@ const Views = ({ search, limit }) => { // Removed unused 'items' prop
         previousLabel={'Previous'}
         nextLabel={'Next'}
         breakLabel={'...'}
-        pageCount={Math.ceil(totalItems / ITEMS_PER_PAGE)}
+        pageCount={Math.ceil(totalItems / ITEMS_PER_PAGE)} 
         marginPagesDisplayed={2}
         pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
+        onPageChange={handlePageClick} 
         containerClassName={styles.pagination}
         activeClassName={styles.active}
-        forcePage={currentPage - 1}
+        forcePage={currentPage - 1} 
       />
     </div>
   );
 };
-
 
 export default Views;

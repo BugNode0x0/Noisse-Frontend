@@ -37,3 +37,38 @@
 
 .form
     margin-bottom: 16px
+
+.pagination
+  display: flex
+  align-items: center
+  justify-content: center
+  list-style-type: none
+  padding: 0
+  margin: 24px 0
+
+  li
+    a
+      display: flex
+      align-items: center
+      justify-content: center
+      min-width: 40px
+      height: 10px
+      margin: 0 4px
+      text-decoration: none
+      color: $n4
+      border-radius: 20px
+      transition: color .2s, border-color .2s
+      +caption1
+      &:hover, &.active
+        border-color: $n7
+        color: $n7
+        +dark
+          border-color: $n6
+          color: $n1
+
+      +dark
+        color: $n1
+
+    .previous, .next
+      svg
+        fill: currentColor
