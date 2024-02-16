@@ -3,15 +3,20 @@ import styles from "./Crawl.module.sass";
 import Urls from "./Urls";
 import Form from "../../components/Form";
 import { getCrawl } from '../../api/subdomainAPI';
+import ReactPaginate from 'react-paginate';
+
+const ITEMS_PER_PAGE = 20;
 
 const Crawl = () => {
     const [groupedUrls, setGroupedUrls] = useState({});
     const [search, setSearch] = useState("");
+    const [totalPages, setTotalPages] = useState(0); 
+    const [currentPage, setCurrentPage] = useState(1);
     
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { jsview } = await getCrawl(search, 1, 100);
+                const { jsview, total } = await getCrawl(search, currentPage, ITEMS_PER_PAGE);
                 const urlsBySubdomain = jsview.reduce((acc, { subdomain, url }) => {
                     acc[subdomain] = acc[subdomain] || [];
                     acc[subdomain].push(url);
@@ -19,16 +24,23 @@ const Crawl = () => {
                 }, {});
 
                 setGroupedUrls(urlsBySubdomain);
+                setTotalPages(Math.ceil(total / ITEMS_PER_PAGE));
             } catch (error) {
                 console.error('Error fetching crawl data:', error);
             }
         };
 
         fetchData();
-    }, [search]);
+    }, [search, currentPage]);
 
-    const handleSubmit = (e) => {
+    const handlePageClick = (data) => {
+        setCurrentPage(data.selected + 1);
+    };
+
+    const handleSearchSubmit = (e) => {
         e.preventDefault();
+        setCurrentPage(1); 
+        
     };
 
     return (
@@ -37,7 +49,7 @@ const Crawl = () => {
                 className={styles.form}
                 value={search}
                 setValue={setSearch}
-                onSubmit={handleSubmit}
+                onSubmit={handleSearchSubmit}
                 placeholder="Search URLs"
                 type="text"
                 name="search"
@@ -46,6 +58,18 @@ const Crawl = () => {
             {Object.entries(groupedUrls).map(([subdomain, urls], index) => (
                 <Urls key={subdomain} subdomain={subdomain} urls={urls} />
             ))}
+            <ReactPaginate
+                previousLabel={'Previous'}
+                nextLabel={'Next'}
+                breakLabel={'...'}
+                pageCount={totalPages}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={handlePageClick}
+                containerClassName={styles.pagination}
+                activeClassName={styles.active}
+                forcePage={currentPage - 1}
+            />
         </div>
     );
 };
