@@ -133,13 +133,14 @@ export const getScreenshots = async (search, page, limit) => {
 
 export const getCrawl = async (search, page, limit) => {
   try {
-    const response = await api.get(`/jsview`, { params: { search: search || '', page, pageSize: limit } });
+    const response = await api.get(`/jsview`, { params: { search, page, pageSize: limit } });
     return response.data;
   } catch (error) {
-    console.error('Error fetching screenshots:', error);
-    throw new Error('Could not retrieve web domains.');
+    console.error('Error fetching crawl data:', error);
+    throw new Error('Could not retrieve crawl data.');
   }
 };
+
 
 export const getUserWebhook = async (hunterId) => {
   try {
