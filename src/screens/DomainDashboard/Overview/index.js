@@ -33,7 +33,7 @@ const Overview = ({ className }) => {
     return dataPoints;
   };
 
-  const [sorting, setSorting] = useState(intervals[0]);
+  //const [sorting, setSorting] = useState(intervals[0]);
   const [discoveredCount, setDiscoveredCount] = useState(0);
   const [activeCount, setActiveCount] = useState(0);
   const [webCount, setWebCount] = useState(0);
