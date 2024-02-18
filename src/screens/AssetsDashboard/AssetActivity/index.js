@@ -78,16 +78,6 @@ const AssetActivity = () => {
     className={cn(styles.card, styles['domain-activity-card'])}
       title="Active IP activity"
       classTitle="title-green"
-      head={
-        <Dropdown
-          className={cn(styles.dropdown, "mobile-hide")}
-          classDropdownHead={styles.dropdownHead}
-          value={activeTab}
-          setValue={setActiveTab}
-          options={intervals}
-          small
-        />
-      }
     >
       <div className={styles.table}>
         <div className={styles.row}>

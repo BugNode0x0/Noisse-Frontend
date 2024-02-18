@@ -69,11 +69,6 @@ const Assets = () => {
         </>
       }
     >
-      <div className={styles.products}>
-        <div className={styles.wrapper}>
-          {activeTab === navigation[0] && <AllAssets  search={search} limit={3}/>}
-        </div>
-      </div>
     </Card>
   );
 };
