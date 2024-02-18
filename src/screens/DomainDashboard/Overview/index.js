@@ -120,17 +120,6 @@ const Overview = ({ className }) => {
         className={cn(styles.card, className)}
         title="Overview"
         classTitle="title-purple"
-        head={
-          <Dropdown
-            className={styles.dropdown}
-            classDropdownHead={styles.dropdownHead}
-            onChange={(value) => setSorting(value)}
-            options={intervals}
-            value={sorting}
-            setValue={setSorting}
-            small
-          />
-        }
       >
         <div className={styles.overview}>
           <div className={styles.list}>
