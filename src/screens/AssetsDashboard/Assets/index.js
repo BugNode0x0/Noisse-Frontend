@@ -58,17 +58,15 @@ const Assets = () => {
             ))}
           </div>
           <div className={cn(styles.dropdown, "tablet-show")}>
-            <Dropdown
-              classDropdownHead={styles.dropdownHead}
-              value={activeTab}
-              setValue={setActiveTab}
-              options={navigation}
-              small
-            />
           </div>
         </>
       }
     >
+      <div className={styles.products}>
+        <div className={styles.wrapper}>
+          {activeTab === navigation[0] && <AllAssets  search={search} limit={3}/>}
+        </div>
+      </div>
     </Card>
   );
 };
