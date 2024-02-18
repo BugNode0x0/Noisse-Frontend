@@ -8,7 +8,7 @@ import AllAssets from "./AllAssets";
 
 
 const Assets = () => {
-  const navigation = ["Resolved IP"];
+  const navigation = ["Target IPs"];
 
   const [activeTab, setActiveTab] = useState(navigation[0]);
   const [search, setSearch] = useState("");
