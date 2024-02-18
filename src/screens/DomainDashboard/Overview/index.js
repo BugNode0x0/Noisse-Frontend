@@ -13,7 +13,9 @@ import {
   getWebDomainsCount, 
 } from '../../../api/subdomainAPI';
 
-const intervals = ["This Week", "Last 14 Days", "Last Month"];
+
+//Implement later
+//const intervals = ["This Week", "Last 14 Days", "Last Month"];
 
 
 
@@ -120,17 +122,17 @@ const Overview = ({ className }) => {
         className={cn(styles.card, className)}
         title="Overview"
         classTitle="title-purple"
-        head={
-          <Dropdown
-            className={styles.dropdown}
-            classDropdownHead={styles.dropdownHead}
-            onChange={(value) => setSorting(value)}
-            options={intervals}
-            value={sorting}
-            setValue={setSorting}
-            small
-          />
-        }
+        //</>head={
+          //<Dropdown
+          //  className={styles.dropdown}
+          //  classDropdownHead={styles.dropdownHead}
+          //  onChange={(value) => setSorting(value)}
+          //  options={intervals}
+          //  value={sorting}
+          //  setValue={setSorting}
+          //  small
+          //>
+       // }
       >
         <div className={styles.overview}>
           <div className={styles.list}>
