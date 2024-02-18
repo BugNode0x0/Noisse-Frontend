@@ -13,7 +13,7 @@ import {
   getWebDomainsCount, 
 } from '../../../api/subdomainAPI';
 
-const intervals = ["This week", "This month", "This year"];
+const intervals = ["This Week", "Last 14 Days", "Last Month"];
 
 
 
@@ -71,12 +71,12 @@ const Overview = ({ className }) => {
 
   const mapIntervalToParam = (interval) => {
     switch (interval) {
-      case "This week":
+      case "This Week":
         return "week";
-      case "This month":
+      case "Last 14 Days":
+        return "biweekly";
+      case "Last Month":
         return "month";
-      case "This year":
-        return "year";
       default:
         return "week"; // Default case if required
     }
