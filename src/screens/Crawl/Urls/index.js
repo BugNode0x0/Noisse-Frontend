@@ -7,8 +7,14 @@ const Urls = ({ subdomain, urls }) => {
     console.log(subdomain, urls);
     // State to control the dropdown visibility
     const [selectedUrl, setSelectedUrl] = React.useState(urls[0]); // Default to the first URL
-
     const [visible, setVisible] = React.useState(false);
+
+    const handleUrlSelect = (selectedOption) => {
+        setSelectedUrl(selectedOption.value);
+        // Here you can also do something with the selected URL, like calling a function
+        // For example:
+        navigateToUrl(selectedOption.value);
+    };
 
     // Handler to toggle dropdown visibility
     const toggleDropdown = () => setVisible(!visible);
@@ -27,7 +33,7 @@ const Urls = ({ subdomain, urls }) => {
                     className={styles.dropdown}
                     options={dropdownOptions}
                     value={selectedUrl}
-                    onChange={setSelectedUrl} // Set the selected URL
+                    onChange={handleUrlSelect} // Set the selected URL
                 />
             )}
         </Card>
