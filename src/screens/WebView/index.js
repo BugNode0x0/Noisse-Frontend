@@ -28,7 +28,7 @@ const WebView = () => {
   return (     
     <Card
       className={styles.card}
-      title="Assets"
+      title="Web Shots"
       classTitle={cn("title-purple", styles.title)}
       classCardHead={styles.head}
       head={

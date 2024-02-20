@@ -10,9 +10,10 @@ const Urls = ({ subdomain, urls }) => {
     const [visible, setVisible] = React.useState(false);
 
     const handleUrlSelect = (selectedOption) => {
-        setSelectedUrl(selectedOption.value);
-        // Here you can also do something with the selected URL, like calling a function
-        // For example:
+        console.log('Selected URL:', selectedOption);
+        if (selectedOption) {
+            setSelectedUrl(selectedOption.value);
+        }
     };
 
     // Handler to toggle dropdown visibility
