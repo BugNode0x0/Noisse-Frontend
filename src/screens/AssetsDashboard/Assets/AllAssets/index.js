@@ -78,14 +78,12 @@ const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
           </div>
           <div className={styles.col}>IP</div>
           <div className={styles.col}>Host</div>
-          <div className={styles.col}>Status Code</div>
         </div>
         {assetsIps.map((domain, index) => (
           <Row
             item={domain.ip}
             url={domain.ip}
             title={domain.subdomain}
-            contentLength={domain.content_length}
             key={index}
             up={AllAssets.length - index <= 2}
             value={selectedFilters.includes(index)}

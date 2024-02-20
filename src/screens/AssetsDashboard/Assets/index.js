@@ -20,7 +20,7 @@ const Assets = () => {
   return (
     <Card
       className={styles.card}
-      title="Domains"
+      title="IPs"
       classTitle={cn("title-purple", styles.title)}
       classCardHead={styles.head}
       head={
