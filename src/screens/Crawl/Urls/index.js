@@ -15,11 +15,13 @@ const Urls = ({ subdomain, urls }) => {
                 {subdomain}
             </div>
             {visible && (
-                <Dropdown
-                options={urls.map(url => ({ value: url, label: url }))}
-                value={selectedUrl}
-                setValue={setSelectedUrl} // Pass the state updater function
-              />
+                <div className={styles.urlList}>
+                    {urls.map((url, index) => (
+                        <div key={index} className={styles.url}>
+                            {url}
+                        </div>
+                    ))}
+                </div>
             )}
         </Card>
     );
