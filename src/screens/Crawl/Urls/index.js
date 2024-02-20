@@ -13,7 +13,6 @@ const Urls = ({ subdomain, urls }) => {
         setSelectedUrl(selectedOption.value);
         // Here you can also do something with the selected URL, like calling a function
         // For example:
-        navigateToUrl(selectedOption.value);
     };
 
     // Handler to toggle dropdown visibility
