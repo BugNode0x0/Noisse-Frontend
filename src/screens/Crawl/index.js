@@ -17,19 +17,20 @@ const Crawl = () => {
         const fetchData = async () => {
             try {
                 const { jsview, total } = await getCrawl(search, currentPage, ITEMS_PER_PAGE);
-                const urlsBySubdomain = jsview.reduce((acc, { subdomain, url }) => {
-                    acc[subdomain] = acc[subdomain] || [];
-                    acc[subdomain].push(url);
+                
+                // If 'jsview' is structured correctly from the backend, you can use it directly
+                const urlsBySubdomain = jsview.reduce((acc, { subdomain, urls }) => {
+                    acc[subdomain] = urls; // Here, 'urls' is assumed to be an array
                     return acc;
                 }, {});
-
+    
                 setGroupedUrls(urlsBySubdomain);
                 setTotalPages(Math.ceil(total / ITEMS_PER_PAGE));
             } catch (error) {
                 console.error('Error fetching crawl data:', error);
             }
         };
-
+    
         fetchData();
     }, [search, currentPage]);
 
