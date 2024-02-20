@@ -36,7 +36,7 @@ const navigation = [
                 url: "/assets/overview",
             },
             {
-                title: "Asset Management",
+                title: "Asset IP",
                 url: "/assets/view",
                 
             },

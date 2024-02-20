@@ -94,7 +94,7 @@ function App() {
                 <Route
                     path="assets/view"
                     element={
-                        <Page title="Asset Management">
+                        <Page title="Asset IP">
                             <AssetManagement />
                         </Page>
                     }
