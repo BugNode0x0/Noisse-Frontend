@@ -8,6 +8,7 @@ import { useLocation } from 'react-router-dom';
 import queryString from 'query-string';
 import { Link } from 'react-router-dom';
 import { useNavigate} from 'react-router-dom';
+import { debounce } from 'lodash'; 
 
 const WebView = () => {
   const location = useLocation()
@@ -15,9 +16,13 @@ const WebView = () => {
   const [search, setSearch] = useState(params.search || '');
   const navigate = useNavigate();
 
+  const debouncedSetSearch = debounce((newSearch) => {
+    navigate(`/webview?search=${encodeURIComponent(newSearch)}`);
+  }, 500);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    navigate(`/webview?search=${search}`);
+    debouncedSetSearch(search);
   };
 
   useEffect(() => {
