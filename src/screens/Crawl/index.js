@@ -55,9 +55,9 @@ const Crawl = () => {
                 name="search"
                 icon="search"
             />
-            {Object.entries(groupedUrls).map(([subdomain, urls], index) => (
-                <Urls key={subdomain} subdomain={subdomain} urls={urls} />
-            ))}
+            {Object.entries(groupedUrls).map(([subdomain, urls]) => (
+    <Urls key={subdomain} subdomain={subdomain} urls={urls} />
+))}
             <ReactPaginate
                 previousLabel={'Previous'}
                 nextLabel={'Next'}
