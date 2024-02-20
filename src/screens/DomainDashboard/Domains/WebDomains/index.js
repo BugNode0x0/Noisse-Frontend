@@ -5,6 +5,8 @@
   import ReactPaginate from 'react-paginate';
   import { getWebDomains } from '../../../../api/subdomainAPI';
   import io from 'socket.io-client';
+  import { debounce } from 'lodash';
+
 
   const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
@@ -16,6 +18,16 @@
     const [webDomains, setWebDomains] = useState([]);
     const [totalWebDomains, setTotalWebDomains] = useState(0);  
     const [sortConfig, setSortConfig] = useState({ key: 'statusCode', direction: 'ascending' });
+
+    const debouncedFetchWebDomains = debounce(async (search) => {
+      try {
+        const data = await getWebDomains(search, currentPage, ITEMS_PER_PAGE);
+        setWebDomains(data.webDomains);
+        setTotalWebDomains(data.total);
+      } catch (error) {
+        console.error('Error fetching web domains:', error);
+      }
+    }, 500);
 
     const onSort = (key) => {
       setSortConfig((currentSortConfig) => {
@@ -44,6 +56,7 @@
 
 
     useEffect(() => {
+      debouncedFetchWebDomains(search);
       const fetchWebDomains = async () => {
         try {
           const data = await getWebDomains(search, currentPage, ITEMS_PER_PAGE);
