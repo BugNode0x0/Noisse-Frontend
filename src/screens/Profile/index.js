@@ -101,7 +101,7 @@ const Profile = () => {
     <Card
     className={styles.card}
     title="Slack Webhook"
-    classTitle={cn("title-red", styles.title)}
+    classTitle={cn("title-purple", styles.title)}
   >
     <Form
       className={styles.form}
@@ -117,7 +117,7 @@ const Profile = () => {
   <Card
         className={styles.card}
         title="Subscription"
-        classTitle={cn("title-red", styles.title)}
+        classTitle={cn("title-blue", styles.title)}
       >
         <div className={styles.subscriptionCard}>
           <p className={styles.subscriptionText}>

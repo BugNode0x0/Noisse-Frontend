@@ -50,7 +50,6 @@ export const getSubdomains = async (search, page, limit) => {
   }
 };
 
-
 export const getActiveDomains = async (search, page, limit) => {
   try {
     const response = await api.get(`/active-domains`, { params: { search: search || '', page, pageSize: limit} });
@@ -100,7 +99,6 @@ export const getWebDomainsCount = async (interval) => {
     return 0; // Return default value in case of error
   }
 };
- 
 
 export const getIPAssets = async (search, page, limit) => {
   try {
@@ -142,7 +140,6 @@ export const getCrawl = async (search, page, limit) => {
   }
 };
 
-
 export const getUserWebhook = async (hunterId) => {
   try {
     const response = await api.get('/user/webhook', {
@@ -155,7 +152,6 @@ export const getUserWebhook = async (hunterId) => {
   }
 };
 
-
 export const updateUserWebhook = async (webhookUrl) => {
   try {
     const response = await api.post('/user/webhook', { webhookUrl });
@@ -165,7 +161,6 @@ export const updateUserWebhook = async (webhookUrl) => {
     throw new Error('Failed to update user webhook');
   }
 };
-
 
 export const cancelUserSubscription = async (webhookUrl) => {
   try {
