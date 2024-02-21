@@ -4,12 +4,27 @@ import styles from "./Profile.module.sass";
 import Card from "../../components/Card";
 import Form from "../../components/Form";
 import Icon from "../../components/Icon";
-import { getUserProfile, getUserWebhook, updateUserWebhook } from '../../api/subdomainAPI';
+import { getUserProfile, getUserWebhook, updateUserWebhook, cancelUserSubscription } from '../../api/subdomainAPI';
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [webhookUrl, setWebhookUrl] = useState(''); 
 
+  const handleCancelSubscription = async () => {
+    try {
+      const response = await cancelUserSubscription(); // Implement this API call
+      if (response.message === 'Subscription cancelled successfully') {
+        alert('Subscription cancelled successfully!');
+      } else {
+        alert('Failed to cancel subscription.');
+      }
+    } catch (error) {
+      console.error('Error cancelling subscription:', error);
+      alert('Error cancelling subscription.');
+    }
+  };
+  
+  
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -99,8 +114,26 @@ const Profile = () => {
       icon="arrow-right"
     />
   </Card>
-</>
+  <Card
+        className={styles.card}
+        title="Subscription"
+        classTitle={cn("title-red", styles.title)}
+      >
+        <div className={styles.subscriptionCard}>
+          <p className={styles.subscriptionText}>
+            If you wish to cancel your subscription, you can do so at any time.
+          </p>
+          <button
+            className={cn("button", styles.button)}
+            onClick={handleCancelSubscription}
+          >
+            Cancel Subscription
+          </button>
+        </div>
+      </Card>
+    </>
   );
 };
+
 
 export default Profile;

@@ -165,3 +165,14 @@ export const updateUserWebhook = async (webhookUrl) => {
     throw new Error('Failed to update user webhook');
   }
 };
+
+
+export const cancelUserSubscription = async (webhookUrl) => {
+  try {
+    const response = await api.post('/cancel-subscription', { webhookUrl });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating user webhook:', error);
+    throw new Error('Failed to update user webhook');
+  }
+};
