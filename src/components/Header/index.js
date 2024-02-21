@@ -7,7 +7,7 @@ import User from "./User";
 
 const Header = ({ onOpen }) => {
   const [visible, setVisible] = useState(false);
-  const stripePaymentLink = 'https://buy.stripe.com/test_5kA8xf0oN8RycZq000'; // Replace with your actual Stripe payment link
+  const stripePaymentLink = 'https://buy.stripe.com/test_6oE8xf4F3ebS6B28wy'; // Replace with your actual Stripe payment link
 
   const handleClick = () => {
     onOpen();
