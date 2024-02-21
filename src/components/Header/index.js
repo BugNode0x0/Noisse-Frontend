@@ -7,7 +7,7 @@ import User from "./User";
 
 const Header = ({ onOpen }) => {
   const [visible, setVisible] = useState(false);
-  const stripePaymentLink = 'https://buy.stripe.com/test_a1bc2de3fgh4jkL5kk'; // Replace with your actual Stripe payment link
+  const stripePaymentLink = 'https://buy.stripe.com/4gwbLKgGfcn53969AA'; // Replace with your actual Stripe payment link
 
   const handleClick = () => {
     onOpen();
@@ -28,8 +28,8 @@ const Header = ({ onOpen }) => {
           target="_blank" 
           rel="noopener noreferrer"
         >
-          <Icon name="credit-card" size="24" />
-          <span>Subscribe $5/month</span>
+          <Icon name="stripe" size="24" />
+          <span>Subscribe - $5/month</span>
         </a>
         <User className={styles.user} />
       </div>
