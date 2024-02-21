@@ -85,6 +85,7 @@
       // Open the socket connection
       socket.on('connect', () => {
         console.log('Connected to websocket server');
+        debouncedFetchWebDomains(search);
       });
 
       // Listen for 'subdomain update' events
