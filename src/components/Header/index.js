@@ -29,6 +29,7 @@ const Header = ({ onOpen }) => {
           target="_blank" 
           rel="noopener noreferrer"
         >
+          
           <Icon name="stripe" size="24" />
           <span>Subscribe - $5/month</span>
         </a>
