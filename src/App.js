@@ -128,7 +128,7 @@ function App() {
                 />
 
                 <Route
-                    path="/"
+                    path="/payment-success"
                     element={
                         <Page title="Payment Success">
                         <PaymentSuccess/>
