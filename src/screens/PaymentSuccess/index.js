@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import cn from "classnames";
 import styles from "./PaymentSuccess.module.sass";
 import { use100vh } from "react-div-100vh";
@@ -10,22 +10,24 @@ import { createUserSubscription } from '../../api/subdomainAPI';
 const PaymentSuccess = () => {
   const heightWindow = use100vh();
   const navigate = useNavigate();
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const sessionId = queryParams.get('session_id');
 
   useEffect(() => {
-    const initiateSubscription = async () => {
+    const finalizeSubscription = async () => {
       try {
-        const subscriptionResponse = await createUserSubscription();
-        console.log('Subscription created:', subscriptionResponse);
-        // Handle successful subscription activation
+        await createUserSubscription({ sessionId });
+        navigate('/dashboard');
       } catch (error) {
-        console.error('Error creating subscription:', error);
-        // Handle error scenario
+        console.error('Error finalizing subscription:', error);
       }
     };
-
-    initiateSubscription();
-  }, []);
-
+  
+    if (sessionId) {
+      finalizeSubscription();
+    }
+  }, [sessionId, navigate]);
 
   return (
     <div className={styles.login} style={{ minHeight: heightWindow }}>
