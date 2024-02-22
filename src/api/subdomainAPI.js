@@ -181,7 +181,7 @@ export const createUserSubscription = async () => {
 
 export const createStripeCheckoutSession = async () => {
   try {
-    const response = await axios.post('https://noisse-backend-development.up.railway.app/create-checkout-session');
+    const response = await api.post('https://noisse-backend-development.up.railway.app/create-checkout-session');
     return response.data; 
   } catch (error) {
     console.error('Error creating Stripe checkout session:', error);
