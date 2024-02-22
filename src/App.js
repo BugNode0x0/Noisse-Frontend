@@ -18,6 +18,7 @@ import AssetManagement from "./screens/AssetManagement";
 import WebView from "./screens/WebView";
 import Crawl from "./screens/Crawl";
 import Profile from "./screens/Profile"
+import PaymentSuccess from './screens/PaymentSuccess';
 
 
 function App() {
@@ -122,6 +123,15 @@ function App() {
                     element={
                         <Page title="Profile">
                             <Profile />
+                        </Page>
+                    }
+                />
+
+                <Route
+                    path="/"
+                    element={
+                        <Page title="Payment Success">
+                        <PaymentSuccess/>
                         </Page>
                     }
                 />

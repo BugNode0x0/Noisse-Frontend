@@ -171,3 +171,13 @@ export const cancelUserSubscription = async (webhookUrl) => {
     throw new Error('Failed to update user webhook');
   }
 };
+
+export const createUserSubscription = async () => {
+  try {
+    const response = await api.post('/create-subscription');
+    return response.data;
+  } catch (error) {
+    console.error('Error creating subscription:', error);
+    throw new Error('Failed to create subscription');
+  }
+};

@@ -9,6 +9,7 @@ const Header = ({ onOpen }) => {
   const [visible, setVisible] = useState(false);
   const stripePaymentLink = 'https://buy.stripe.com/test_6oE8xf4F3ebS6B28wy'; // Replace with your actual Stripe payment link
 
+
   const handleClick = () => {
     onOpen();
     setVisible(false);
