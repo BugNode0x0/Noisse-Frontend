@@ -56,15 +56,15 @@ const DomainEnumerator = ({ className }) => {
           />
           <div className={styles.buttons}>
             <button className={cn('button', styles.button)} type="submit" disabled={isEnumerating}>
-              {isEnumerating ? (
-                <div dangerouslySetInnerHTML={{ __html: `
-                  <div style="width:100%;height:0;padding-bottom:100%;position:relative;">
-                    <iframe src="https://giphy.com/embed/l3nWhI38IWDofyDrW" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
-                  </div>
-                  <p><a href="https://giphy.com/gifs/thinking-l3nWhI38IWDofyDrW"></a></p>
-                ` }} />
-              ) : "Add Asset"}
+              Add Asset
             </button>
+            {isEnumerating && (
+              <img 
+                src="/images/content/enumerating.gif" 
+                alt="Enumerating" 
+                className={styles.enumerationGif}
+              />
+            )}
           </div>
         </form>
         {notification && <div className={styles.notification}>{notification}</div>}
