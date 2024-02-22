@@ -171,7 +171,7 @@ export const cancelUserSubscription = async (webhookUrl) => {
 
 export const createUserSubscription = async () => {
   try {
-    const response = await api.post('/create-subscription');
+    const response = await api.post('/finalize-subscription');
     return response.data;
   } catch (error) {
     console.error('Error creating subscription:', error);
@@ -181,7 +181,7 @@ export const createUserSubscription = async () => {
 
 export const createStripeCheckoutSession = async () => {
   try {
-    const response = await api.post('https://noisse-backend-development.up.railway.app/create-checkout-session');
+    const response = await api.post('/create-checkout-session');
     return response.data; 
   } catch (error) {
     console.error('Error creating Stripe checkout session:', error);
