@@ -6,8 +6,7 @@ import styles from "./DomainEnumerator.module.sass";
 import Card from "../../../components/Card";
 import Icon from "../../../components/Icon";
 import TextInput from "../../../components/TextInput";
-import Loader from "../../../components/Loader"; // Make sure you import your Loader component
-import { enumerateSubdomains, getSubdomains } from '../../../api/subdomainAPI';
+import { enumerateSubdomains } from '../../../api/subdomainAPI';
 
 const DomainEnumerator = ({ className }) => {
     const [domain, setDomain] = useState('');
@@ -22,10 +21,9 @@ const DomainEnumerator = ({ className }) => {
       try {
         await enumerateSubdomains(domain);
         setNotification('Enumeration Started!');
-        // Simulate waiting for enumeration to finish before navigating
         setTimeout(() => {
           navigate('/domains');
-        }, 5000); // Adjust timeout as needed for your enumeration duration
+        }, 5000); // Adjust timeout as needed
       } catch (err) {
         setNotification("Failed to start enumeration. Please try again later.");
       }
@@ -59,15 +57,16 @@ const DomainEnumerator = ({ className }) => {
           <div className={styles.buttons}>
             <button className={cn('button', styles.button)} type="submit" disabled={isEnumerating}>
               {isEnumerating ? (
-                <>
-                  <Loader className={styles.loader} />
-                  <span>Enumerating...</span>
-                </>
+                <div dangerouslySetInnerHTML={{ __html: `
+                  <div style="width:100%;height:0;padding-bottom:100%;position:relative;">
+                    <iframe src="https://giphy.com/embed/l3nWhI38IWDofyDrW" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+                  </div>
+                  <p><a href="https://giphy.com/gifs/thinking-l3nWhI38IWDofyDrW"></a></p>
+                ` }} />
               ) : "Add Asset"}
             </button>
           </div>
         </form>
-        {/* Notification message */}
         {notification && <div className={styles.notification}>{notification}</div>}
       </Card>
     );
