@@ -15,15 +15,17 @@ const PaymentSuccess = () => {
     const initiateSubscription = async () => {
       try {
         const subscriptionResponse = await createUserSubscription();
-        // Navigate to the dashboard
-        navigate('/dashboard');
+        console.log('Subscription created:', subscriptionResponse);
+        // Handle successful subscription activation
       } catch (error) {
-        // Handle any errors that occur during subscription creation
+        console.error('Error creating subscription:', error);
+        // Handle error scenario
       }
     };
 
     initiateSubscription();
-  }, [navigate]);
+  }, []);
+
 
   return (
     <div className={styles.login} style={{ minHeight: heightWindow }}>
