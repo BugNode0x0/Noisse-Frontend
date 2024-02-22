@@ -58,16 +58,19 @@ const DomainEnumerator = ({ className }) => {
             <button className={cn('button', styles.button)} type="submit" disabled={isEnumerating}>
               Add Asset
             </button>
-            {isEnumerating && (
-              <img 
-                src="/images/content/enumerating.gif" 
-                alt="Enumerating" 
-                className={styles.enumerationGif}
-              />
-            )}
           </div>
         </form>
-        {notification && <div className={styles.notification}>{notification}</div>}
+        {/* Notification message */}
+        {isEnumerating && (
+          <div className={styles.enumerationStatus}>
+            <div className={styles.notification}>Enumeration Started!</div>
+            <img 
+              src="/images/content/your-gif-name.gif" 
+              alt="Enumerating" 
+              className={styles.enumeratingGif}
+            />
+          </div>
+        )}
       </Card>
     );
 };
