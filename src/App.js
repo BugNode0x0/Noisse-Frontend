@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { SubscriptionProvider } from './context/SubscriptionContext';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import React from 'react';
 import "./styles/app.sass";
@@ -25,6 +26,7 @@ function App() {
     
     return (
         <AuthProvider>
+        <SubscriptionProvider>
         <Routes>
         <Route path="/sign-in" element={<SignIn />} />
         <Route element={<ProtectedRoutes />}>
@@ -143,6 +145,7 @@ function App() {
                 <Route path="pagelist" element={<PageList />} />
             
         </Routes>
+        </SubscriptionProvider>
         </AuthProvider>
     );
 }

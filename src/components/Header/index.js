@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import cn from "classnames";
 import styles from "./Header.module.sass";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
 import User from "./User";
 import { createStripeCheckoutSession } from '../../api/subdomainAPI';
-
+import SubscriptionContext from '../../context/SubscriptionContext';
 
 const Header = ({ onOpen }) => {
   const [visible, setVisible] = useState(false);
-
+  const { isSubscribed } = useContext(SubscriptionContext);
 
   const handleClick = () => {
     onOpen();
@@ -24,7 +24,6 @@ const Header = ({ onOpen }) => {
       console.error('Error redirecting to Stripe:', error);
     }
   };
-  
 
   return (
     <header className={styles.header}>
@@ -34,13 +33,15 @@ const Header = ({ onOpen }) => {
           <Icon name="add" size="24" />
           <span>Start Recon</span>
         </Link>
-        <a 
-          className={cn("button", styles.button)} 
-          onClick={handleStripeCheckout}
-        >
-          <Icon name="stripe" size="24" />
-          <span>Subscribe - $5/month</span>
-        </a>
+        {!isSubscribed && (
+          <a 
+            className={cn("button", styles.button)} 
+            onClick={handleStripeCheckout}
+          >
+            <Icon name="stripe" size="24" />
+            <span>Subscribe - $5/month</span>
+          </a>
+        )}
         <User className={styles.user} />
       </div>
     </header>

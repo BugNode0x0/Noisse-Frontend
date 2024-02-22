@@ -188,3 +188,13 @@ export const createStripeCheckoutSession = async () => {
     throw new Error('Failed to create Stripe checkout session');
   }
 };
+
+export const fetchSubscriptionStatus = async () => {
+  try {
+    const response = await api.get('/subscription-status');
+    return response.data; 
+  } catch (error) {
+    console.error('Error fetching subscription status:', error);
+    throw error;  
+  }
+};

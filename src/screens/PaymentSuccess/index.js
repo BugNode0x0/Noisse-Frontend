@@ -18,7 +18,7 @@ const PaymentSuccess = () => {
     const finalizeSubscription = async () => {
       try {
         await createUserSubscription({ sessionId });
-        navigate('/dashboard');
+        navigate('/');
       } catch (error) {
         console.error('Error finalizing subscription:', error);
       }
