@@ -4,16 +4,27 @@ import styles from "./Header.module.sass";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
 import User from "./User";
+import { createStripeCheckoutSession } from '../../api/subdomainAPI';
+
 
 const Header = ({ onOpen }) => {
   const [visible, setVisible] = useState(false);
-  const stripePaymentLink = 'https://buy.stripe.com/test_6oE8xf4F3ebS6B28wy'; // Replace with your actual Stripe payment link
 
 
   const handleClick = () => {
     onOpen();
     setVisible(false);
   };
+
+  const handleStripeCheckout = async () => {
+    try {
+      const { sessionId } = await createStripeCheckoutSession();
+      window.location.href = `https://checkout.stripe.com/pay/${sessionId}`;
+    } catch (error) {
+      console.error('Error redirecting to Stripe:', error);
+    }
+  };
+  
 
   return (
     <header className={styles.header}>
@@ -25,25 +36,13 @@ const Header = ({ onOpen }) => {
         </Link>
         <a 
           className={cn("button", styles.button)} 
-          href={stripePaymentLink} 
-          target="_blank" 
-          rel="noopener noreferrer"
+          onClick={handleStripeCheckout}
         >
-          
           <Icon name="stripe" size="24" />
           <span>Subscribe - $5/month</span>
         </a>
         <User className={styles.user} />
       </div>
-      {/* You can uncomment and use the below code if you have sign-in and sign-up pages */}
-      {/* <div className={styles.btns}>
-        <Link className={styles.link} to="/sign-in">
-          Sign in
-        </Link>
-        <Link className={cn("button", styles.button)} to="/sign-up">
-          Sign up
-        </Link>
-      </div> */}
     </header>
   );
 };

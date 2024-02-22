@@ -7,7 +7,6 @@ const api = axios.create({
   withCredentials: true,
 });
 
-
 //export const testAuth = async () => {
 //  try {
 //    const response = await api.get('/test-auth');
@@ -18,7 +17,6 @@ const api = axios.create({
 //  }
 //};
 
-
 export const getUserProfile = async () => {
   try {
     const response = await api.get('/portal/user');
@@ -28,7 +26,6 @@ export const getUserProfile = async () => {
     throw new Error('Failed to fetch user profile');
   }
 };
-
 
 export const enumerateSubdomains = async (domain) => {
   try {
@@ -179,5 +176,15 @@ export const createUserSubscription = async () => {
   } catch (error) {
     console.error('Error creating subscription:', error);
     throw new Error('Failed to create subscription');
+  }
+};
+
+export const createStripeCheckoutSession = async () => {
+  try {
+    const response = await axios.post('/create-checkout-session');
+    return response.data; 
+  } catch (error) {
+    console.error('Error creating Stripe checkout session:', error);
+    throw new Error('Failed to create Stripe checkout session');
   }
 };
