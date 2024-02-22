@@ -65,7 +65,7 @@ const DomainEnumerator = ({ className }) => {
           <div className={styles.enumerationStatus}>
             <div className={styles.notification}>Enumeration Started!</div>
             <img 
-              src="/images/content/your-gif-name.gif" 
+              src="/images/content/enumerating.gif" 
               alt="Enumerating" 
               className={styles.enumeratingGif}
             />
