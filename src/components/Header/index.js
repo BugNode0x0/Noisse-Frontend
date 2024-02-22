@@ -19,7 +19,7 @@ const Header = ({ onOpen }) => {
   const handleStripeCheckout = async () => {
     try {
       const { sessionId } = await createStripeCheckoutSession();
-      window.location.href = `https://checkout.stripe.com/pay/${sessionId}`;
+      window.location.href = `${sessionId}`;
     } catch (error) {
       console.error('Error redirecting to Stripe:', error);
     }
