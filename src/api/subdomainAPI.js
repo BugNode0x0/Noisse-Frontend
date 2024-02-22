@@ -171,7 +171,7 @@ export const cancelUserSubscription = async (webhookUrl) => {
 
 export const createUserSubscription = async () => {
   try {
-    const response = await api.post('/finalize-subscription');
+    const response = await api.post('/finalize-subscription', data);
     return response.data;
   } catch (error) {
     console.error('Error creating subscription:', error);
