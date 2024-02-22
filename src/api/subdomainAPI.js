@@ -169,7 +169,7 @@ export const cancelUserSubscription = async (webhookUrl) => {
   }
 };
 
-export const createUserSubscription = async () => {
+export const createUserSubscription = async (data) => {
   try {
     const response = await api.post('/finalize-subscription', data);
     return response.data;
