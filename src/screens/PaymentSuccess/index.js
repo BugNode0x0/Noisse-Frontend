@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import cn from "classnames";
 import styles from "./PaymentSuccess.module.sass";
 import { use100vh } from "react-div-100vh";
@@ -9,23 +9,21 @@ import { createUserSubscription } from '../../api/subdomainAPI';
 
 const PaymentSuccess = () => {
   const heightWindow = use100vh();
-  const history = useHistory();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const initiateSubscription = async () => {
       try {
         const subscriptionResponse = await createUserSubscription();
-        // Handle the subscription response, e.g., display success message
         // Navigate to the dashboard
-        history.push('/dashboard');
+        navigate('/dashboard');
       } catch (error) {
         // Handle any errors that occur during subscription creation
-        // Possibly display an error message or log the error
       }
     };
 
     initiateSubscription();
-  }, [history]);
+  }, [navigate]);
 
   return (
     <div className={styles.login} style={{ minHeight: heightWindow }}>
