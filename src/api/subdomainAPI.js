@@ -1,6 +1,10 @@
 import axios from 'axios';
 
+<<<<<<< HEAD
 const BASE_URL = 'https://api.noisse.io';
+=======
+const BASE_URL = 'https://noisse-backend-development.up.railway.app';
+>>>>>>> dev
 
 const api = axios.create({
   baseURL: BASE_URL,

@@ -10,7 +10,11 @@ const SignIn = () => {
 
   // Function to handle redirect to AuthKit Sign In
   const handleAuthKitSignIn = () => {
+<<<<<<< HEAD
     window.location.href = 'https://api.noisse.io/portal/auth';
+=======
+    window.location.href = 'https://noisse-backend-development.up.railway.app/portal/auth';
+>>>>>>> dev
   };
 
   return (

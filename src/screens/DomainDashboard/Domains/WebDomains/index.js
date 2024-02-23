@@ -44,7 +44,11 @@ const WebDomains = ({ search, limit }) => { // Removed unused 'items' prop
     };
     fetchWebDomains();
 
+<<<<<<< HEAD
     const socket = io('https://api.noisse.io/');
+=======
+    const socket = io('https://noisse-backend-development.up.railway.app/');
+>>>>>>> dev
 
     // Open the socket connection
     socket.on('connect', () => {
