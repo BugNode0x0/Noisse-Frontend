@@ -7,13 +7,8 @@ import "./styles/app.sass";
 import Page from "./components/Page";
 import DomainDashboard from "./screens/DomainDashboard";
 import DisDomains from "./screens/DisDomains";
-import Released from "./screens/Released";
-import Comments from "./screens/Comments";
-import Scheduled from "./screens/Scheduled";
 import AssetsDashboard from "./screens/AssetsDashboard";
-import SignUp from "./screens/SignUp";
 import SignIn from "./screens/SignIn";
-import PageList from "./screens/PageList";
 import NewAsset from "./screens/NewAsset";
 import AssetManagement from "./screens/AssetManagement";
 import WebView from "./screens/WebView";
@@ -59,30 +54,6 @@ function App() {
                     element={
                         <Page title="Discover Domains">
                             <DisDomains />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="products/released"
-                    element={
-                        <Page title="Released">
-                            <Released />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="products/comments"
-                    element={
-                        <Page title="Comments">
-                            <Comments />
-                        </Page>
-                    }
-                />
-                <Route
-                    path="products/scheduled"
-                    element={
-                        <Page title="Scheduled">
-                            <Scheduled />
                         </Page>
                     }
                 />
@@ -138,12 +109,7 @@ function App() {
                     }
                 />
                 
-                </Route>
-
-                
-                <Route path="sign-up" element={<SignUp />} />
-                <Route path="pagelist" element={<PageList />} />
-            
+                </Route>            
         </Routes>
         </SubscriptionProvider>
         </AuthProvider>
