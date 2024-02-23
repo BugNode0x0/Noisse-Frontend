@@ -63,7 +63,7 @@ const DomainEnumerator = ({ className }) => {
         {/* Notification message */}
         {isEnumerating && (
           <div className={styles.enumerationStatus}>
-            <div className={styles.notification}>Enumeration Started!</div>
+            <div className={styles.notification}>Enumeration Started! Wait a few mins or check your Slack webhook channel. Worst case scenario reach out to @caffeinvulns</div>
             <img 
               src="/images/content/enumerating.gif" 
               alt="Enumerating" 
