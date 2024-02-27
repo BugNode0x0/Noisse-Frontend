@@ -1,28 +1,34 @@
-import React, { createContext, useState, useEffect } from 'react';
+import React, { createContext, useState, useEffect, useCallback } from 'react';
 import { fetchSubscriptionStatus } from '../api/subdomainAPI';
 
-// Create a Context for Subscription Information
 const SubscriptionContext = createContext();
 
 export const SubscriptionProvider = ({ children }) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  useEffect(() => {
-    const initializeSubscriptionStatus = async () => {
-      try {
-        const status = await fetchSubscriptionStatus();
-        setIsSubscribed(status.isSubscribed); // Ensure you're using the correct property from the response
-      } catch (error) {
-        console.error('Error initializing subscription status:', error);
-        
-      }
-    };
-
-    initializeSubscriptionStatus();
+  // Wrap in useCallback to memoize the function so it can be used in dependencies of useEffect
+  const refreshSubscriptionStatus = useCallback(async () => {
+    try {
+      const status = await fetchSubscriptionStatus();
+      setIsSubscribed(status.isSubscribed);
+    } catch (error) {
+      console.error('Error fetching subscription status:', error);
+    }
   }, []);
 
+  useEffect(() => {
+    refreshSubscriptionStatus();
+  }, [refreshSubscriptionStatus]);
+
+  // Expose refreshSubscriptionStatus method to consumers of the context
+  const contextValue = {
+    isSubscribed,
+    setIsSubscribed,
+    refreshSubscriptionStatus,
+  };
+
   return (
-    <SubscriptionContext.Provider value={{ isSubscribed, setIsSubscribed }}>
+    <SubscriptionContext.Provider value={contextValue}>
       {children}
     </SubscriptionContext.Provider>
   );

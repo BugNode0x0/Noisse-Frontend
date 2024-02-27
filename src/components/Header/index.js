@@ -9,7 +9,7 @@ import SubscriptionContext from '../../context/SubscriptionContext';
 
 const Header = ({ onOpen }) => {
   const [visible, setVisible] = useState(false);
-  const { isSubscribed } = useContext(SubscriptionContext);
+  const { isSubscribed, refreshSubscriptionStatus } = useContext(SubscriptionContext);
 
   const handleClick = () => {
     onOpen();
@@ -19,12 +19,15 @@ const Header = ({ onOpen }) => {
   const handleStripeCheckout = async () => {
     try {
       const { sessionId } = await createStripeCheckoutSession();
+      // After the Stripe checkout session is created, refresh the subscription status.
+      await refreshSubscriptionStatus();
       window.location.href = `${sessionId}`;
     } catch (error) {
       console.error('Error redirecting to Stripe:', error);
     }
   };
 
+  
   return (
     <header className={styles.header}>
       <button className={styles.burger} onClick={() => handleClick()}></button>
