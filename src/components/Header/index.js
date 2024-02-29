@@ -20,9 +20,7 @@ const Header = ({ onOpen }) => {
     try {
       const { sessionId } = await createStripeCheckoutSession();
       window.location.href = `${sessionId}`;
-      // After the Stripe checkout session is created, refresh the subscription status.
       await refreshSubscriptionStatus();
-      window.location.href = `${sessionId}`;
     } catch (error) {
       console.error('Error redirecting to Stripe:', error);
     }
