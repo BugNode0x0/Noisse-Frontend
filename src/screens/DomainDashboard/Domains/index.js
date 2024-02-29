@@ -7,6 +7,7 @@ import Dropdown from "../../../components/Dropdown";
 import AllDomains from "./AllDomains";
 import ActiveDomains from "./ActiveDomains";
 import WebDomains from "./WebDomains";
+import { downloadAllDomainsCSV, downloadActiveDomainsCSV, downloadWebDomainsCSV } from '../../../api/subdomainAPI';
 
 
 

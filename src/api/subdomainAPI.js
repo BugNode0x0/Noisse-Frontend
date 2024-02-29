@@ -199,3 +199,94 @@ export const fetchSubscriptionStatus = async () => {
     throw error;  
   }
 };
+
+export const downloadAllDomainsCSV = async (search = '') => {
+  try {
+    const response = await api.get('/subdomains', {
+      params: { format: 'csv', search },
+      responseType: 'blob'  // Important for handling binary data like CSV
+    });
+
+    // Extract filename from Content-Disposition header
+    const contentDisposition = response.headers['content-disposition'];
+    let filename = 'subdomains.csv';
+    if (contentDisposition) {
+      const filenameMatch = contentDisposition.match(/filename="?([^"]+)"?/);
+      if (filenameMatch.length === 2) {
+        filename = filenameMatch[1];
+      }
+    }
+
+    // Create a URL for the blob
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename);  // Set the download attribute to the filename
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up and revoke the object URL
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error downloading CSV:', error);
+    // Handle the error (e.g., show a notification to the user)
+  }
+};
+
+export const downloadActiveDomainsCSV = async () => {
+  try {
+    const response = await api.get('/active-domains', {
+      params: { format: 'csv' },
+      responseType: 'blob' // Important for handling the binary data of the CSV file
+    });
+
+    // Create a Blob from the PDF Stream
+    const file = new Blob(
+      [response.data], 
+      { type: 'text/csv;charset=utf-8;' }
+    );
+
+    // Build a URL from the file
+    const fileURL = URL.createObjectURL(file);
+
+    // Create a temporary anchor element and trigger a download
+    const link = document.createElement('a');
+    link.href = fileURL;
+    link.setAttribute('download', 'active-domains.csv');
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up and revoke the URL
+    document.body.removeChild(link);
+    URL.revokeObjectURL(fileURL);
+  } catch (error) {
+    console.error('Error downloading active domains CSV:', error);
+    throw new Error('Failed to download active domains CSV.');
+  }
+};
+
+export const downloadWebDomainsCSV = async (search) => {
+  try {
+    // Construct the URL with the 'format' query parameter set to 'csv'
+    const response = await api.get(`/web-domains`, { 
+      params: { search: search || '', format: 'csv' },
+      responseType: 'blob' // Important for handling binary data like CSV
+    });
+
+    // Create a Blob from the CSV data
+    const blob = new Blob([response.data], { type: 'text/csv' });
+
+    // Create a link element and trigger the download
+    const url = window.URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'web-domains.csv'); // Set the file name for the download
+    document.body.appendChild(link);
+    link.click();
+    link.parentNode.removeChild(link);
+  } catch (error) {
+    console.error('Error downloading web domains CSV:', error);
+    throw new Error('Failed to download web domains CSV.');
+  }
+};
