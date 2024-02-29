@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import cn from "classnames";
-import styles from "./PaymentSuccess.module.sass";
+import styles from "./PaymentCancelled.module.sass";
 import { use100vh } from "react-div-100vh";
 import { Link } from "react-router-dom";
 import Image from "../../components/Image";
