@@ -5,10 +5,15 @@ import Card from "../../components/Card";
 import Form from "../../components/Form";
 import Icon from "../../components/Icon";
 import { getUserProfile, getUserWebhook, updateUserWebhook, cancelUserSubscription } from '../../api/subdomainAPI';
+import SubscriptionContext from '../../context/SubscriptionContext';
+
 
 const Profile = () => {
   const [userData, setUserData] = useState(null);
   const [webhookUrl, setWebhookUrl] = useState(''); 
+  
+  const { isSubscribed } = useContext(SubscriptionContext);
+
 
   const handleCancelSubscription = async () => {
     try {
@@ -114,6 +119,7 @@ const Profile = () => {
       icon="arrow-right"
     />
   </Card>
+  {isSubscribed && (
   <Card
         className={styles.card}
         title="Subscription"
@@ -131,6 +137,7 @@ const Profile = () => {
           </button>
         </div>
       </Card>
+      )}
     </>
   );
 };
