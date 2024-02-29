@@ -15,6 +15,7 @@ import WebView from "./screens/WebView";
 import Crawl from "./screens/Crawl";
 import Profile from "./screens/Profile"
 import PaymentSuccess from './screens/PaymentSuccess';
+import PaymentCancelled from './screens/PaymentCancelled';
 
 
 function App() {
@@ -24,6 +25,8 @@ function App() {
         <SubscriptionProvider>
         <Routes>
         <Route path="/sign-in" element={<SignIn />} />
+        <Route path="/payment-success" element={<PaymentSuccess />} />
+        <Route path="/payment-cancelled" element={<PaymentCancelled />} />
         <Route element={<ProtectedRoutes />}>
         <Route
             path="/"
@@ -96,15 +99,6 @@ function App() {
                     element={
                         <Page title="Profile">
                             <Profile />
-                        </Page>
-                    }
-                />
-
-                <Route
-                    path="/payment-success"
-                    element={
-                        <Page title="Payment Success">
-                        <PaymentSuccess/>
                         </Page>
                     }
                 />

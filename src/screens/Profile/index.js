@@ -20,6 +20,7 @@ const Profile = () => {
       const response = await cancelUserSubscription(); // Implement this API call
       if (response.message === 'Subscription cancelled successfully') {
         alert('Subscription cancelled successfully!');
+        window.location.reload();
       } else {
         alert('Failed to cancel subscription.');
       }
