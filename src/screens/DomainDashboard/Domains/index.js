@@ -13,8 +13,25 @@ import WebDomains from "./WebDomains";
 const Domains = () => {
   const navigation = ["Web", "Active", "All"];
 
+  const downloadOptions = [
+    { label: "Web Domains", value: "Web" },
+    { label: "Active Domains", value: "Active" },
+    { label: "All Domains", value: "All" }
+  ];
+
   const [activeTab, setActiveTab] = useState(navigation[0]);
   const [search, setSearch] = useState("");
+  const [downloadType, setDownloadType] = useState(downloadOptions[0].value);
+
+  const handleDownload = () => {
+    if (downloadType === "Web") {
+      downloadWebDomainsCSV();
+    } else if (downloadType === "Active") {
+      downloadActiveDomainsCSV();
+    } else if (downloadType === "All") {
+      downloadAllDomainsCSV();
+    }
+  };
 
   const handleSubmit = (e) => {
     alert();
@@ -68,6 +85,21 @@ const Domains = () => {
               options={navigation}
               small
             />
+          </div>
+          <div className={styles.downloadControl}>
+            <Dropdown
+              classDropdownHead={styles.dropdownHead}
+              value={downloadType}
+              setValue={setDownloadType}
+              options={downloadOptions}
+              small
+            />
+            <button
+              className={cn("button-stroke button-small", styles.button)}
+              onClick={handleDownload}
+            >
+              Download CSV
+            </button>
           </div>
         </>
       }
