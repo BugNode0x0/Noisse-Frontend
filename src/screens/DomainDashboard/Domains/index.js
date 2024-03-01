@@ -9,10 +9,7 @@ import ActiveDomains from "./ActiveDomains";
 import WebDomains from "./WebDomains";
 import { downloadAllDomainsCSV, downloadActiveDomainsCSV, downloadWebDomainsCSV } from '../../../api/subdomainAPI';
 
-
-
 const Domains = () => {
-  const navigation = ["Web", "Active", "All"];
 
   const downloadOptions = [
     { label: "Web Domains", value: "Web" },
@@ -20,9 +17,8 @@ const Domains = () => {
     { label: "All Domains", value: "All" }
   ];
 
-  const [activeTab, setActiveTab] = useState(navigation[0]);
   const [search, setSearch] = useState("");
-  const [downloadType, setDownloadType] = useState(downloadOptions[0].value);
+  const [activeDomainType, setActiveDomainType] = useState(domainOptions[0].value);
 
   const handleDownload = () => {
     if (downloadType === "Web") {
@@ -35,7 +31,20 @@ const Domains = () => {
   };
 
   const handleSubmit = (e) => {
-    alert();
+    e.preventDefault();
+  };
+
+  const renderDomainComponent = () => {
+    switch (activeDomainType) {
+      case "Web":
+        return <WebDomains search={search} limit={3} />;
+      case "Active":
+        return <ActiveDomains search={search} limit={3} />;
+      case "All":
+        return <AllDomains search={search} limit={3} />;
+      default:
+        return null;
+    }
   };
 
   return (
@@ -50,49 +59,18 @@ const Domains = () => {
             className={styles.form}
             value={search}
             setValue={setSearch}
-            onSubmit={() => handleSubmit()}
+            onSubmit={handleSubmit}
             placeholder="Search domains"
             type="text"
             name="search"
             icon="search"
           />
-          <div className={styles.control}>
-            <button className={cn("button-stroke button-small", styles.button)}>
-              Deleted
-            </button>
-            <button className={cn("button-stroke button-small", styles.button)}>
-              Set status
-            </button>
-            <div className={styles.counter}>3 selected</div>
-          </div>
-          <div className={cn(styles.nav, "tablet-hide")}>
-            {navigation.map((x, index) => (
-              <button
-                className={cn(styles.link, {
-                  [styles.active]: x === activeTab,
-                })}
-                onClick={() => setActiveTab(x)}
-                key={index}
-              >
-                {x}
-              </button>
-            ))}
-          </div>
-          <div className={cn(styles.dropdown, "tablet-show")}>
+          <div className={styles.dropdownControl}>
             <Dropdown
               classDropdownHead={styles.dropdownHead}
-              value={activeTab}
-              setValue={setActiveTab}
-              options={navigation}
-              small
-            />
-          </div>
-          <div className={styles.downloadControl}>
-            <Dropdown
-              classDropdownHead={styles.dropdownHead}
-              value={downloadType}
-              setValue={setDownloadType}
-              options={downloadOptions}
+              value={activeDomainType}
+              setValue={setActiveDomainType}
+              options={domainOptions}
               small
             />
             <button
@@ -107,9 +85,7 @@ const Domains = () => {
     >
       <div className={styles.products}>
         <div className={styles.wrapper}>
-          {activeTab === navigation[0] && <WebDomains  search={search} limit={3}/>}
-          {activeTab === navigation[1] && <ActiveDomains  search={search} limit={3}/>}
-          {activeTab === navigation[2] && <AllDomains  search={search} limit={3}/>}
+          {renderDomainComponent()}
         </div>
       </div>
     </Card>
