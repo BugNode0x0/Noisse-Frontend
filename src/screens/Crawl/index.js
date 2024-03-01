@@ -53,23 +53,23 @@ const Crawl = () => {
 
     return (
         <div className={styles.section}>
-            <div className={styles.topBar}>
-                <Form
-                    className={styles.form}
-                    value={search}
-                    setValue={setSearch}
-                    onSubmit={handleSearchSubmit}
-                    placeholder="Search URLs"
-                    type="text"
-                    name="search"
-                    icon="search"
-                />
-                <button
-                    className={cn("button-stroke", styles.button)}
-                    onClick={handleDownload}
-                >
-                    Download CSV
-                </button>
+            <div className={cn(styles.searchDownloadWrapper)}>
+              <Form
+                className={cn(styles.searchBar)}
+                value={search}
+                setValue={setSearch}
+                onSubmit={handleSearchSubmit}
+                placeholder="Search URLs"
+                type="text"
+                name="search"
+                icon="search"
+              />
+              <button
+                className={cn(styles.downloadButton)}
+                onClick={handleDownload}
+              >
+                Download CSV
+              </button>
             </div>
             {Object.entries(groupedUrls).map(([subdomain, urls]) => (
                 <Urls key={subdomain} subdomain={subdomain} urls={urls} />
