@@ -4,38 +4,36 @@ import styles from "./AssetManagement.module.sass";
 import Card from "../../components/Card";
 import Form from "../../components/Form";
 import AllAssets from "../AssetsDashboard/Assets/AllAssets";
-import Dropdown from "../../components/Dropdown";
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import queryString from 'query-string';
-import { Link } from 'react-router-dom';
-import { useNavigate} from 'react-router-dom';
+import { downloadAssetsCSV } from '../../api/subdomainAPI'; // Make sure this path is correct
 
 const AssetManagement = () => {
-  const navigation = ["All"];
-  const location = useLocation()
-  const params = queryString.parse(location.search);
-
-  const [activeTab, setActiveTab] = useState(params.tab || navigation[0]);
-  const [search, setSearch] = useState(params.search || '');
+  const [search, setSearch] = useState('');
+  const [activeTab, setActiveTab] = useState("All"); // Default to "All" or use your navigation logic here
   const navigate = useNavigate();
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    navigate(`/domains/view?tab=${activeTab}&search=${search}`); // Navigate programmatically using navigate
-  };
-
-  const handleTabChange = (newTab) => {
-    setActiveTab(newTab);
-    navigate(`/domains/view?tab=${newTab}&search=${search}`); // Update the URL
-  };
+  const location = useLocation();
 
   useEffect(() => {
     const params = queryString.parse(location.search);
-    setActiveTab(params.tab || navigation[0]); 
+    setActiveTab(params.tab || "All");
     setSearch(params.search || '');
-  }, [params.tab, params.search]);
+  }, [location.search]);
 
-  return (     
+  const handleDownload = async () => {
+    try {
+      await downloadAssetsCSV(search);
+    } catch (error) {
+      console.error('Failed to download the CSV file:', error);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/domains/view?tab=${activeTab}&search=${search}`);
+  };
+
+  return (
     <Card
       className={styles.card}
       title="Assets"
@@ -53,33 +51,17 @@ const AssetManagement = () => {
             name="search"
             icon="search"
           />
-          <div className={cn(styles.nav, "tablet-hide")}>
-            {navigation.map((tabName, index) => (
-              <button
-                className={cn(styles.link, { [styles.active]: tabName === activeTab })}
-                onClick={() => handleTabChange(tabName)}
-                key={index}
-              >
-                {tabName}
-              </button>
-            ))}
-          </div>
-          <div className={cn(styles.dropdown, "tablet-show")}>
-            <Dropdown
-              classDropdownHead={styles.dropdownHead}
-              value={activeTab}
-              setValue={setActiveTab}
-              options={navigation}
-              small
-            />
-          </div>
+          <button
+            className={cn("button-stroke button-small", styles.button)}
+            onClick={handleDownload}
+          >
+            Download CSV
+          </button>
         </>
       }
     >
       <div className={styles.products}>
-        <div className={styles.wrapper}>
-          {activeTab === navigation[0] && <AllAssets  search={search} />}
-        </div>
+        <AllAssets search={search} />
       </div>
     </Card>
   );
