@@ -5,23 +5,31 @@ import Card from "../../../components/Card";
 import Form from "../../../components/Form";
 import Dropdown from "../../../components/Dropdown";
 import AllAssets from "./AllAssets";
+import { downloadAssetsCSV } from '../../../api/subdomainAPI';
 
 
 const Assets = () => {
-  const navigation = ["IP to Domain"];
+  const [search, setSearch] = useState('');
 
-  const [activeTab, setActiveTab] = useState(navigation[0]);
-  const [search, setSearch] = useState("");
+  const handleDownload = async () => {
+    try {
+      await downloadAssetsCSV(search); // Pass the search term to the download function
+    } catch (error) {
+      // Handle the error appropriately
+      console.error('Failed to download the CSV file:', error);
+      // Perhaps show a user-friendly error message
+    }
+  };
 
   const handleSubmit = (e) => {
-    alert();
+    e.preventDefault();
   };
 
   return (
     <Card
       className={styles.card}
-      title="IPs"
-      classTitle={cn("title-purple", styles.title)}
+      title='IPs'
+      classTitle={cn('title-purple', styles.title)}
       classCardHead={styles.head}
       head={
         <>
@@ -29,43 +37,23 @@ const Assets = () => {
             className={styles.form}
             value={search}
             setValue={setSearch}
-            onSubmit={() => handleSubmit()}
-            placeholder="Search domains"
-            type="text"
-            name="search"
-            icon="search"
+            onSubmit={handleSubmit}
+            placeholder='Search IPs' // Changed to 'Search IPs'
+            type='text'
+            name='search'
+            icon='search'
           />
-          <div className={styles.control}>
-            <button className={cn("button-stroke button-small", styles.button)}>
-              Deleted
-            </button>
-            <button className={cn("button-stroke button-small", styles.button)}>
-              Set status
-            </button>
-            <div className={styles.counter}>3 selected</div>
-          </div>
-          <div className={cn(styles.nav, "tablet-hide")}>
-            {navigation.map((x, index) => (
-              <button
-                className={cn(styles.link, {
-                  [styles.active]: x === activeTab,
-                })}
-                onClick={() => setActiveTab(x)}
-                key={index}
-              >
-                {x}
-              </button>
-            ))}
-          </div>
-          <div className={cn(styles.dropdown, "tablet-show")}>
-          </div>
+          <button // Removed the div for simplicity, unless it's needed for styling
+            className={cn('button-stroke button-small', styles.button)}
+            onClick={handleDownload}
+          >
+            Download CSV
+          </button>
         </>
       }
     >
       <div className={styles.products}>
-        <div className={styles.wrapper}>
-          {activeTab === navigation[0] && <AllAssets  search={search} limit={3}/>}
-        </div>
+        <AllAssets search={search} limit={3} />
       </div>
     </Card>
   );

@@ -290,3 +290,33 @@ export const downloadWebDomainsCSV = async (search) => {
     throw new Error('Failed to download web domains CSV.');
   }
 };
+
+export const downloadAssetsCSV = async (search = '') => {
+  try {
+    const response = await api.get('/assets-ips', {
+      params: { format: 'csv', search },
+      responseType: 'blob' // Important for handling binary data like CSV
+    });
+
+    // Extract filename from Content-Disposition header or default to assets-ips.csv
+    const filename = response.headers['content-disposition']
+                     ? response.headers['content-disposition'].split('filename=')[1]
+                     : 'assets-ips.csv';
+
+    // Create a URL for the blob
+    const url = window.URL.createObjectURL(new Blob([response.data]));
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', filename); // Set the download attribute to the filename
+    document.body.appendChild(link);
+    link.click();
+
+    // Clean up and revoke the object URL
+    document.body.removeChild(link);
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error downloading assets CSV:', error);
+    // Handle the error (e.g., show a notification to the user)
+    throw new Error('Failed to download assets CSV.');
+  }
+};
