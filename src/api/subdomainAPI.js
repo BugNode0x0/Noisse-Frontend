@@ -320,3 +320,33 @@ export const downloadAssetsCSV = async (search = '') => {
     throw new Error('Failed to download assets CSV.');
   }
 };
+
+export const downloadCrawlCSV = async (search) => {
+  try {
+    // Construct the URL with the 'format' query parameter set to 'csv'
+    const response = await api.get(`/jsview`, { 
+      params: { search: search || '', format: 'csv' },
+      responseType: 'blob' // This ensures you get the data back as a Blob
+    });
+
+    // Create a Blob from the CSV data
+    const blob = new Blob([response.data], { type: 'text/csv' });
+
+    // Generate a URL for the Blob
+    const url = window.URL.createObjectURL(blob);
+
+    // Create a link element and trigger the download
+    const link = document.createElement('a');
+    link.href = url;
+    link.setAttribute('download', 'crawl-data.csv'); // Set a filename for the download
+    document.body.appendChild(link);
+    link.click(); // Simulate a click on the link to download the file
+    link.parentNode.removeChild(link); // Clean up the DOM
+
+    // Revoke the object URL to free up resources
+    window.URL.revokeObjectURL(url);
+  } catch (error) {
+    console.error('Error downloading crawl CSV:', error);
+    throw new Error('Failed to download crawl CSV.');
+  }
+};

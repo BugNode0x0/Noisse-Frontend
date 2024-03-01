@@ -2,8 +2,9 @@ import React, { useState, useEffect } from "react";
 import styles from "./Crawl.module.sass";
 import Urls from "./Urls";
 import Form from "../../components/Form";
-import { getCrawl } from '../../api/subdomainAPI';
+import { getCrawl, downloadCrawlCSV } from '../../api/subdomainAPI';
 import ReactPaginate from 'react-paginate';
+import cn from 'classnames';
 
 const ITEMS_PER_PAGE = 20;
 
@@ -18,9 +19,8 @@ const Crawl = () => {
             try {
                 const { jsview, total } = await getCrawl(search, currentPage, ITEMS_PER_PAGE);
                 
-                // If 'jsview' is structured correctly from the backend, you can use it directly
                 const urlsBySubdomain = jsview.reduce((acc, { subdomain, urls }) => {
-                    acc[subdomain] = urls; // Here, 'urls' is assumed to be an array
+                    acc[subdomain] = urls; // Assuming 'urls' is an array
                     return acc;
                 }, {});
     
@@ -41,24 +41,39 @@ const Crawl = () => {
     const handleSearchSubmit = (e) => {
         e.preventDefault();
         setCurrentPage(1); 
-        
+    };
+
+    const handleDownload = async () => {
+        try {
+            await downloadCrawlCSV(search);
+        } catch (error) {
+            console.error('Failed to download the CSV file:', error);
+        }
     };
 
     return (
         <div className={styles.section}>
-            <Form
-                className={styles.form}
-                value={search}
-                setValue={setSearch}
-                onSubmit={handleSearchSubmit}
-                placeholder="Search URLs"
-                type="text"
-                name="search"
-                icon="search"
-            />
+            <div className={styles.topBar}>
+                <Form
+                    className={styles.form}
+                    value={search}
+                    setValue={setSearch}
+                    onSubmit={handleSearchSubmit}
+                    placeholder="Search URLs"
+                    type="text"
+                    name="search"
+                    icon="search"
+                />
+                <button
+                    className={cn("button-stroke", styles.button)}
+                    onClick={handleDownload}
+                >
+                    Download CSV
+                </button>
+            </div>
             {Object.entries(groupedUrls).map(([subdomain, urls]) => (
-    <Urls key={subdomain} subdomain={subdomain} urls={urls} />
-))}
+                <Urls key={subdomain} subdomain={subdomain} urls={urls} />
+            ))}
             <ReactPaginate
                 previousLabel={'Previous'}
                 nextLabel={'Next'}
