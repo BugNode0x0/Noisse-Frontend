@@ -21,12 +21,12 @@ const Domains = () => {
   const [activeDomainType, setActiveDomainType] = useState(domainOptions[0].value);
 
   const handleDownload = () => {
-    if (downloadType === "Web") {
-      downloadWebDomainsCSV();
-    } else if (downloadType === "Active") {
-      downloadActiveDomainsCSV();
-    } else if (downloadType === "All") {
-      downloadAllDomainsCSV();
+    if (activeDomainType === "Web") {
+      downloadWebDomainsCSV(search);
+    } else if (activeDomainType === "Active") {
+      downloadActiveDomainsCSV(search);
+    } else if (activeDomainType === "All") {
+      downloadAllDomainsCSV(search);
     }
   };
 
