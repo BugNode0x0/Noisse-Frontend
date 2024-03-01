@@ -18,7 +18,7 @@ const Domains = () => {
   ];
 
   const [search, setSearch] = useState("");
-  const [activeDomainType, setActiveDomainType] = useState(domainOptions[0].value);
+  const [activeDomainType, setActiveDomainType] = useState(downloadOptions[0].value);
 
   const handleDownload = () => {
     if (activeDomainType === "Web") {
@@ -70,7 +70,7 @@ const Domains = () => {
               classDropdownHead={styles.dropdownHead}
               value={activeDomainType}
               setValue={setActiveDomainType}
-              options={domainOptions}
+              options={downloadOptions}
               small
             />
             <button
