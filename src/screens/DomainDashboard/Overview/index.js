@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from "react";
+import io from 'socket.io-client';
 import cn from "classnames";
 import styles from "./Overview.module.sass";
 import TooltipGlodal from "../../../components/TooltipGlodal";
 import Card from "../../../components/Card";
-import Dropdown from "../../../components/Dropdown";
 import Icon from "../../../components/Icon";
 import Tooltip from "../../../components/Tooltip";
-import Balance from "../../../components/Balance";
 import { 
   getDiscoveredDomainsCount, 
   getActiveDomainsCount, 
   getWebDomainsCount, 
 } from '../../../api/subdomainAPI';
 
+const socket = io(process.env.REACT_APP_BACKEND_URL);
+
 const intervals = ["This Week"];
-
-
 
 const Overview = ({ className }) => {
   // Inside Overview component, before the return statement
@@ -84,7 +83,7 @@ const Overview = ({ className }) => {
 
   useEffect(() => {
     const intervalParam = mapIntervalToParam(sorting);
-  
+
     const fetchCounts = async () => {
       try {
         const discoveredDomainsCountData = await getDiscoveredDomainsCount(intervalParam);
@@ -110,10 +109,28 @@ const Overview = ({ className }) => {
     };
   
     fetchCounts();
+
+    const handleNewCounts = (data) => {
+      if (data.type === 'discoveredDomains') {
+        setDiscoveredCount(data.count);
+        setDiscoveredDomainsChartData(generateChartData(data.count));
+      } else if (data.type === 'activeDomains') {
+        setActiveCount(data.count);
+        setActiveDomainsChartData(generateChartData(data.count));
+      } else if (data.type === 'webDomains') {
+        setWebCount(data.count);
+        setWebDomainsChartData(generateChartData(data.count));
+      }
+    };
+  
+    // Listen for 'updateCounts' event from server
+    socket.on('updateCounts', handleNewCounts);
+  
+    // Clean up the effect when the component is unmounted or re-mounted
+    return () => {
+      socket.off('updateCounts', handleNewCounts);
+    };
   }, [sorting]);
-
-
-
   return (
     <>
       <Card
