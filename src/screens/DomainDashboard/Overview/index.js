@@ -12,7 +12,7 @@ import {
   getWebDomainsCount, 
 } from '../../../api/subdomainAPI';
 
-const socket = io(process.env.REACT_APP_BACKEND_URL);
+const socket = io('https://noisse-backend-development.up.railway.app/');
 
 const intervals = ["This Week"];
 
