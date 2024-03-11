@@ -41,7 +41,7 @@ const Header = ({ onOpen }) => {
             onClick={handleStripeCheckout}
           >
             <Icon name="stripe" size="24" />
-            <span>Subscribe - $5/month</span>
+            <span>Subscribe - $10/month</span>
           </a>
         )}
         <User className={styles.user} />
