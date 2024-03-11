@@ -12,7 +12,7 @@ import {
   getWebDomainsCount, 
 } from '../../../api/subdomainAPI';
 
-const socket = io('https://noisse-backend-development.up.railway.app/');
+const socket = io('https://api.noisse.io/');
 
 const intervals = ["This Week"];
 

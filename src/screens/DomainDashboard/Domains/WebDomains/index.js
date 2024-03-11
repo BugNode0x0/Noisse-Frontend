@@ -80,7 +80,7 @@
         });
       }
 
-      const socket = io('https://noisse-backend-development.up.railway.app/');
+      const socket = io('https://api.noisse.io/');
 
       // Open the socket connection
       socket.on('connect', () => {

@@ -34,7 +34,7 @@ const Views = ({ search }) => { // Removed unused 'items' prop
     };
     fetchScreenshots();
 
-    const socket = io('https://noisse-backend-development.up.railway.app/');
+    const socket = io('https://api.noisse.io/');
 
     socket.on('connect', () => {
       console.log('Connected to websocket server');
