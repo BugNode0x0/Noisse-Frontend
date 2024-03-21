@@ -12,7 +12,11 @@ import {
   getWebDomainsCount, 
 } from '../../../api/subdomainAPI';
 
-const socket = io('https://api.noisse.io/');
+const socket = io('https://api.noisse.io/',{
+  pingInterval: 10000, // Time in ms between pings (10 seconds)
+  pingTimeout: 5000, // Time in ms to wait for a pong before considering the connection closed (5 seconds)
+});
+
 
 const intervals = ["This Week"];
 
