@@ -111,6 +111,7 @@ const Overview = ({ className }) => {
     fetchCounts();
 
     const handleNewCounts = (data) => {
+      console.log("Received data from WebSocket:", data);
       if (data.type === 'discoveredDomains') {
         setDiscoveredCount(data.count);
         setDiscoveredDomainsChartData(generateChartData(data.count));
