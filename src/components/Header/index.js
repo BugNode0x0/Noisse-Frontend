@@ -4,6 +4,7 @@ import styles from "./Header.module.sass";
 import { Link } from "react-router-dom";
 import Icon from "../Icon";
 import User from "./User";
+import Notification from "./Notification";
 import { createStripeCheckoutSession } from '../../api/subdomainAPI';
 import SubscriptionContext from '../../context/SubscriptionContext';
 
@@ -44,6 +45,7 @@ const Header = ({ onOpen }) => {
             <span>Subscribe - $5/month</span>
           </a>
         )}
+        <Notification className={styles.notification} />
         <User className={styles.user} />
       </div>
     </header>
