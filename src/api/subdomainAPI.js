@@ -350,3 +350,14 @@ export const downloadCrawlCSV = async (search) => {
     throw new Error('Failed to download crawl CSV.');
   }
 };
+
+export const getHunterId = async () => {
+  try {
+    // Make a GET request to the /get-hunter-id endpoint
+    const response = await api.get('/get-hunter-id');
+    return response.data.hunterId; // This should return the hunter_id from the backend
+  } catch (error) {
+    console.error('Error fetching hunter ID:', error);
+    throw new Error('Failed to fetch hunter ID');
+  }
+};

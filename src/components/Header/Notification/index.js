@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import cn from "classnames";
 import OutsideClickHandler from "react-outside-click-handler";
@@ -6,9 +6,12 @@ import styles from "./Notification.module.sass";
 import Icon from "../../Icon";
 import Actions from "../../Actions";
 import Item from "./Item";
+import io from 'socket.io-client';
+import { getHunterId } from '../../../api/subdomainAPI';
 
-// data
-import { notifications } from "../../../mocks/notifications";
+
+// Replace with the actual socket URL
+const SOCKET_URL = 'https://noisse-backend-development.up.railway.app';
 
 const actions = [
   {
@@ -25,6 +28,34 @@ const actions = [
 
 const Notification = ({ className }) => {
   const [visible, setVisible] = useState(false);
+  const [notifications, setNotifications] = useState([]);
+
+  useEffect(() => {
+    // Fetch the hunter_id and establish socket connection
+    const setupNotifications = async () => {
+      try {
+        const hunterId = await getHunterId(); // Fetch the hunter_id using the function from SubdomainAPI.js
+        if (hunterId) {
+          const socket = io(SOCKET_URL, { withCredentials: true });
+          socket.emit('authenticate', hunterId);
+          socket.on('notification', (notification) => {
+            setNotifications((prevNotifications) => [...prevNotifications, notification]);
+          });
+
+          // Return a cleanup function to disconnect the socket when the component unmounts
+          return () => {
+            socket.off('notification');
+            socket.disconnect();
+          };
+        }
+      } catch (error) {
+        console.error('Error setting up notifications:', error);
+      }
+    };
+
+    setupNotifications();
+
+  }, []); 
 
   return (
     <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
@@ -50,10 +81,10 @@ const Notification = ({ className }) => {
             />
           </div>
           <div className={styles.list}>
-            {notifications.map((x, index) => (
+            {notifications.map((notification, index) => (
               <Item
                 className={cn(styles.item, className)}
-                item={x}
+                item={notification}
                 key={index}
                 onClose={() => setVisible(false)}
               />
@@ -61,7 +92,7 @@ const Notification = ({ className }) => {
           </div>
           <Link
             className={cn("button", styles.button)}
-            to="/notification"
+            to="/notifications"
             onClick={() => setVisible(false)}
           >
             See all notifications
