@@ -39,6 +39,7 @@ const Notification = ({ className }) => {
           const socket = io(SOCKET_URL, { withCredentials: true });
           socket.emit('authenticate', hunterId);
           socket.on('notification', (notification) => {
+            console.log('Received notification:', notification);
             setNotifications((prevNotifications) => [...prevNotifications, notification]);
           });
 
@@ -90,13 +91,6 @@ const Notification = ({ className }) => {
               />
             ))}
           </div>
-          <Link
-            className={cn("button", styles.button)}
-            to="/notifications"
-            onClick={() => setVisible(false)}
-          >
-            See all notifications
-          </Link>
         </div>
       </div>
     </OutsideClickHandler>
