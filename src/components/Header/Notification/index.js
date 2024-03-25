@@ -47,6 +47,11 @@ const Notification = ({ className }) => {
             console.log('Received notification:', notification);
             setNotifications((prevNotifications) => [...prevNotifications, notification]);
           });
+
+          socket.on('error', (error) => {
+            console.error('Socket.IO error:', error);
+            // Handle the error accordingly
+          });
   
           // Add event listeners for 'ping' and 'pong' events
           socket.on('ping', () => {
