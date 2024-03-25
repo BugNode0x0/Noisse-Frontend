@@ -36,16 +36,32 @@ const Notification = ({ className }) => {
       try {
         const hunterId = await getHunterId(); // Fetch the hunter_id using the function from SubdomainAPI.js
         if (hunterId) {
-          const socket = io(SOCKET_URL, { withCredentials: true });
+          const socket = io(SOCKET_URL, { 
+            withCredentials: true,
+            transports: ['websocket'], // Use WebSocket transport only
+            pingInterval: 25000, // Send a ping every 25 seconds
+            pingTimeout: 60000 // Increase the ping timeout to 60 seconds
+          });
           socket.emit('authenticate', hunterId);
           socket.on('notification', (notification) => {
             console.log('Received notification:', notification);
             setNotifications((prevNotifications) => [...prevNotifications, notification]);
           });
-
+  
+          // Add event listeners for 'ping' and 'pong' events
+          socket.on('ping', () => {
+            console.log('Received ping from server');
+          });
+  
+          socket.on('pong', (latency) => {
+            console.log(`Received pong from server with latency: ${latency}ms`);
+          });
+  
           // Return a cleanup function to disconnect the socket when the component unmounts
           return () => {
             socket.off('notification');
+            socket.off('ping'); // Remove the 'ping' event listener
+            socket.off('pong'); // Remove the 'pong' event listener
             socket.disconnect();
           };
         }
@@ -53,10 +69,10 @@ const Notification = ({ className }) => {
         console.error('Error setting up notifications:', error);
       }
     };
-
+  
     setupNotifications();
-
-  }, []); 
+  
+  }, []);
 
   return (
     <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
