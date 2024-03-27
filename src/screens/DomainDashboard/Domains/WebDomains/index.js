@@ -4,7 +4,7 @@
   import Row from "./Row";// Row.js
   import ReactPaginate from 'react-paginate';
   import { getWebDomains } from '../../../../api/subdomainAPI';
-  import io from 'socket.io-client';
+  import socket from '../../../../context/socketInstance';
   import { debounce } from 'lodash';
 
 
@@ -79,8 +79,6 @@
           return 0;
         });
       }
-
-      const socket = io('https://noisse-backend-development.up.railway.app/');
 
       // Open the socket connection
       socket.on('connect', () => {

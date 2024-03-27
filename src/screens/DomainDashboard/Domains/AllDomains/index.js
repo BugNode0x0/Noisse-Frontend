@@ -4,7 +4,7 @@ import Icon from "../../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getSubdomains } from '../../../../api/subdomainAPI';
-import io from 'socket.io-client';
+import socket from '../../../../context/socketInstance';
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
@@ -48,8 +48,6 @@ const AllDomains = ({ search, limit }) => { // Removed unused 'items' prop
       }
     };
     fetchSubdomains();
-
-    const socket = io('https://noisse-backend-development.up.railway.app/');
 
     // Open the socket connection
     socket.on('connect', () => {
