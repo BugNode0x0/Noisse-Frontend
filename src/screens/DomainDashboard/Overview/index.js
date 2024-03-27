@@ -12,7 +12,7 @@ import {
   getWebDomainsCount, 
 } from '../../../api/subdomainAPI';
 
-const SOCKET_URL = 'https://noisse-backend-development.up.railway.app/socket.io/';
+const SOCKET_URL = 'https://noisse-backend-development.up.railway.app/';
 
 const socket = io(SOCKET_URL);
 
