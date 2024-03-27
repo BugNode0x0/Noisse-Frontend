@@ -11,7 +11,6 @@ import { getHunterId } from '../../../api/subdomainAPI';
 
 
 // Replace with the actual socket URL
-const SOCKET_URL = 'https://noisse-backend-development.up.railway.app/socket.io/';
 
 const actions = [
   {

@@ -3,7 +3,7 @@ import styles from "./Views.module.sass";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getScreenshots } from '../../../api/subdomainAPI';
-import io from 'socket.io-client';
+import socket from "../../../context/socketInstance"
 
 const ITEMS_PER_PAGE = 20;  // Set the desired items per page
 
@@ -33,8 +33,6 @@ const Views = ({ search }) => { // Removed unused 'items' prop
       }
     };
     fetchScreenshots();
-
-    const socket = io('https://noisse-backend-development.up.railway.app/');
 
     socket.on('connect', () => {
       console.log('Connected to websocket server');
