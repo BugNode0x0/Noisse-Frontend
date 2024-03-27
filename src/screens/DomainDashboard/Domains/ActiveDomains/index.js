@@ -4,7 +4,7 @@ import Icon from "../../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getActiveDomains } from '../../../../api/subdomainAPI';
-import io from 'socket.io-client';
+import socket from '../../../../context/socketInstance';
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
@@ -14,7 +14,6 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
   const [totalActiveDomains, setTotalActiveDomains] = useState(0);
   const [chooseAll, setChooseAll] = useState(false);
   const [selectedFilters, setSelectedFilters] = useState([]);
-
 
   const totalPages = Math.ceil(totalActiveDomains / ITEMS_PER_PAGE);
 
@@ -31,7 +30,6 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
     setCurrentPage(selectedPage);
   };
 
-
   useEffect(() => {
     const fetchActiveDomains = async () => {
       try {
@@ -44,8 +42,6 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
     };
     fetchActiveDomains();
 
-    const socket = io('https://noisse-backend-development.up.railway.app/');
-
     // Listen for 'active domain update' events or similar events tailored for active domains
     socket.on('active domain update', (data) => {
       console.log('Active domain update received:', data.message);
@@ -54,19 +50,17 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
 
     return () => {
       socket.off('active domain update');
-      socket.disconnect();
     };
   }, [search, currentPage]);
-
 
   return (
     <div className={styles.all}>
       <div className={styles.table}>
         <div className={styles.row}>
-        <div className={styles.col}>
-        <div className={styles.iconCheckboxWrapper}>
-          <Icon name="lightning" size="25" className={styles.icon}/>
-          </div>
+          <div className={styles.col}>
+            <div className={styles.iconCheckboxWrapper}>
+              <Icon name="lightning" size="25" className={styles.icon}/>
+            </div>
           </div>
           <div className={styles.col}>Domain Name</div>
         </div>
@@ -92,7 +86,6 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
         forcePage={currentPage - 1} // Use forcePage to set correct page
       />
     </div>
-    
   );
 };
 
