@@ -43,15 +43,24 @@ const Notification = ({ className }) => {
             pingTimeout: 60000 // Increase the ping timeout to 60 seconds
           });
           socket.emit('authenticate', hunterId);
+
+
           socket.on('notification', (notification) => {
-            console.log('Received notification:', notification);
-            setNotifications((prevNotifications) => [...prevNotifications, notification]);
-          });
+          console.log('Received notification:', notification);
+          setNotifications((prevNotifications) => [...prevNotifications, notification]);
+        });
 
           socket.on('error', (error) => {
-            console.error('Socket.IO error:', error);
-            // Handle the error accordingly
+            console.error('Socket.IO error in Notification component:', error);
+            // Implement appropriate error handling logic
           });
+          
+          
+          socket.on('disconnect', () => {
+            console.log('Socket disconnected in Notification component. Attempting to reconnect...');
+            socket.connect();
+          });
+  
   
           // Add event listeners for 'ping' and 'pong' events
           socket.on('ping', () => {
@@ -65,8 +74,10 @@ const Notification = ({ className }) => {
           // Return a cleanup function to disconnect the socket when the component unmounts
           return () => {
             socket.off('notification');
-            socket.off('ping'); // Remove the 'ping' event listener
-            socket.off('pong'); // Remove the 'pong' event listener
+            socket.off('ping');
+            socket.off('pong');
+            socket.off('error');
+            socket.off('disconnect');
             socket.disconnect();
           };
         }
@@ -76,7 +87,6 @@ const Notification = ({ className }) => {
     };
   
     setupNotifications();
-  
   }, []);
 
   return (

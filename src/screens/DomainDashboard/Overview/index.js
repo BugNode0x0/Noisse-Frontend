@@ -123,15 +123,30 @@ const Overview = ({ className }) => {
         setWebDomainsChartData(generateChartData(data.count));
       }
     };
+
+    const handleSocketError = (error) => {
+      console.error('Socket.IO error in Overview component:', error);
+      // Implement appropriate error handling logic
+    };
+    
+    const reconnectSocket = () => {
+      console.log('Attempting to reconnect socket in Overview component...');
+      socket.connect();
+    };
   
     // Listen for 'updateCounts' event from server
     socket.on('updateCounts', handleNewCounts);
+    socket.on('error', handleSocketError);
+    socket.on('disconnect', reconnectSocket);
   
     // Clean up the effect when the component is unmounted or re-mounted
     return () => {
       socket.off('updateCounts', handleNewCounts);
+      socket.off('error', handleSocketError);
+      socket.off('disconnect', reconnectSocket);
     };
   }, [sorting]);
+  
   return (
     <>
       <Card
