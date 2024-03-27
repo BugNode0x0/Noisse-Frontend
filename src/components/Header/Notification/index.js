@@ -6,7 +6,7 @@ import styles from "./Notification.module.sass";
 import Icon from "../../Icon";
 import Actions from "../../Actions";
 import Item from "./Item";
-import io from 'socket.io-client';
+import socket from "../../../context/socketInstance"
 import { getHunterId } from '../../../api/subdomainAPI';
 
 
@@ -36,12 +36,6 @@ const Notification = ({ className }) => {
       try {
         const hunterId = await getHunterId(); // Fetch the hunter_id using the function from SubdomainAPI.js
         if (hunterId) {
-          const socket = io(SOCKET_URL, { 
-            withCredentials: true,
-            transports: ['websocket'], // Use WebSocket transport only
-            pingInterval: 25000, // Send a ping every 25 seconds
-            pingTimeout: 60000 // Increase the ping timeout to 60 seconds
-          });
           socket.emit('authenticate', hunterId);
 
 

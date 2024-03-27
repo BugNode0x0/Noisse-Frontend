@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import io from 'socket.io-client';
 import cn from "classnames";
 import styles from "./Overview.module.sass";
 import TooltipGlodal from "../../../components/TooltipGlodal";
 import Card from "../../../components/Card";
 import Icon from "../../../components/Icon";
 import Tooltip from "../../../components/Tooltip";
+import socket from "../../../context/socketInstance"
 import { 
   getDiscoveredDomainsCount, 
   getActiveDomainsCount, 
@@ -128,13 +128,7 @@ const Overview = ({ className }) => {
       console.log('Attempting to reconnect socket in Overview component...');
       socket.connect();
     };
-  
-    const socket = io(SOCKET_URL, {
-      withCredentials: true,
-      transports: ['websocket'],
-      pingInterval: 25000,
-      pingTimeout: 60000
-    });
+
 
     socket.on('updateCounts', handleNewCounts);
     socket.on('error', handleSocketError);
