@@ -14,12 +14,9 @@ import {
 
 const SOCKET_URL = 'https://noisse-backend-development.up.railway.app/socket.io/';
 
-const socket = io(SOCKET_URL);
-
 const intervals = ["This Week"];
 
 const Overview = ({ className }) => {
-  // Inside Overview component, before the return statement
   const generateChartData = (counter) => {
     const dataPoints = []; // Create an array to store the data points
     const steps = 10; // The number of steps or data points you want
@@ -40,8 +37,6 @@ const Overview = ({ className }) => {
   const [activeDomainsChartData, setActiveDomainsChartData] = useState([]);
   const [webDomainsChartData, setWebDomainsChartData] = useState([]);
 
-  
-
   const items = [
     {
       title: "Discovered Domains",
@@ -53,7 +48,7 @@ const Overview = ({ className }) => {
     },
     {
       title: "Active Domains",
-      counter: activeCount ? activeCount.toString() : '0', // Use activeCount here
+      counter: activeCount ? activeCount.toString() : '0',
       icon: "lightning",
       background: "#ecf9fe",
       chartColor: "#2A85FF",
@@ -61,12 +56,11 @@ const Overview = ({ className }) => {
     },
     {
       title: "Web Services",
-      counter: webCount ? webCount.toString() : '0', // Use webCount here
+      counter: webCount ? webCount.toString() : '0',
       icon: "cloudcheck",
       background: "#f2efff",
       chartColor: "#8E59FF",
       data: webDomainsChartData,
-      
     },
   ];
 
@@ -79,7 +73,7 @@ const Overview = ({ className }) => {
       case "Last Month":
         return "month";
       default:
-        return "week"; // Default case if required
+        return "week";
     }
   };
 
@@ -92,7 +86,6 @@ const Overview = ({ className }) => {
         const activeDomainsCountData = await getActiveDomainsCount(intervalParam);
         const webDomainsCountData = await getWebDomainsCount(intervalParam);
   
-        // Only if new count data is fetched, then generate chart data
         if (discoveredDomainsCountData) {
           setDiscoveredCount(discoveredDomainsCountData);
           setDiscoveredDomainsChartData(generateChartData(discoveredDomainsCountData));
@@ -136,16 +129,22 @@ const Overview = ({ className }) => {
       socket.connect();
     };
   
-    // Listen for 'updateCounts' event from server
+    const socket = io(SOCKET_URL, {
+      withCredentials: true,
+      transports: ['websocket'],
+      pingInterval: 25000,
+      pingTimeout: 60000
+    });
+
     socket.on('updateCounts', handleNewCounts);
     socket.on('error', handleSocketError);
     socket.on('disconnect', reconnectSocket);
   
-    // Clean up the effect when the component is unmounted or re-mounted
     return () => {
       socket.off('updateCounts', handleNewCounts);
       socket.off('error', handleSocketError);
       socket.off('disconnect', reconnectSocket);
+      socket.disconnect();
     };
   }, [sorting]);
 
