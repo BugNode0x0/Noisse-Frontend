@@ -49,6 +49,7 @@ const Notification = ({ className }) => {
           });
           
           
+          
           socket.on('disconnect', () => {
             console.log('Socket disconnected in Notification component. Attempting to reconnect...');
             socket.connect();
