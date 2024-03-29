@@ -9,9 +9,6 @@ import Item from "./Item";
 import socket, { authenticateSocket } from '../../../context/socketInstance';
 import { getHunterId } from '../../../api/subdomainAPI';
 
-
-// Replace with the actual socket URL
-
 const actions = [
   {
     title: "Mark as read",
@@ -36,43 +33,20 @@ const Notification = ({ className }) => {
         const hunterId = await getHunterId(); // Fetch the hunter_id using the function from SubdomainAPI.js
         if (hunterId) {
           authenticateSocket(hunterId);
-          socket.emit('authenticate', hunterId);
-
+  
           socket.on('notification', (notification) => {
-          console.log('Received notification:', notification);
-          setNotifications((prevNotifications) => [...prevNotifications, notification]);
-        });
-
+            console.log('Received notification:', notification);
+            setNotifications((prevNotifications) => [...prevNotifications, notification]);
+          });
+  
           socket.on('error', (error) => {
             console.error('Socket.IO error in Notification component:', error);
-            // Implement appropriate error handling logic
-          });
-          
-          
-          
-          socket.on('disconnect', () => {
-            console.log('Socket disconnected in Notification component. Attempting to reconnect...');
-            socket.connect();
-          });
-  
-  
-          // Add event listeners for 'ping' and 'pong' events
-          socket.on('ping', () => {
-            console.log('Received ping from server');
-          });
-  
-          socket.on('pong', (latency) => {
-            console.log(`Received pong from server with latency: ${latency}ms`);
           });
   
           // Return a cleanup function to disconnect the socket when the component unmounts
           return () => {
             socket.off('notification');
-            socket.off('ping');
-            socket.off('pong');
             socket.off('error');
-            socket.off('disconnect');
-            socket.disconnect();
           };
         }
       } catch (error) {
@@ -81,7 +55,7 @@ const Notification = ({ className }) => {
     };
   
     setupNotifications();
-  }, []);
+  }, []);  
 
   return (
     <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
