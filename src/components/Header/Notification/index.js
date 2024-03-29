@@ -6,7 +6,7 @@ import styles from "./Notification.module.sass";
 import Icon from "../../Icon";
 import Actions from "../../Actions";
 import Item from "./Item";
-import socket from "../../../context/socketInstance"
+import socket, { authenticateSocket } from '../../../context/socketInstance';
 import { getHunterId } from '../../../api/subdomainAPI';
 
 
@@ -35,8 +35,8 @@ const Notification = ({ className }) => {
       try {
         const hunterId = await getHunterId(); // Fetch the hunter_id using the function from SubdomainAPI.js
         if (hunterId) {
+          authenticateSocket(hunterId);
           socket.emit('authenticate', hunterId);
-
 
           socket.on('notification', (notification) => {
           console.log('Received notification:', notification);

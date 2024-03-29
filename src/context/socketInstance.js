@@ -9,4 +9,20 @@ const socket = io(SOCKET_URL, {
   pingTimeout: 60000
 });
 
+// Emit a 'ping' event every 25 seconds
+setInterval(() => {
+  socket.emit('ping');
+  console.log(`Sending fucking pings`);
+}, 5000);
+
+// Listen for 'pong' event from the server
+socket.on('pong', latency => {
+  console.log(`Received pong with latency: ${latency}ms`);
+});
+
+// Function to emit 'authenticate' event with hunter_id
+export const authenticateSocket = (hunterId) => {
+  socket.emit('authenticate', hunterId);
+};
+
 export default socket;
