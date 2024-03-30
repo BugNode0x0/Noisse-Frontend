@@ -6,7 +6,6 @@ import styles from "./Notification.module.sass";
 import Icon from "../../Icon";
 import Actions from "../../Actions";
 import Item from "./Item";
-import socket, { authenticateSocket } from '../../../context/socketInstance';
 import { getHunterId } from '../../../api/subdomainAPI';
 
 const actions = [
@@ -25,37 +24,6 @@ const actions = [
 const Notification = ({ className }) => {
   const [visible, setVisible] = useState(false);
   const [notifications, setNotifications] = useState([]);
-
-  useEffect(() => {
-    // Fetch the hunter_id and establish socket connection
-    const setupNotifications = async () => {
-      try {
-        const hunterId = await getHunterId(); // Fetch the hunter_id using the function from SubdomainAPI.js
-        if (hunterId) {
-          authenticateSocket(hunterId);
-  
-          socket.on('notification', (notification) => {
-            console.log('Received notification:', notification);
-            setNotifications((prevNotifications) => [...prevNotifications, notification]);
-          });
-  
-          socket.on('error', (error) => {
-            console.error('Socket.IO error in Notification component:', error);
-          });
-  
-          // Return a cleanup function to disconnect the socket when the component unmounts
-          return () => {
-            socket.off('notification');
-            socket.off('error');
-          };
-        }
-      } catch (error) {
-        console.error('Error setting up notifications:', error);
-      }
-    };
-  
-    setupNotifications();
-  }, []);  
 
   return (
     <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
