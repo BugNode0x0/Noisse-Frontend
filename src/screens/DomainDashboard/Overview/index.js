@@ -5,7 +5,6 @@ import TooltipGlodal from "../../../components/TooltipGlodal";
 import Card from "../../../components/Card";
 import Icon from "../../../components/Icon";
 import Tooltip from "../../../components/Tooltip";
-import socket from "../../../context/socketInstance"
 import { 
   getDiscoveredDomainsCount, 
   getActiveDomainsCount, 
@@ -103,42 +102,7 @@ const Overview = ({ className }) => {
     };
   
     fetchCounts();
-
-    const handleNewCounts = (data) => {
-      console.log("Received data from WebSocket:", data);
-      if (data.type === 'discoveredDomains') {
-        setDiscoveredCount(data.count);
-        setDiscoveredDomainsChartData(generateChartData(data.count));
-      } else if (data.type === 'activeDomains') {
-        setActiveCount(data.count);
-        setActiveDomainsChartData(generateChartData(data.count));
-      } else if (data.type === 'webDomains') {
-        setWebCount(data.count);
-        setWebDomainsChartData(generateChartData(data.count));
-      }
-    };
-
-    const handleSocketError = (error) => {
-      console.error('Socket.IO error in Overview component:', error);
-      // Implement appropriate error handling logic
-    };
     
-    const reconnectSocket = () => {
-      console.log('Attempting to reconnect socket in Overview component...');
-      socket.connect();
-    };
-
-
-    socket.on('updateCounts', handleNewCounts);
-    socket.on('error', handleSocketError);
-    socket.on('disconnect', reconnectSocket);
-  
-    return () => {
-      socket.off('updateCounts', handleNewCounts);
-      socket.off('error', handleSocketError);
-      socket.off('disconnect', reconnectSocket);
-      socket.disconnect();
-    };
   }, [sorting]);
 
   return (
