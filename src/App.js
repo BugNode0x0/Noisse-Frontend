@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route, Switch, Redirect, Routes } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import { SubscriptionProvider } from './context/SubscriptionContext';
+import SocketProvider from './context/SocketProvider';
 import ProtectedRoutes from './components/ProtectedRoutes';
 import React from 'react';
 import "./styles/app.sass";
@@ -22,6 +23,7 @@ function App() {
     
     return (
         <AuthProvider>
+        <SocketProvider>
         <SubscriptionProvider>
         <Routes>
         <Route path="/sign-in" element={<SignIn />} />
@@ -106,6 +108,7 @@ function App() {
                 </Route>            
         </Routes>
         </SubscriptionProvider>
+        </SocketProvider>
         </AuthProvider>
     );
 }
