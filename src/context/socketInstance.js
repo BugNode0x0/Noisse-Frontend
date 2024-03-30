@@ -22,6 +22,7 @@ socket.on('pong', latency => {
 
 // Function to emit 'authenticate' event with hunter_id
 export const authenticateSocket = (hunterId) => {
+  console.log("fucking authenticated")
   socket.emit('authenticate', hunterId);
 };
 
