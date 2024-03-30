@@ -14,9 +14,10 @@ import {
 
 
 const intervals = ["This Week"];
-const socket = useContext(SocketContext);
 
 const Overview = ({ className }) => {
+  const socket = useContext(SocketContext);
+
   const generateChartData = (counter) => {
     const dataPoints = []; // Create an array to store the data points
     const steps = 10; // The number of steps or data points you want
