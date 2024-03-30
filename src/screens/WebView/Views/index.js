@@ -3,7 +3,6 @@ import styles from "./Views.module.sass";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getScreenshots } from '../../../api/subdomainAPI';
-import socket from "../../../context/socketInstance"
 
 const ITEMS_PER_PAGE = 20;  // Set the desired items per page
 
@@ -34,21 +33,6 @@ const Views = ({ search }) => { // Removed unused 'items' prop
     };
     fetchScreenshots();
 
-    socket.on('connect', () => {
-      console.log('Connected to websocket server');
-    });
-
-    socket.on('screenshot update', (data) => {
-      console.log('screenshot update received:', data.message);
-      fetchScreenshots();
-    });
-    
-    return () => {
-      socket.off('connect');
-      socket.off('subdomain update');
-      socket.disconnect();
-      console.log('Disconnected from websocket server');
-    };
   }, [search, currentPage]);
 
   const handlePageClick = (data) => {
