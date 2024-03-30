@@ -4,7 +4,6 @@ import Icon from "../../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getSubdomains } from '../../../../api/subdomainAPI';
-import socket from '../../../../context/socketInstance';
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
@@ -49,24 +48,6 @@ const AllDomains = ({ search, limit }) => { // Removed unused 'items' prop
     };
     fetchSubdomains();
 
-    // Open the socket connection
-    socket.on('connect', () => {
-      console.log('Connected to websocket server');
-    });
-
-    // Listen for 'subdomain update' events
-    socket.on('subdomain update', (data) => {
-      console.log('Subdomain update received:', data.message);
-      fetchSubdomains(); // Call fetchSubdomains to update the list of subdomains
-    });
-
-    // Cleanup function for WebSocket
-    return () => {
-      socket.off('connect');
-      socket.off('subdomain update');
-      socket.disconnect();
-      console.log('Disconnected from websocket server');
-    };
   }, [ search, currentPage]);
 
 
