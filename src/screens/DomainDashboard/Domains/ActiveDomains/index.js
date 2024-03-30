@@ -4,7 +4,6 @@ import Icon from "../../../../components/Icon";
 import Row from "./Row";
 import ReactPaginate from 'react-paginate';
 import { getActiveDomains } from '../../../../api/subdomainAPI';
-import socket from '../../../../context/socketInstance';
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
@@ -31,26 +30,16 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
   };
 
   useEffect(() => {
-    const fetchActiveDomains = async () => {
+    const fetchassetsIps = async () => {
       try {
-        const data = await getActiveDomains(search, currentPage, ITEMS_PER_PAGE);
-        setActiveDomains(data.activeDomains);
-        setTotalActiveDomains(data.total);
+        const data = await getIPAssets(search, currentPage, ITEMS_PER_PAGE);
+        setassetsIps(data.assetsIps);
+        setTotalassetsIps(data.total);
       } catch (error) {
-        console.error('Error fetching active domains:', error);
+        console.error('Error fetching web domains:', error);
       }
     };
-    fetchActiveDomains();
-
-    // Listen for 'active domain update' events or similar events tailored for active domains
-    socket.on('active domain update', (data) => {
-      console.log('Active domain update received:', data.message);
-      fetchActiveDomains();
-    });
-
-    return () => {
-      socket.off('active domain update');
-    };
+    fetchassetsIps();
   }, [search, currentPage]);
 
   return (

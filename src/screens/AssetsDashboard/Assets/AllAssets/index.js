@@ -3,7 +3,7 @@ import styles from "./AllAssets.module.sass";
 import Icon from "../../../../components/Icon";
 import Row from "./Row";// Row.js
 import ReactPaginate from 'react-paginate';
-import { getIPAssets } from '../../../../api/subdomainAPI';å
+import { getIPAssets } from '../../../../api/subdomainAPI';
 
 const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
