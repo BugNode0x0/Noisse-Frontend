@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import cn from "classnames";
 import styles from "./Overview.module.sass";
+import { SocketContext } from '../../../context/socketContext'; 
 import TooltipGlodal from "../../../components/TooltipGlodal";
 import Card from "../../../components/Card";
 import Icon from "../../../components/Icon";
@@ -13,6 +14,7 @@ import {
 
 
 const intervals = ["This Week"];
+const socket = useContext(SocketContext);
 
 const Overview = ({ className }) => {
   const generateChartData = (counter) => {
@@ -102,8 +104,26 @@ const Overview = ({ className }) => {
     };
   
     fetchCounts();
-    
-  }, [sorting]);
+    const intervalId = setInterval(fetchCounts, 5000);
+
+    socket.on('updateCounts', (data) => {
+      if (data.type === 'discoveredDomains') {
+          setDiscoveredCount(data.count);
+          setDiscoveredDomainsChartData(generateChartData(data.count));
+      } else if (data.type === 'activeDomains') {
+          setActiveCount(data.count);
+          setActiveDomainsChartData(generateChartData(data.count));
+      } else if (data.type === 'webDomains') {
+          setWebCount(data.count);
+          setWebDomainsChartData(generateChartData(data.count));
+      }
+  });
+
+  return () => {
+      clearInterval(intervalId);
+      socket.off('updateCounts');
+  };
+}, [socket, sorting]);
 
   return (
     <>
