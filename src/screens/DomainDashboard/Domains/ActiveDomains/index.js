@@ -30,16 +30,17 @@ const ActiveDomains = ({search, limit}) => { // Removed unused 'items' prop
   };
 
   useEffect(() => {
-    const fetchassetsIps = async () => {
+    const fetchActiveDomains = async () => {
       try {
-        const data = await getIPAssets(search, currentPage, ITEMS_PER_PAGE);
-        setassetsIps(data.assetsIps);
-        setTotalassetsIps(data.total);
+        const data = await getActiveDomains(search, currentPage, ITEMS_PER_PAGE);
+        setActiveDomains(data.activeDomains);
+        setTotalActiveDomains(data.total);
       } catch (error) {
-        console.error('Error fetching web domains:', error);
+        console.error('Error fetching active domains:', error);
       }
     };
-    fetchassetsIps();
+    fetchActiveDomains();
+
   }, [search, currentPage]);
 
   return (
