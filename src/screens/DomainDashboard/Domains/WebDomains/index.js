@@ -4,14 +4,13 @@
   import Row from "./Row";// Row.js
   import ReactPaginate from 'react-paginate';
   import { getWebDomains } from '../../../../api/subdomainAPI';
-  import socket from '../../../../context/socketInstance';
   import { debounce } from 'lodash';
 
 
   const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
-  const WebDomains = ({ search, limit }) => { // Removed unused 'items' prop
-    const [chooseAll, setChooseAll] = useState(false); // Fixed typo setСhooseAll -> setChooseAll
+  const WebDomains = ({ search, limit }) => { 
+    const [chooseAll, setChooseAll] = useState(false);
     const [selectedFilters, setSelectedFilters] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [itemsPerPage] = useState(ITEMS_PER_PAGE);  
@@ -80,25 +79,6 @@
         });
       }
 
-      // Open the socket connection
-      socket.on('connect', () => {
-        console.log('Connected to websocket server');
-        debouncedFetchWebDomains(search);
-      });
-
-      // Listen for 'subdomain update' events
-      socket.on('web domain update', (data) => {
-        console.log('Web domain update received:', data.message);
-        fetchWebDomains();
-      });
-      
-      // Cleanup function for WebSocket
-      return () => {
-        socket.off('connect');
-        socket.off('subdomain update');
-        socket.disconnect();
-        console.log('Disconnected from websocket server');
-      };
 
     }, [search, currentPage, sortConfig.key, sortConfig.direction]);
 
