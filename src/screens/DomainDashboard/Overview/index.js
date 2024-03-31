@@ -104,6 +104,7 @@ const Overview = ({ className }) => {
       }
     };
   
+    
     fetchCounts();
     const intervalId = setInterval(fetchCounts, 5000);
 
