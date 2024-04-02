@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
 import cn from "classnames";
+import { SocketContext } from '../../../context/socketContext';
 import OutsideClickHandler from "react-outside-click-handler";
 import styles from "./Notification.module.sass";
 import Icon from "../../Icon";
 import Actions from "../../Actions";
 import Item from "./Item";
-import { getHunterId } from '../../../api/subdomainAPI';
 
 const actions = [
   {
@@ -24,6 +23,29 @@ const actions = [
 const Notification = ({ className }) => {
   const [visible, setVisible] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const socket = useContext(SocketContext);
+
+  useEffect(() => {
+    // Listen for 'notification' events from the server
+    const handleNotification = (data) => {
+      console.log("Received notification:", data);
+
+      // Parse the notification data (if necessary)
+      const newNotification = typeof data === 'string' ? JSON.parse(data) : data;
+
+      // Update the notifications state
+      setNotifications((prevNotifications) => [...prevNotifications, newNotification]);
+    };
+
+
+
+    socket.on("notification", handleNotification);
+
+    // Clean up event listener on component unmount
+    return () => {
+      socket.off("notification", handleNotification);
+    };
+  }, [socket]);
 
   return (
     <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
