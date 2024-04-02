@@ -29,10 +29,16 @@ const Notification = ({ className }) => {
     // Listen for 'notification' events from the server
     const handleNotification = (data) => {
       console.log("Received notification:", data);
-
-      // Parse the notification data (if necessary)
-      const newNotification = typeof data === 'string' ? JSON.parse(data) : data;
-
+    
+      let newNotification;
+      try {
+        // Attempt to parse the notification data as JSON
+        newNotification = JSON.parse(data);
+      } catch (e) {
+        // If parsing fails, treat the data as plain text
+        newNotification = { message: data };
+      }
+    
       // Update the notifications state
       setNotifications((prevNotifications) => [...prevNotifications, newNotification]);
     };
