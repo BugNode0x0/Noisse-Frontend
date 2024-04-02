@@ -26,17 +26,29 @@ const Notification = ({ className }) => {
   const socket = useContext(SocketContext);
 
   useEffect(() => {
-    const handleNotification = (notification) => {
-      console.log("Received notification:", notification);
-      // Update the notifications state
-      setNotifications((prevNotifications) => [...prevNotifications, notification]);
+    const handleNotification = (data) => {
+      console.log("Notification event received from socket:", data);
+
+      try {
+        const notification = JSON.parse(data);
+        console.log("Parsed notification:", notification);
+
+        setNotifications((prevNotifications) => {
+          const updatedNotifications = [...prevNotifications, notification];
+          console.log("Updated notifications state:", updatedNotifications);
+          return updatedNotifications;
+        });
+      } catch (error) {
+        console.error("Error parsing notification data:", error);
+      }
     };
 
+    // Listen for 'notification' events from the server
     socket.on("notification", handleNotification);
 
     // Clean up event listener on component unmount
     return () => socket.off("notification", handleNotification);
-  }, [socket]); // Re-run the effect if socket changes
+  }, [socket]);
 
   return (
     <OutsideClickHandler onOutsideClick={() => setVisible(false)}>
@@ -51,10 +63,16 @@ const Notification = ({ className }) => {
             <Actions className={styles.actions} classActionsHead={styles.actionsHead} items={actions} small />
           </div>
           <div className={styles.list}>
-            {notifications.map((notification, index) => (
-              <Item className={styles.item} item={notification} key={index} onClose={() => setVisible(false)} />
-            ))}
-          </div>
+        {notifications.length === 0 && <div>No notifications yet.</div>}
+        {notifications.map((notification, index) => (
+          <Item
+            className={cn(styles.item, className)}
+            item={notification}
+            key={index}
+            onClose={() => setVisible(false)}
+          />
+        ))}
+      </div>
         </div>
       </div>
     </OutsideClickHandler>
