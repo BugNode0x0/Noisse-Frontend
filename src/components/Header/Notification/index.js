@@ -29,17 +29,20 @@ const Notification = ({ className }) => {
     const handleNotification = (data) => {
       console.log("Notification event received from socket:", data);
 
-      try {
-        const notification = JSON.parse(data);
-        console.log("Parsed notification:", notification);
-
-        setNotifications((prevNotifications) => {
-          const updatedNotifications = [...prevNotifications, notification];
-          console.log("Updated notifications state:", updatedNotifications);
-          return updatedNotifications;
-        });
-      } catch (error) {
-        console.error("Error parsing notification data:", error);
+      // Check if data is a string that needs to be parsed as JSON
+      if (typeof data === 'string' && data.startsWith('{') && data.endsWith('}')) {
+        try {
+          const parsedData = JSON.parse(data);
+          console.log("Parsed notification:", parsedData);
+          setNotifications((prev) => [...prev, parsedData]);
+        } catch (error) {
+          console.error("Error parsing notification JSON:", error);
+        }
+      } else {
+        // Handle the case where data is a plain string or already a parsed object
+        const notification = typeof data === 'string' ? { message: data } : data;
+        console.log("Adding plain text notification:", notification);
+        setNotifications((prev) => [...prev, notification]);
       }
     };
 
