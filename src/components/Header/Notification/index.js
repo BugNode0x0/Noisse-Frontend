@@ -14,9 +14,16 @@ const Notification = ({ className }) => {
 
   useEffect(() => {
     const storedNotifications = JSON.parse(localStorage.getItem('notifications')) || [];
-    setNotifications(storedNotifications.filter(notification => {
-      return Date.now() - notification.timestamp < 24 * 60 * 60 * 1000;
-    }));
+    const filteredNotifications = storedNotifications.filter(notification => {
+      return Date.now() - notification.timestamp < 24 * 60 * 60 * 1000; // 24 hours in milliseconds
+    });
+  
+    // If we've removed any, update local storage and state
+    if (filteredNotifications.length !== storedNotifications.length) {
+      localStorage.setItem('notifications', JSON.stringify(filteredNotifications));
+    }
+  
+    setNotifications(filteredNotifications);
   }, []);
 
   useEffect(() => {
@@ -24,26 +31,23 @@ const Notification = ({ className }) => {
       console.log("Notification event received from socket:", data);
   
       let newNotification;
-      // Check if data is a string that needs to be parsed as JSON
-      if (typeof data === 'string' && data.startsWith('{') && data.endsWith('}')) {
-        try {
-          newNotification = JSON.parse(data);
-          console.log("Parsed notification:", newNotification);
-        } catch (error) {
-          console.error("Error parsing notification JSON:", error);
-          return; // If there is an error, exit early
-        }
-      } else {
-        // Handle the case where data is a plain string or already a parsed object
-        newNotification = typeof data === 'string' ? { message: data } : data;
-        console.log("Adding plain text notification:", newNotification);
+      try {
+        // Assume data is already a JSON object
+        newNotification = (typeof data === 'object') ? data : JSON.parse(data);
+      } catch (error) {
+        // If not a JSON string, then treat as a simple text message
+        newNotification = { message: data };
       }
   
-      // Update notifications state and local storage
+      // Always add a timestamp to the new notification
+      newNotification.timestamp = Date.now();
+  
+      // Update the notifications state and local storage
       setNotifications(prevNotifications => {
         const updatedNotifications = [...prevNotifications, newNotification];
-        // Save updated notifications to local storage
-        localStorage.setItem('notifications', JSON.stringify(updatedNotifications));
+        localStorage.setItem('notifications', JSON.stringify(updatedNotifications.filter(notification => {
+          return Date.now() - notification.timestamp < 24 * 60 * 60 * 1000; // Filter out notifications older than 24 hours
+        })));
         return updatedNotifications;
       });
     };
