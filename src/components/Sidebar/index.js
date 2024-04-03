@@ -130,7 +130,7 @@ const Sidebar = ({ className, onClose }) => {
                         onClick={() => setVisibleHelp(true)}
                     >
                         <Icon name="help" size="24" />
-                        Help
+                        Get help or provide feedback!
                     </button>
                 </div>
             </div>
