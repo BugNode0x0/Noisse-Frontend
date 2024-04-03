@@ -83,14 +83,6 @@ const Sidebar = ({ className, onClose }) => {
                 <button className={styles.close} onClick={onClose}>
                     <Icon name="close" size="24" />
                 </button>
-                <Link className={styles.logo} to="/" onClick={onClose}>
-                    <Image
-                        className={styles.pic}
-                        src="/images/logo-dark.png"
-                        srcDark="/images/logo-light.png"
-                        alt="Core"
-                    />
-                </Link>
                 <div className={styles.menu}>
                     {navigation.map((x, index) =>
                         x.url ? (
@@ -130,9 +122,8 @@ const Sidebar = ({ className, onClose }) => {
                         onClick={() => setVisibleHelp(true)}
                     >
                         <Icon name="help" size="24" />
-                        Help & getting started
+                        Help
                     </button>
-                    <Theme className={styles.theme} visibleSidebar={visible} />
                 </div>
             </div>
             <Help
