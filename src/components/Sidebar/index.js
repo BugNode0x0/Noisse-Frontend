@@ -65,6 +65,17 @@ const navigation = [
             },
         ],
     },
+    {
+        title: "Historic URLs",
+        slug: "Historic URLs",
+        icon: "clock",
+        dropdown: [
+            {
+                title: "Historic URLs",
+                url: "/historic-urls/view",
+            },
+        ],
+    },
 ];
 
 const Sidebar = ({ className, onClose }) => {
