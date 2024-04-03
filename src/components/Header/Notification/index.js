@@ -107,5 +107,4 @@ const Notification = ({ className }) => {
   );
 };
 
-
 export default Notification;
