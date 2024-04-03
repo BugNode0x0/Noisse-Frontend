@@ -1,6 +1,8 @@
 import React from "react";
 import styles from "./Theme.module.sass";
 import Icon from "../Icon";
+import cn from "classnames";
+
 
 const Theme = ({ className, visibleSidebar }) => {
   return (
