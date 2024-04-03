@@ -1,0 +1,95 @@
+@import ../../styles/helpers
+
+.row
+    display: flex
+    +t
+        display: block
+
+.col
+    &:first-child
+        flex: 0 0 calc(100% - 340px)
+        width: calc(100% - 340px)
+        padding-right: 8px
+        +w
+            flex: 0 0 calc(100% - 310px)
+            width: calc(100% - 310px)
+        +d
+            flex: 0 0 calc(100% - 296px)
+            width: calc(100% - 296px)
+        +t
+            width: 100%
+            margin-bottom: 16px
+            padding-right: 0
+    &:nth-child(2)
+        flex-shrink: 0
+        width: 340px
+        +w
+            width: 310px
+        +d
+            width: 296px
+        +t
+            width: 100%
+
+.row,
+    .card
+        &:not(:last-child)
+            margin-bottom: 16px
+
+.form
+    margin-bottom: 16px
+
+.pagination
+  display: flex
+  align-items: center
+  justify-content: center
+  list-style-type: none
+  padding: 0
+  margin: 24px 0
+
+  li
+    a
+      display: flex
+      align-items: center
+      justify-content: center
+      min-width: 40px
+      height: 10px
+      margin: 0 4px
+      text-decoration: none
+      color: $n4
+      border-radius: 20px
+      transition: color .2s, border-color .2s
+      +caption1
+      &:hover, &.active
+        border-color: $n7
+        color: $n7
+        +dark
+          border-color: $n6
+          color: $n1
+
+      +dark
+        color: $n1
+
+    .previous, .next
+      svg
+        fill: currentColor
+
+.searchDownloadWrapper
+  display: flex
+  align-items: center
+  justify-content: space-between
+  margin-bottom: 24px
+
+.searchBar
+  flex-grow: 1
+  margin-right: 16px
+
+.downloadButton
+  padding: 8px 16px
+  background-color: #6558f5
+  color: #ffffff
+  border: none
+  cursor: pointer
+  transition: background-color 0.3s
+
+  &:hover
+    background-color: darken(#6558f5, 10%)

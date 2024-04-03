@@ -66,8 +66,8 @@ const navigation = [
         ],
     },
     {
-        title: "Historic URLs",
-        slug: "Historic URLs",
+        title: "Historic Data",
+        slug: "Urls",
         icon: "clock",
         dropdown: [
             {
