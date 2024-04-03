@@ -14,7 +14,7 @@ import NewAsset from "./screens/NewAsset";
 import AssetManagement from "./screens/AssetManagement";
 import WebView from "./screens/WebView";
 import Crawl from "./screens/Crawl";
-import Crawl from "./screens/Hurls";
+import Hurls from "./screens/Hurls";
 import Profile from "./screens/Profile"
 import PaymentSuccess from './screens/PaymentSuccess';
 import PaymentCancelled from './screens/PaymentCancelled';

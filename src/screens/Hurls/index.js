@@ -8,7 +8,7 @@ import cn from 'classnames';
 
 const ITEMS_PER_PAGE = 20;
 
-const Crawl = () => {
+const Hurls = () => {
     const [groupedUrls, setGroupedUrls] = useState({});
     const [search, setSearch] = useState("");
     const [totalPages, setTotalPages] = useState(0); 
@@ -90,4 +90,4 @@ const Crawl = () => {
     );
 };
 
-export default Crawl;
+export default Hurls;
