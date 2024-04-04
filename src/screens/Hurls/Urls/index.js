@@ -109,7 +109,6 @@
           </div>
             </div>
             <div className={styles.col}>URL</div>
-            <div className={styles.col} onClick={() => onSort('status_code')}>Status Code</div>
             <div className={styles.col}>Content Length</div>
             <div className={styles.col}>Web Server</div>
             <div className={styles.col}>Tech</div>
@@ -118,8 +117,6 @@
           <Row
               item={domain.url}
               url={domain.url}
-              title={domain.title}
-              statusCode={domain.status_code}
               contentLength={domain.content_length}
               webServer={domain.webserver}
               technology={domain.tech}
