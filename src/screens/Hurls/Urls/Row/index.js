@@ -15,6 +15,7 @@ const Row = ({ url, title, statusCode, contentLength, webServer, technology,sele
       <div className={styles.col}>{webServer}</div>
       <div className={styles.col}>{technology}</div>
 
+
     </div>
   );
 };
