@@ -100,7 +100,7 @@ function App() {
                 <Route
                     path="historic-urls/view"
                     element={
-                        <Page title="Crawler">
+                        <Page title="Historic Urls">
                             <Hurls />
                         </Page>
                     }

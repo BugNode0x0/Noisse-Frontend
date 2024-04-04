@@ -1,35 +1,151 @@
-import React from "react";
-import styles from "./Urls.module.sass";
-import Card from "../../../components/Card"; // Adjust the path as necessary
-import Dropdown from "../../../components/Dropdown"; // Adjust the path as necessary
-
-const Urls = ({ subdomain, urls }) => {
-    // State to control the dropdown visibility
-    const [selectedUrl, setSelectedUrl] = React.useState(urls[0]); // Default to the first URL
-    const [visible, setVisible] = React.useState(false);
+  import React, { useState, useContext, useEffect, useMemo } from "react";
+  import styles from "./WebDomains.module.sass";
+  import Icon from "../../../components/Icon";
+  import Row from "./Row";
+  import ReactPaginate from 'react-paginate';
+  import { getWebDomains } from '../../../api/subdomainAPI';
+  import { debounce } from 'lodash';
 
 
-    // Handler to toggle dropdown visibility
-    const toggleDropdown = () => setVisible(!visible);
+  const ITEMS_PER_PAGE = 10;  // Set the desired items per page
 
-    // Dropdown options
-    const dropdownOptions = urls.map(url => ({ value: url, label: url }));
+  const Urls = ({ search, limit }) => { 
+    const [chooseAll, setChooseAll] = useState(false);
+    const [selectedFilters, setSelectedFilters] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage] = useState(ITEMS_PER_PAGE);  
+    const [webDomains, setWebDomains] = useState([]);
+    const [totalWebDomains, setTotalWebDomains] = useState(0);  
+    const [sortConfig, setSortConfig] = useState({ key: 'statusCode', direction: 'ascending' });
+
+    const debouncedFetchWebDomains = debounce(async (search) => {
+      try {
+        const data = await getWebDomains(search, currentPage, ITEMS_PER_PAGE);
+        setWebDomains(data.webDomains);
+        setTotalWebDomains(data.total);
+      } catch (error) {
+        console.error('Error fetching web domains:', error);
+      }
+    }, 500);
+
+    const onSort = (key) => {
+      setSortConfig((currentSortConfig) => {
+        let direction = 'ascending';
+        if (currentSortConfig.key === key && currentSortConfig.direction === 'ascending') {
+          direction = 'descending';
+        }
+        return { key, direction };
+      });
+    };
+
+    const handleChange = (id) => {
+      if (selectedFilters.includes(id)) {
+        setSelectedFilters(selectedFilters.filter((x) => x !== id));
+      } else {
+        setSelectedFilters((selectedFilters) => [...selectedFilters, id]);
+      }
+    };
+
+    const totalPages = Math.ceil(totalWebDomains / ITEMS_PER_PAGE);
+
+    const handlePageClick = (data) => {
+      const selectedPage = data.selected + 1; // Adjust the page number (+1 because `selected` is zero-based)
+      setCurrentPage(selectedPage);
+    };
+
+
+    useEffect(() => {
+      debouncedFetchWebDomains(search);
+      const fetchWebDomains = async () => {
+        try {
+          const data = await getWebDomains(search, currentPage, ITEMS_PER_PAGE);
+          setWebDomains(data.webDomains); // Assuming the response has a 'webDomains' property
+          setTotalWebDomains(data.total); // Assuming the response has a 'total' property
+        } catch (error) {
+          console.error('Error fetching web domains:', error);
+        }
+      };
+      fetchWebDomains();
+
+      if (sortConfig !== null) {
+        webDomains.sort((a, b) => {
+          if (a[sortConfig.key] < b[sortConfig.key]) {
+            return sortConfig.direction === 'ascending' ? -1 : 1;
+          }
+          if (a[sortConfig.key] > b[sortConfig.key]) {
+            return sortConfig.direction === 'ascending' ? 1 : -1;
+          }
+          return 0;
+        });
+      }
+
+
+    }, [search, currentPage, sortConfig.key, sortConfig.direction]);
+
+    const sortedWebDomains = useMemo(() => {
+      let sortableDomains = [...webDomains];
+      if (sortConfig.key) {
+        sortableDomains.sort((a, b) => {
+          if (a[sortConfig.key] < b[sortConfig.key]) {
+            return sortConfig.direction === 'ascending' ? -1 : 1;
+          }
+          if (a[sortConfig.key] > b[sortConfig.key]) {
+            return sortConfig.direction === 'ascending' ? 1 : -1;
+          }
+          return 0;
+        });
+      }
+      return sortableDomains;
+    }, [webDomains, sortConfig]);
+
 
     return (
-        <Card className={styles.card}>
-            <div className={styles.cardHead} onClick={toggleDropdown}>
-                {subdomain}
+      <div className={styles.all}>
+        <div className={styles.table}>
+          <div className={styles.row}>
+          <div className={styles.col}>
+          <div className={styles.iconCheckboxWrapper}>
+              <Icon name="cloudcheck" size="25" className={styles.icon} />
+          </div>
             </div>
-            {visible && (
-                <Dropdown
-                    className={styles.dropdown}
-                    options={dropdownOptions}
-                    value={selectedUrl}
-                    setValue={setSelectedUrl} // Set the selected URL
-                />
-            )}
-        </Card>
+            <div className={styles.col}>URL</div>
+            <div className={styles.col}>Title</div>
+            <div className={styles.col} onClick={() => onSort('status_code')}>Status Code</div>
+            <div className={styles.col}>Content Length</div>
+            <div className={styles.col}>Web Server</div>
+            <div className={styles.col}>Tech</div>
+          </div>
+          {sortedWebDomains.map((domain, index) => (            
+          <Row
+              item={domain.url}
+              url={domain.url}
+              title={domain.title}
+              statusCode={domain.status_code}
+              contentLength={domain.content_length}
+              webServer={domain.webserver}
+              technology={domain.tech}
+              key={domain.id}
+              up={WebDomains.length - index <= 2}
+              value={selectedFilters.includes(index)}
+              onChange={() => handleChange(index)}
+            />
+          ))}
+        </div>
+        <ReactPaginate
+          previousLabel={'Previous'}
+          nextLabel={'Next'}
+          breakLabel={'...'}
+          pageCount={totalPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePageClick}
+          containerClassName={styles.pagination}
+          activeClassName={styles.active}
+          forcePage={currentPage - 1} // Use forcePage to set correct page
+        />
+      </div>
+      
     );
-};
+  };
 
-export default Urls;
+  export default Urls;
