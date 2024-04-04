@@ -125,7 +125,7 @@
               webServer={domain.webserver}
               technology={domain.tech}
               key={domain.id}
-              up={WebDomains.length - index <= 2}
+              up={Urls.length - index <= 2}
               value={selectedFilters.includes(index)}
               onChange={() => handleChange(index)}
             />
