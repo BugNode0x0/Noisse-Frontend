@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styles from "./Products.module.sass";
+import styles from "./Hurls.module.sass";
 import cn from "classnames";
 import Card from "../../components/Card";
 import Form from "../../components/Form";
