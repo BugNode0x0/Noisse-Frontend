@@ -109,17 +109,11 @@
           </div>
             </div>
             <div className={styles.col}>URL</div>
-            <div className={styles.col}>Content Length</div>
-            <div className={styles.col}>Web Server</div>
-            <div className={styles.col}>Tech</div>
           </div>
           {sortedWebDomains.map((domain, index) => (            
           <Row
               item={domain.url}
               url={domain.url}
-              contentLength={domain.content_length}
-              webServer={domain.webserver}
-              technology={domain.tech}
               key={domain.id}
               up={Urls.length - index <= 2}
               value={selectedFilters.includes(index)}
