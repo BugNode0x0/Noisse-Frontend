@@ -109,7 +109,6 @@
           </div>
             </div>
             <div className={styles.col}>URL</div>
-            <div className={styles.col}>Title</div>
             <div className={styles.col} onClick={() => onSort('status_code')}>Status Code</div>
             <div className={styles.col}>Content Length</div>
             <div className={styles.col}>Web Server</div>

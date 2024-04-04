@@ -9,7 +9,6 @@ const Row = ({ url, title, statusCode, contentLength, webServer, technology,sele
       <div className={styles.col}>
       </div>
       <div className={styles.col}>{url}</div>
-      <div className={styles.col}>{title || 'N/A'}</div>
       <div className={styles.col}>{statusCode}</div>
       <div className={styles.col}>{contentLength}</div>
       <div className={styles.col}>{webServer}</div>
