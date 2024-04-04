@@ -1,93 +1,84 @@
-import React, { useState, useEffect } from "react";
-import styles from "./Hurls.module.sass";
-import Urls from "./Urls";
+import React, { useState } from "react";
+import styles from "./Products.module.sass";
+import cn from "classnames";
+import Card from "../../components/Card";
 import Form from "../../components/Form";
-import { getCrawl, downloadCrawlCSV } from '../../api/subdomainAPI';
-import ReactPaginate from 'react-paginate';
-import cn from 'classnames';
-
-const ITEMS_PER_PAGE = 20;
+import Dropdown from "../../components/Dropdown";
+import Urls from "./Urls";
+import { downloadWebDomainsCSV } from '../../api/subdomainAPI';
 
 const Hurls = () => {
-    const [groupedUrls, setGroupedUrls] = useState({});
-    const [search, setSearch] = useState("");
-    const [totalPages, setTotalPages] = useState(0); 
-    const [currentPage, setCurrentPage] = useState(1);
-    
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const { jsview, total } = await getCrawl(search, currentPage, ITEMS_PER_PAGE);
-                
-                const urlsBySubdomain = jsview.reduce((acc, { subdomain, urls }) => {
-                    acc[subdomain] = urls; // Assuming 'urls' is an array
-                    return acc;
-                }, {});
-    
-                setGroupedUrls(urlsBySubdomain);
-                setTotalPages(Math.ceil(total / ITEMS_PER_PAGE));
-            } catch (error) {
-                console.error('Error fetching crawl data:', error);
-            }
-        };
-    
-        fetchData();
-    }, [search, currentPage]);
+    const downloadOptions = [
+      { label: "Web Domains", value: "Web" }
+    ];
 
-    const handlePageClick = (data) => {
-        setCurrentPage(data.selected + 1);
-    };
+  const [search, setSearch] = useState("");
+  const [activeDomainType, setActiveDomainType] = useState(downloadOptions[0].value);
 
-    const handleSearchSubmit = (e) => {
-        e.preventDefault();
-        setCurrentPage(1); 
-    };
+  const handleDownload = () => {
+    downloadWebDomainsCSV(search);
+  };
 
-    const handleDownload = async () => {
-        try {
-            await downloadCrawlCSV(search);
-        } catch (error) {
-            console.error('Failed to download the CSV file:', error);
-        }
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
 
-    return (
-        <div className={styles.section}>
-            <div className={cn(styles.searchDownloadWrapper)}>
-              <Form
-                className={cn(styles.searchBar)}
-                value={search}
-                setValue={setSearch}
-                onSubmit={handleSearchSubmit}
-                placeholder="Search URLs"
-                type="text"
-                name="search"
-                icon="search"
-              />
-              <button
-                className={cn(styles.downloadButton)}
-                onClick={handleDownload}
-              >
-                Download CSV
-              </button>
-            </div>
-            {Object.entries(groupedUrls).map(([subdomain, urls]) => (
-                <Urls key={subdomain} subdomain={subdomain} urls={urls} />
-            ))}
-            <ReactPaginate
-                previousLabel={'Previous'}
-                nextLabel={'Next'}
-                breakLabel={'...'}
-                pageCount={totalPages}
-                marginPagesDisplayed={2}
-                pageRangeDisplayed={5}
-                onPageChange={handlePageClick}
-                containerClassName={styles.pagination}
-                activeClassName={styles.active}
-                forcePage={currentPage - 1}
+  //const renderDomainComponent = () => {
+  //  switch (activeDomainType) {
+  //    case "Web":
+  //      return <Urls search={search} limit={3} />;
+  //    case "Active":
+  //      return <ActiveDomains search={search} limit={3} />;
+  //    case "All":
+  //      return <AllDomains search={search} limit={3} />;
+  //    default:
+  //      return null;
+  //  }
+  //};
+
+  return (
+    <Card
+      className={styles.card}
+      title="Domains"
+      classTitle={cn("title-purple", styles.title)}
+      classCardHead={styles.head}
+      head={
+        <>
+          <Form
+            className={styles.form}
+            value={search}
+            setValue={setSearch}
+            onSubmit={handleSubmit}
+            placeholder="Search domains"
+            type="text"
+            name="search"
+            icon="search"
+          />
+          <div className={styles.dropdownControl}>
+            <Dropdown
+              classDropdownHead={styles.dropdownHead}
+              value={activeDomainType}
+              setValue={setActiveDomainType}
+              options={downloadOptions}
+              small
             />
+            <button
+              className={cn("button-stroke button-small", styles.button)}
+              onClick={handleDownload}
+            >
+              Download CSV
+            </button>
+          </div>
+        </>
+      }
+    >
+      <div className={styles.products}>
+        <div className={styles.wrapper}>
+          <Urls search={search} limit={3} />
         </div>
-    );
+      </div>
+    </Card>
+  );
 };
 
 export default Hurls;
