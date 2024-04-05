@@ -3,11 +3,11 @@
   import Icon from "../../../components/Icon";
   import Row from "./Row";
   import ReactPaginate from 'react-paginate';
-  import { getWebDomains } from '../../../api/subdomainAPI';
+  import { getHistoricUrls } from '../../../api/subdomainAPI';
   import { debounce } from 'lodash';
 
 
-  const ITEMS_PER_PAGE = 10;  // Set the desired items per page
+  const ITEMS_PER_PAGE = 10;
 
   const Urls = ({ search, limit }) => { 
     const [chooseAll, setChooseAll] = useState(false);
@@ -20,7 +20,7 @@
 
     const debouncedFetchWebDomains = debounce(async (search) => {
       try {
-        const data = await getWebDomains(search, currentPage, ITEMS_PER_PAGE);
+        const data = await getHistoricUrls(search, currentPage, ITEMS_PER_PAGE);
         setWebDomains(data.webDomains);
         setTotalWebDomains(data.total);
       } catch (error) {
@@ -58,9 +58,9 @@
       debouncedFetchWebDomains(search);
       const fetchWebDomains = async () => {
         try {
-          const data = await getWebDomains(search, currentPage, ITEMS_PER_PAGE);
-          setWebDomains(data.webDomains); // Assuming the response has a 'webDomains' property
-          setTotalWebDomains(data.total); // Assuming the response has a 'total' property
+          const data = await getHistoricUrls(search, currentPage, ITEMS_PER_PAGE);
+          setWebDomains(data.webDomains); 
+          setTotalWebDomains(data.total); 
         } catch (error) {
           console.error('Error fetching web domains:', error);
         }

@@ -361,3 +361,13 @@ export const getHunterId = async () => {
     throw new Error('Failed to fetch hunter ID');
   }
 };
+
+export const getHistoricUrls = async (search, page, limit) => {
+  try {
+    const response = await api.get(`/historic-urls`, { params: { search: search || '', page, pageSize: limit } });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching web domains:', error);
+    throw new Error('Could not retrieve web domains.');
+  }
+};
