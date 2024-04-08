@@ -21,7 +21,7 @@
     const debouncedFetchWebDomains = debounce(async (search) => {
       try {
         const data = await getHistoricUrls(search, currentPage, ITEMS_PER_PAGE);
-        setWebDomains(data.webDomains);
+        setWebDomains(data.urls);
         setTotalWebDomains(data.total);
       } catch (error) {
         console.error('Error fetching web domains:', error);
@@ -59,7 +59,7 @@
       const fetchWebDomains = async () => {
         try {
           const data = await getHistoricUrls(search, currentPage, ITEMS_PER_PAGE);
-          setWebDomains(data.webDomains); 
+          setWebDomains(data.urls); 
           setTotalWebDomains(data.total); 
         } catch (error) {
           console.error('Error fetching web domains:', error);
@@ -112,8 +112,8 @@
           </div>
           {sortedWebDomains.map((domain, index) => (            
           <Row
-              item={domain.url}
-              url={domain.url}
+              item={domain.urls}
+              url={domain.urls}
               key={domain.id}
               up={Urls.length - index <= 2}
               value={selectedFilters.includes(index)}
@@ -138,5 +138,5 @@
     );
   };
 
-  
+
   export default Urls;
