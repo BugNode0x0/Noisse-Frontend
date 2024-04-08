@@ -364,7 +364,7 @@ export const getHunterId = async () => {
 
 export const getHistoricUrls = async (search, page, limit) => {
   try {
-    const response = await api.get(`/historic-urls`, { params: { search: search || '', page, pageSize: limit } });
+    const response = await api.get(`/historical-urls`, { params: { search: search || '', page, pageSize: limit } });
     return response.data;
   } catch (error) {
     console.error('Error fetching web domains:', error);
