@@ -47,7 +47,9 @@
         <div className={styles.table}>
           <div className={styles.row}>
             <div className={styles.col}>
-              <Icon name="cloudcheck" size="25" />
+            <div className={styles.iconCheckboxWrapper}>
+              <Icon name="cloudcheck" size="25" className={styles.icon} />
+          </div>
             </div>
             <div className={styles.col}>URL</div>
           </div>
