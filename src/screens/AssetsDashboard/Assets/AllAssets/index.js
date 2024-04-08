@@ -1,90 +1,70 @@
-import React, { useState, useContext, useEffect } from "react";
-import styles from "./AllAssets.module.sass";
-import Icon from "../../../../components/Icon";
-import Row from "./Row";// Row.js
-import ReactPaginate from 'react-paginate';
-import { getIPAssets } from '../../../../api/subdomainAPI';
+import React, { useState, useEffect } from "react";
+import cn from "classnames";
+import styles from "./AssetManagement.module.sass";
+import Card from "../../components/Card";
+import Form from "../../components/Form";
+import AllAssets from "../AssetsDashboard/Assets/AllAssets";
+import { useLocation, useNavigate } from 'react-router-dom';
+import queryString from 'query-string';
+import { downloadAssetsCSV } from '../../api/subdomainAPI'; // Make sure this path is correct
 
-const ITEMS_PER_PAGE = 10;  // Set the desired items per page
+const AssetManagement = () => {
+  const [search, setSearch] = useState('');
+  const [activeTab, setActiveTab] = useState("All"); // Default to "All" or use your navigation logic here
+  const navigate = useNavigate();
+  const location = useLocation();
 
-const AllAssets = ({ search, limit }) => { // Removed unused 'items' prop
-  const [chooseAll, setChooseAll] = useState(false); 
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(ITEMS_PER_PAGE);  
-  const [assetsIps, setassetsIps] = useState([]);
-  const [totalassetsIps, setTotalassetsIps] = useState(0);  
+  useEffect(() => {
+    const params = queryString.parse(location.search);
+    setActiveTab(params.tab || "All");
+    setSearch(params.search || '');
+  }, [location.search]);
 
-  const handleChange = (id) => {
-    if (selectedFilters.includes(id)) {
-      setSelectedFilters(selectedFilters.filter((x) => x !== id));
-    } else {
-      setSelectedFilters((selectedFilters) => [...selectedFilters, id]);
+  const handleDownload = async () => {
+    try {
+      await downloadAssetsCSV(search);
+    } catch (error) {
+      console.error('Failed to download the CSV file:', error);
     }
   };
 
-  const totalPages = Math.ceil(totalassetsIps / ITEMS_PER_PAGE);
-
-  const handlePageClick = (data) => {
-    const selectedPage = data.selected + 1; // Adjust the page number (+1 because `selected` is zero-based)
-    setCurrentPage(selectedPage);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/domains/view?tab=${activeTab}&search=${search}`);
   };
 
-
-  useEffect(() => {
-    const fetchassetsIps = async () => {
-      try {
-        const data = await getIPAssets(search, currentPage, ITEMS_PER_PAGE);
-        setassetsIps(data.assetsIps); // Assuming the response has a 'assetsIps' property
-        setTotalassetsIps(data.total); // Assuming the response has a 'total' property
-      } catch (error) {
-        console.error('Error fetching web domains:', error);
-      }
-    };
-    fetchassetsIps();
-
-  }, [search, currentPage]);
-
-
   return (
-    <div className={styles.all}>
-      <div className={styles.table}>
-        <div className={styles.row}>
-        <div className={styles.col}>
-        <div className={styles.iconCheckboxWrapper}>
-            <Icon name="server" size="25" className={styles.icon} />
-        </div>
-          </div>
-          <div className={styles.col}>IP</div>
-          <div className={styles.col}>Host</div>
-        </div>
-        {assetsIps.map((domain, index) => (
-          <Row
-            item={domain.ip}
-            url={domain.ip}
-            title={domain.subdomain}
-            key={index}
-            up={AllAssets.length - index <= 2}
-            value={selectedFilters.includes(index)}
-            onChange={() => handleChange(index)}
+    <Card
+      className={styles.card}
+      title="Assets"
+      classTitle={cn("title-purple", styles.title)}
+      classCardHead={styles.head}
+      head={
+        <>
+          <Form
+            className={styles.form}
+            value={search}
+            setValue={setSearch}
+            onSubmit={handleSubmit}
+            placeholder="Search assets"
+            type="text"
+            name="search"
+            icon="search"
           />
-        ))}
+          <button
+            className={cn("button-stroke button-small", styles.button)}
+            onClick={handleDownload}
+          >
+            Download CSV
+          </button>
+        </>
+      }
+    >
+      <div className={styles.products}>
+        <AllAssets search={search} />
       </div>
-      <ReactPaginate
-        previousLabel={'Previous'}
-        nextLabel={'Next'}
-        breakLabel={'...'}
-        pageCount={totalPages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePageClick}
-        containerClassName={styles.pagination}
-        activeClassName={styles.active}
-        forcePage={currentPage - 1} // Use forcePage to set correct page
-      />
-    </div>
-    
+    </Card>
   );
 };
 
-export default AllAssets;
+export default AssetManagement;
