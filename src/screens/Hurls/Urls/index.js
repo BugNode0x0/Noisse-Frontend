@@ -10,116 +10,54 @@
   const ITEMS_PER_PAGE = 10;
 
   const Urls = ({ search, limit }) => { 
-    const [chooseAll, setChooseAll] = useState(false);
-    const [selectedFilters, setSelectedFilters] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
-    const [itemsPerPage] = useState(ITEMS_PER_PAGE);  
     const [webDomains, setWebDomains] = useState([]);
-    const [totalWebDomains, setTotalWebDomains] = useState(0);  
-    const [sortConfig, setSortConfig] = useState({ key: 'statusCode', direction: 'ascending' });
+    const [totalWebDomains, setTotalWebDomains] = useState(0);
 
-    const debouncedFetchWebDomains = debounce(async (search) => {
+    const fetchWebDomains = debounce(async (searchValue, page) => {
       try {
-        const data = await getHistoricUrls(search, currentPage, ITEMS_PER_PAGE);
-        setWebDomains(data.webDomains);
-        setTotalWebDomains(data.total);
+        const data = await getHistoricUrls(searchValue, page, ITEMS_PER_PAGE);
+        if (data && Array.isArray(data.urls) && typeof data.total === 'number') {
+          setWebDomains(data.urls);
+          setTotalWebDomains(data.total);
+        } else {
+          throw new Error('Invalid data structure received from getHistoricUrls');
+        }
       } catch (error) {
-        console.error('Error fetching web domains:', error);
+        console.error('Error fetching historical URLs:', error);
+        setWebDomains([]);
+        setTotalWebDomains(0);
       }
     }, 500);
-
-    const onSort = (key) => {
-      setSortConfig((currentSortConfig) => {
-        let direction = 'ascending';
-        if (currentSortConfig.key === key && currentSortConfig.direction === 'ascending') {
-          direction = 'descending';
-        }
-        return { key, direction };
-      });
-    };
-
-    const handleChange = (id) => {
-      if (selectedFilters.includes(id)) {
-        setSelectedFilters(selectedFilters.filter((x) => x !== id));
-      } else {
-        setSelectedFilters((selectedFilters) => [...selectedFilters, id]);
-      }
-    };
-
-    const totalPages = Math.ceil(totalWebDomains / ITEMS_PER_PAGE);
-
-    const handlePageClick = (data) => {
-      const selectedPage = data.selected + 1; // Adjust the page number (+1 because `selected` is zero-based)
-      setCurrentPage(selectedPage);
-    };
-
-
+  
     useEffect(() => {
-      debouncedFetchWebDomains(search);
-      const fetchWebDomains = async () => {
-        try {
-          const data = await getHistoricUrls(search, currentPage, ITEMS_PER_PAGE);
-          setWebDomains(data.webDomains); 
-          setTotalWebDomains(data.total); 
-        } catch (error) {
-          console.error('Error fetching web domains:', error);
-        }
-      };
-      fetchWebDomains();
-
-      if (sortConfig !== null) {
-        webDomains.sort((a, b) => {
-          if (a[sortConfig.key] < b[sortConfig.key]) {
-            return sortConfig.direction === 'ascending' ? -1 : 1;
-          }
-          if (a[sortConfig.key] > b[sortConfig.key]) {
-            return sortConfig.direction === 'ascending' ? 1 : -1;
-          }
-          return 0;
-        });
-      }
-
-
-    }, [search, currentPage, sortConfig.key, sortConfig.direction]);
-
-    const sortedWebDomains = useMemo(() => {
-      let sortableDomains = [...webDomains];
-      if (sortConfig.key) {
-        sortableDomains.sort((a, b) => {
-          if (a[sortConfig.key] < b[sortConfig.key]) {
-            return sortConfig.direction === 'ascending' ? -1 : 1;
-          }
-          if (a[sortConfig.key] > b[sortConfig.key]) {
-            return sortConfig.direction === 'ascending' ? 1 : -1;
-          }
-          return 0;
-        });
-      }
-      return sortableDomains;
-    }, [webDomains, sortConfig]);
-
-
+      fetchWebDomains(search, currentPage);
+      // Clean up function to cancel debounce if component unmounts or dependencies change
+      return () => fetchWebDomains.cancel();
+    }, [search, currentPage, fetchWebDomains]);
+  
+    const totalPages = Math.max(Math.ceil(totalWebDomains / ITEMS_PER_PAGE), 1);
+  
+    const handlePageClick = (data) => {
+      setCurrentPage(data.selected + 1);
+    };
+  
     return (
       <div className={styles.all}>
         <div className={styles.table}>
           <div className={styles.row}>
-          <div className={styles.col}>
-          <div className={styles.iconCheckboxWrapper}>
-              <Icon name="cloudcheck" size="25" className={styles.icon} />
-          </div>
+            <div className={styles.col}>
+              <Icon name="cloudcheck" size="25" />
             </div>
             <div className={styles.col}>URL</div>
           </div>
-          {sortedWebDomains.map((domain, index) => (            
-          <Row
-              item={domain.url}
-              url={domain.url}
-              key={domain.id}
-              up={Urls.length - index <= 2}
-              value={selectedFilters.includes(index)}
-              onChange={() => handleChange(index)}
-            />
-          ))}
+          {webDomains.length === 0 ? (
+            <div className={styles.noResults}>No URLs found.</div>
+          ) : (
+            webDomains.map((url, index) => (
+              <Row key={index} url={url} />
+            ))
+          )}
         </div>
         <ReactPaginate
           previousLabel={'Previous'}
@@ -131,12 +69,10 @@
           onPageChange={handlePageClick}
           containerClassName={styles.pagination}
           activeClassName={styles.active}
-          forcePage={currentPage - 1} // Use forcePage to set correct page
+          forcePage={currentPage - 1}
         />
       </div>
-      
     );
   };
-
   
   export default Urls;
