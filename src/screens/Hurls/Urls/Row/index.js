@@ -8,7 +8,7 @@ const Row = ({ url,selected, onChange }) => {
     <div className={styles.row}>
       <div className={styles.col}>
       </div>
-      <div className={styles.col}>{url}</div>
+      <div className={styles.col}>{urls}</div>
 
 
     </div>
