@@ -18,6 +18,7 @@ const api = axios.create({
 //  }
 //};
 
+
 export const getUserProfile = async () => {
   try {
     const response = await api.get('/portal/user');
