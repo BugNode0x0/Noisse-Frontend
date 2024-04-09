@@ -1,7 +1,7 @@
 import React from 'react';
 import io from 'socket.io-client';
 
-const SOCKET_URL = 'https://noisse-backend-development.up.railway.app/';
+const SOCKET_URL = 'https://api.noisse.io/';
 
 // Function to get a cookie by name
 const getCookie = (name) => {
